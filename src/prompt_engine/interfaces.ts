@@ -1,0 +1,40 @@
+import { BaseResponse } from "../../types";
+
+export interface PromptCreateParams {
+  prompt: string;
+  return_prompt: string | Array<Record<string, any>> | Record<string, any>;
+  inputs: Array<{
+    key: string;
+    optional: boolean;
+    initial_value: string;
+  }>;
+}
+
+export interface PromptRunParams {
+  id: string;
+  input_values: Record<string, any>;
+}
+
+export interface PromptListParams {
+  page: string;
+  limit: string;
+}
+
+export interface PromptResult {
+  id: string;
+  prompt: string;
+  inputs: Array<{
+    key: string;
+    optional: boolean;
+  }>;
+  return_prompt: string;
+  created_at: string;
+}
+
+export interface PromptGetResponse extends PromptResult {
+  success: boolean;
+}
+
+export interface PromptListResponse extends PromptResult {
+  prompt_engines: PromptResult[];
+}
