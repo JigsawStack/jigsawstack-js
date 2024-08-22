@@ -1,3 +1,4 @@
+import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { DNSParams, DNSResponse } from "./interfaces/dns";
 import { HTMLAnyParams } from "./interfaces/html_to_any";
@@ -17,9 +18,9 @@ class Web {
     return await this.client.fetchJSS("/web/dns", "GET", {}, params);
   };
 
-  html_to_any = async (params: HTMLAnyParams): Promise<Blob> => {
+  html_to_any = async (params: HTMLAnyParams) => {
     const resp = await this.client.fetchJSS("/web/html_to_any", "POST", params);
-    return resp;
+    return respToFileChoice(resp);
   };
 }
 

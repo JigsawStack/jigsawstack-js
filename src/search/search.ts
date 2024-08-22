@@ -2,11 +2,11 @@ import { RequestClient } from "../request";
 import { SearchParams, SearchResponse, SuggestionResponse } from "./interfaces";
 class Search {
   constructor(private readonly client: RequestClient) {}
-  ai = async (params: SearchParams): Promise<SearchResponse> => {
-    return await this.client.fetchJSS("/ai/scrape", "POST", params);
+  search = async (params: SearchParams): Promise<SearchResponse> => {
+    return await this.client.fetchJSS("/web/search", "GET", undefined, params);
   };
   suggestion = async (query: string): Promise<SuggestionResponse> => {
-    return await this.client.fetchJSS(`/web/search/suggest?query=${query}`, "GET", {});
+    return await this.client.fetchJSS(`/web/search/suggest?query=${query}`, "GET", undefined);
   };
 }
 
