@@ -2,17 +2,22 @@ import { BaseResponse } from "../../types";
 
 export interface PromptCreateParams {
   prompt: string;
-  return_prompt: string | Array<Record<string, any>> | Record<string, any>;
-  inputs: Array<{
+  return_prompt?: string | Array<Record<string, any>> | Record<string, any>;
+  inputs?: Array<{
     key: string;
-    optional: boolean;
-    initial_value: string;
+    optional?: boolean;
+    initial_value?: string;
   }>;
+  // groq_key?: string;
 }
 
-export interface PromptRunParams {
+export interface PromptRunParams extends PromptCreateParams {
+  input_values?: Record<string, any>;
+}
+
+export interface PromptExecuteParams {
   id: string;
-  input_values: Record<string, any>;
+  input_values?: Record<string, any>;
 }
 
 export interface PromptListParams {
