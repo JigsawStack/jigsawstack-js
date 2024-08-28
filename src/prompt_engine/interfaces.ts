@@ -21,8 +21,8 @@ export interface PromptExecuteParams {
 }
 
 export interface PromptListParams {
-  page: string;
-  limit: string;
+  page?: number;
+  limit?: number;
 }
 
 export interface PromptResult {
