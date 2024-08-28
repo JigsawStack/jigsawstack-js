@@ -12,7 +12,7 @@ class PromptEngine {
   get = async (id: string): Promise<PromptGetResponse> => {
     return await this.client.fetchJSS(`/prompt_engine/${id}`, "GET", {});
   };
-  list = async (params: PromptListParams): Promise<PromptListResponse> => {
+  list = async (params: PromptListParams = { limit: 20, page: 0 }): Promise<PromptListResponse> => {
     return await this.client.fetchJSS("/prompt_engine", "GET", {}, params);
   };
   delete = async (id: string): Promise<{ prompt_engine_id: string }> => {
