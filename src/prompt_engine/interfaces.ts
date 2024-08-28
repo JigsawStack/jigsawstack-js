@@ -5,8 +5,8 @@ export interface PromptCreateParams {
   return_prompt?: string | Array<Record<string, any>> | Record<string, any>;
   inputs?: Array<{
     key: string;
-    optional: boolean;
-    initial_value: string;
+    optional?: boolean;
+    initial_value?: string;
   }>;
   groq_key?: string;
 }
