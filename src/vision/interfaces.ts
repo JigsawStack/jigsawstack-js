@@ -15,8 +15,8 @@ export interface VOCRResponse {
 }
 
 export interface ObjectDetentionParams {
-  url: string;
-  ile_store_key: string;
+  url?: string;
+  file_store_key?: string;
 }
 
 export interface ObjectDetectionResponse extends Omit<VOCRResponse, "context"> {
