@@ -1,0 +1,5 @@
+{
+  "name": "@jigsawstack/jigsawstack",
+  "version": "0.0.3",
+  "exports": "./index.ts"
+}

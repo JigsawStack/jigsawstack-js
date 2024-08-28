@@ -19,7 +19,9 @@ jobs:
         run: |
           yarn
           yarn build
-      - name: Publish package
+      - name: Publish package NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Publish package JSR
+        run: npx jsr publish --allow-slow-types
