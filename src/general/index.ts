@@ -1,14 +1,6 @@
-import {
-  PredictionResponse,
-  SentimentResponse,
-  SpeechToTextResponse,
-  SpeechToTextWebhookResponse,
-  SummaryResponse,
-  TextToSQLResponse,
-  TranslateResponse,
-} from "./interfaces";
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
+import { PredictionParams, PredictionResponse, SentimentResponse, SummaryResponse, TextToSQLResponse, TranslateResponse } from "./interfaces";
 
 class General {
   constructor(private readonly client: RequestClient) {}
@@ -37,14 +29,14 @@ class General {
     return respToFileChoice(resp);
   };
 
-  text_to_sql = async (params: { prompt: string; sql_schema: string; file_store_key?: string }): Promise<TextToSQLResponse> => {
+  text_to_sql = async (params: { prompt: string; sql_schema?: string; file_store_key?: string }): Promise<TextToSQLResponse> => {
     return await this.client.fetchJSS("/ai/sql", "POST", params);
   };
 
-  summary = async (params: { text: string; type: "text" | "points" }): Promise<SummaryResponse> => {
+  summary = async (params: { text: string; type?: "text" | "points" }): Promise<SummaryResponse> => {
     return await this.client.fetchJSS("/ai/summary", "POST", params);
   };
-  prediction = async (params: { text: string; type: "text" | "points" }): Promise<PredictionResponse> => {
+  prediction = async (params: PredictionParams): Promise<PredictionResponse> => {
     return await this.client.fetchJSS("/ai/prediction", "POST", params);
   };
 }
