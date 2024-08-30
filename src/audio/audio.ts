@@ -1,9 +1,9 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
-import { SpeechToTextParams, SpeechToTextResponse, SpeechToTextWebhookResponse, TextToSpeechParams } from "./interfaces";
+import { SpeechToTextParams, SpeechToTextResponse, TextToSpeechParams } from "./interfaces";
 class Audio {
   constructor(private readonly client: RequestClient) {}
-  speech_to_text = async (params: SpeechToTextParams): Promise<SpeechToTextResponse | SpeechToTextWebhookResponse> => {
+  speech_to_text = async (params: SpeechToTextParams): Promise<SpeechToTextResponse> => {
     return await this.client.fetchJSS("/ai/transcribe", "POST", params);
   };
   text_to_speech = async (params: TextToSpeechParams) => {
