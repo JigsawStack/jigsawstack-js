@@ -9,13 +9,14 @@ export interface SpeechToTextParams {
   webhook_url?: string;
 }
 
-export interface SpeechToTextResponse {
-  success: boolean;
+export interface SpeechToTextResponse extends BaseResponse {
   text: string;
   chunks: Array<{
     timestamp: number[];
     text: string;
   }>;
+  status?: "processing" | "error";
+  id?: string;
 }
 
 export interface SpeechToTextWebhookResponse extends BaseResponse {
