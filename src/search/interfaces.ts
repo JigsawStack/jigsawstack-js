@@ -18,12 +18,20 @@ export interface SearchResponse {
   spell_fixed: string;
   is_safe: boolean;
   ai_overview: string;
-  site_name: string;
-  site_long_name: string;
-  age: string;
-  language: string;
-  favicon: string;
-  related_index: RelatedIndex[];
+  results: {
+    title: string;
+    url: string;
+    description: string;
+    content: string;
+    is_safe: boolean;
+    site_name: string;
+    site_long_name: string;
+    age: string;
+    language: string;
+    favicon: string;
+    snippets: string[];
+    related_index: RelatedIndex[];
+  }[];
 }
 
 export interface SuggestionResponse {
