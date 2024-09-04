@@ -10,6 +10,9 @@ class Audio {
     const resp = await this.client.fetchJSS("/ai/tts", "POST", params);
     return respToFileChoice(resp);
   };
+  speaker_voice_accents = async () => {
+    return await this.client.fetchJSS("/ai/tts", "GET", undefined);
+  };
 }
 
 export default Audio;
