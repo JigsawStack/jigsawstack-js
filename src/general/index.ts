@@ -4,7 +4,7 @@ import { PredictionParams, PredictionResponse, SentimentResponse, SummaryRespons
 
 class General {
   constructor(private readonly client: RequestClient) {}
-  translate = async (params: { current_language: string; target_language: string; text: string }): Promise<TranslateResponse> => {
+  translate = async (params: { current_language?: string; target_language: string; text: string }): Promise<TranslateResponse> => {
     return await this.client.fetchJSS("/ai/translate", "POST", params);
   };
   sentiment = async (params: { text: string }): Promise<SentimentResponse> => {
