@@ -18,7 +18,7 @@ const JigsawStack = (config?: BaseConfig) => {
     throw new Error("No JigsawStack API key provided");
   }
 
-  const client = new RequestClient({ apiKey: _apiKey, baseURL: config?.baseURL, extraConfig: config?.extraConfig });
+  const client = new RequestClient({ ...config, apiKey: _apiKey });
   const general = new General(client);
   const web = new Web(client);
   const search = new Search(client);

@@ -16,7 +16,7 @@ export class RequestClient {
       [key: string]: string;
     }
   ) => {
-    const disableRequestLogging = this.config?.extraConfig?.disableRequestLogging;
+    const disableRequestLogging = this.config?.disableRequestLogging;
     const isFileUpload = body instanceof Blob || body instanceof Buffer;
 
     const _headers = {
