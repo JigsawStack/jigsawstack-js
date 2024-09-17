@@ -1,7 +1,9 @@
+import { BaseConfig } from "../types";
+
 const baseURL = "https://api.jigsawstack.com/v1";
 
 export class RequestClient {
-  constructor(private readonly config: { apiKey: string; baseURL?: string }) {}
+  constructor(private readonly config: BaseConfig) {}
 
   readonly fetchJSS = async (
     path: string,
@@ -14,12 +16,14 @@ export class RequestClient {
       [key: string]: string;
     }
   ) => {
+    const disableRequestLogging = this.config?.extraConfig?.disableRequestLogging;
     const isFileUpload = body instanceof Blob || body instanceof Buffer;
 
     const _headers = {
       "x-api-key": this.config?.apiKey,
       "Content-Type": isFileUpload ? "application/octet-stream" : "application/json",
       ...headers,
+      ["x-jigsaw-no-request-log"]: disableRequestLogging && "true",
     };
 
     const _body = isFileUpload ? body : JSON.stringify(body);
