@@ -9,15 +9,16 @@ import PromptEngine from "./src/prompt_engine";
 import General from "./src/general";
 import { File, KV } from "./src/store";
 import Validate from "./src/validate";
+import { BaseConfig } from "./types";
 
-const JigsawStack = (config?: { apiKey?: string; baseURL?: string }) => {
+const JigsawStack = (config?: BaseConfig) => {
   const _apiKey = config?.apiKey || process?.env?.JIGSAWSTACK_API_KEY;
 
   if (!_apiKey) {
     throw new Error("No JigsawStack API key provided");
   }
 
-  const client = new RequestClient({ apiKey: _apiKey, baseURL: config?.baseURL });
+  const client = new RequestClient({ apiKey: _apiKey, baseURL: config?.baseURL, extraConfig: config?.extraConfig });
   const general = new General(client);
   const web = new Web(client);
   const search = new Search(client);
