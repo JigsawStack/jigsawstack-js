@@ -2,9 +2,15 @@ import { BaseResponse } from "../../types";
 
 export interface SentimentResponse extends BaseResponse {
   sentiment: {
-    emotion: "happiness";
-    sentiment: "positive";
-    score: 0.9;
+    emotion: string;
+    sentiment: string;
+    score: number;
+    sentences: Array<{
+      text: string;
+      emotion: string;
+      sentiment: string;
+      score: number;
+    }>;
   };
 }
 
