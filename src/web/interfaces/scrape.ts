@@ -42,7 +42,25 @@ export interface ScrapeParams {
 
 export interface ScrapeResponse {
   success: boolean;
-  data: any;
+  data: Array<{
+    key: string;
+    selector: string;
+    results: Array<{
+      html: string;
+      text: string;
+      attributes: Array<{
+        name: string;
+        value: string;
+      }>;
+    }>;
+  }>;
+}
+
+export interface AIScrapeResponse extends ScrapeResponse {
+  page_position: number;
+  page_position_length: number;
+  context: Record<string, Array<string>>;
+  selectors: Record<string, Array<string>>;
 }
 
 export interface AIScrapeParams extends Omit<ScrapeParams, "elements"> {
