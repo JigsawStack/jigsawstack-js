@@ -2,11 +2,11 @@ import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { DNSParams, DNSResponse } from "./interfaces/dns";
 import { HTMLAnyParams } from "./interfaces/html_to_any";
-import { AIScrapeParams, ScrapeParams, ScrapeResponse } from "./interfaces/scrape";
+import { AIScrapeParams, AIScrapeResponse, ScrapeParams, ScrapeResponse } from "./interfaces/scrape";
 class Web {
   constructor(private readonly client: RequestClient) {}
 
-  ai_scrape = async (params: AIScrapeParams): Promise<ScrapeResponse> => {
+  ai_scrape = async (params: AIScrapeParams): Promise<AIScrapeResponse> => {
     return await this.client.fetchJSS("/ai/scrape", "POST", params);
   };
 
