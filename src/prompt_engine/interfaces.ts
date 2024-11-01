@@ -1,4 +1,5 @@
 import { BaseResponse } from "../../types";
+import { Stream } from "../lib/streaming";
 
 export interface PromptCreateParams {
   prompt: string;
@@ -13,11 +14,13 @@ export interface PromptCreateParams {
 
 export interface PromptRunParams extends PromptCreateParams {
   input_values?: Record<string, any>;
+  streaming?: boolean;
 }
 
 export interface PromptExecuteParams {
   id: string;
   input_values?: Record<string, any>;
+  streaming?: boolean;
 }
 
 export interface PromptListParams {
@@ -43,3 +46,13 @@ export interface PromptGetResponse extends PromptResult {
 export interface PromptListResponse extends PromptResult {
   prompt_engines: PromptResult[];
 }
+
+export interface RunPromptResponse {
+  result: any;
+  success: boolean;
+  message?: string;
+}
+
+export interface RunPromptResponseStreaming<T> extends Stream<T> {}
+
+export interface RunPromptDirectResponse extends RunPromptResponse {}
