@@ -9,18 +9,19 @@ export interface PromptCreateParams {
     optional?: boolean;
     initial_value?: string;
   }>;
-  // groq_key?: string;
+  use_internet?: boolean;
+  optimize_prompt?: boolean;
 }
 
-export interface PromptRunParams extends PromptCreateParams {
+export interface PromptRunParams extends Omit<PromptCreateParams, "optimize_prompt"> {
   input_values?: Record<string, any>;
-  streaming?: boolean;
+  stream?: boolean;
 }
 
 export interface PromptExecuteParams {
   id: string;
   input_values?: Record<string, any>;
-  streaming?: boolean;
+  stream?: boolean;
 }
 
 export interface PromptListParams {
@@ -53,6 +54,6 @@ export interface RunPromptResponse {
   message?: string;
 }
 
-export interface RunPromptResponseStreaming<T> extends Stream<T> {}
+export interface RunPromptResponseStream<T> extends Stream<T> {}
 
 export interface RunPromptDirectResponse extends RunPromptResponse {}

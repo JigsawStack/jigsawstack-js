@@ -9,7 +9,7 @@ import {
   PromptRunParams,
   RunPromptDirectResponse,
   RunPromptResponse,
-  RunPromptResponseStreaming,
+  RunPromptResponseStream,
 } from "./interfaces";
 
 class PromptEngine {
@@ -18,14 +18,14 @@ class PromptEngine {
     return await this.client.fetchJSS("/prompt_engine", "POST", params);
   };
 
-  run_prompt_direct<T>(params: PromptRunParams & { streaming: true }): Promise<RunPromptResponseStreaming<T>>;
-  run_prompt_direct(params: PromptRunParams & { streaming?: false }): Promise<RunPromptDirectResponse>;
-  async run_prompt_direct<T>(params: PromptRunParams): Promise<RunPromptDirectResponse | RunPromptResponseStreaming<T>> {
+  run_prompt_direct(params: PromptRunParams & { stream: true }): Promise<RunPromptResponseStream<string>>;
+  run_prompt_direct(params: PromptRunParams & { stream?: false }): Promise<RunPromptDirectResponse>;
+  async run_prompt_direct(params: PromptRunParams): Promise<RunPromptDirectResponse | RunPromptResponseStream<string>> {
     const resp = await this.client.fetchJSS(`/prompt_engine/run`, "POST", params);
-    if (!params.streaming) {
+    if (!params.stream) {
       return resp as RunPromptDirectResponse;
     }
-    return Stream.fromReadableStream<T>(resp.body) as RunPromptResponseStreaming<T>;
+    return Stream.fromReadableStream<string>(resp.body) as RunPromptResponseStream<string>;
   }
   get = async (id: string): Promise<PromptGetResponse> => {
     return await this.client.fetchJSS(`/prompt_engine/${id}`, "GET", {});
@@ -36,14 +36,14 @@ class PromptEngine {
   delete = async (id: string): Promise<{ prompt_engine_id: string }> => {
     return await this.client.fetchJSS(`/prompt_engine/${id}`, "DELETE", {});
   };
-  run<T>(params: PromptExecuteParams & { streaming: true }): Promise<RunPromptResponseStreaming<T>>;
-  run(params: PromptExecuteParams & { streaming?: false }): Promise<RunPromptResponse>;
-  async run<T>(params: PromptExecuteParams): Promise<RunPromptResponseStreaming<T> | RunPromptResponse> {
+  run(params: PromptExecuteParams & { stream: true }): Promise<RunPromptResponseStream<string>>;
+  run(params: PromptExecuteParams & { stream?: false }): Promise<RunPromptResponse>;
+  async run(params: PromptExecuteParams): Promise<RunPromptResponseStream<string> | RunPromptResponse> {
     const resp = await this.client.fetchJSS(`/prompt_engine/${params.id}`, "POST", params);
-    if (!params.streaming) {
+    if (!params.stream) {
       return resp as RunPromptResponse;
     }
-    return Stream.fromReadableStream<T>(resp.body) as RunPromptResponseStreaming<T>;
+    return Stream.fromReadableStream<string>(resp.body) as RunPromptResponseStream<string>;
   }
 }
 
