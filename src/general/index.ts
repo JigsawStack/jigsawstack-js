@@ -1,12 +1,35 @@
+import { BaseResponse } from "../../types";
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
-import { PredictionParams, PredictionResponse, SentimentResponse, SummaryResponse, TextToSQLResponse, TranslateResponse } from "./interfaces";
+import {
+  PredictionParams,
+  PredictionResponse,
+  SentimentResponse,
+  SummaryParams,
+  SummaryResponse,
+  TextToSQLResponse,
+  TranslateParams,
+  TranslateResponse,
+} from "./interfaces";
 
 class General {
-  constructor(private readonly client: RequestClient) {}
-  translate = async (params: { current_language?: string; target_language: string; text: string }): Promise<TranslateResponse> => {
+  private readonly client: RequestClient;
+  constructor(client: RequestClient) {
+    this.client = client;
+    this.summary = this.summary.bind(this);
+    this.translate = this.translate.bind(this);
+  }
+
+  translate(params: TranslateParams & { text: string[] }): Promise<BaseResponse & { translated_text: string[] }>;
+  translate(params: TranslateParams & { text: string }): Promise<TranslateResponse>;
+
+  async translate(params: TranslateParams): Promise<TranslateResponse | (BaseResponse & { translated_text: string[] })> {
+    if (Array.isArray(params.text)) {
+      const resp = await this.client.fetchJSS("/ai/translate", "POST", params);
+      return resp as BaseResponse & { translated_text: string[] };
+    }
     return await this.client.fetchJSS("/ai/translate", "POST", params);
-  };
+  }
   sentiment = async (params: { text: string }): Promise<SentimentResponse> => {
     return await this.client.fetchJSS("/ai/sentiment", "POST", params);
   };
@@ -33,9 +56,16 @@ class General {
     return await this.client.fetchJSS("/ai/sql", "POST", params);
   };
 
-  summary = async (params: { text: string; type?: "text" | "points" }): Promise<SummaryResponse> => {
+  summary(params: SummaryParams & { type: "points" }): Promise<BaseResponse & { summary: string[] }>;
+  summary(params: SummaryParams & { type: "text" }): Promise<SummaryResponse>;
+  async summary(params: SummaryParams): Promise<SummaryResponse | (BaseResponse & { summary: string[] })> {
+    if (params.type === "points") {
+      const resp = await this.client.fetchJSS("/ai/summary", "POST", params);
+      return resp as BaseResponse & { summary: string[] };
+    }
     return await this.client.fetchJSS("/ai/summary", "POST", params);
-  };
+  }
+
   prediction = async (params: PredictionParams): Promise<PredictionResponse> => {
     return await this.client.fetchJSS("/ai/prediction", "POST", params);
   };

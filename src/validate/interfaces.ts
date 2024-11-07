@@ -45,3 +45,11 @@ export interface SpamCheckValidationResponse {
     score: number;
   };
 }
+
+export interface SpamCheckValidationArrayResponse {
+  success: boolean;
+  check: {
+    is_spam: boolean;
+    score: number;
+  }[];
+}
