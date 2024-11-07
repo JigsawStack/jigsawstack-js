@@ -18,6 +18,12 @@ export interface TranslateResponse extends BaseResponse {
   translated_text: string;
 }
 
+export interface TranslateParams {
+  current_language?: string;
+  target_language: string;
+  text: string | string[];
+}
+
 export interface SpeechToTextResponse extends BaseResponse {
   text: string;
   chunks: {
@@ -38,6 +44,15 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
 
 export interface TextToSQLResponse extends BaseResponse {
   sql: string;
+}
+
+export interface SummaryParams {
+  text?: string; // maximum 300_000 characters
+  type?: "text" | "points";
+  url?: string; // PDF url only supported
+  file_store_key?: string;
+  max_points?: number; // max 100
+  max_characters?: number;
 }
 
 export interface SummaryResponse extends BaseResponse {
