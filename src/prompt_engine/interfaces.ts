@@ -1,4 +1,3 @@
-import { BaseResponse } from "../../types";
 import { Stream } from "../lib/streaming";
 
 export interface PromptCreateParams {
@@ -11,6 +10,17 @@ export interface PromptCreateParams {
   }>;
   use_internet?: boolean;
   optimize_prompt?: boolean;
+  prompt_guard?: Array<
+    | "defamation"
+    | "specialized_advice"
+    | "privacy"
+    | "intellectual_property"
+    | "indiscriminate_weapons"
+    | "hate"
+    | "sexual_content"
+    | "elections"
+    | "code_interpreter_abuse"
+  >;
 }
 
 export interface PromptRunParams extends Omit<PromptCreateParams, "optimize_prompt"> {
