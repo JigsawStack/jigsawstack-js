@@ -3,6 +3,7 @@ export interface SearchParams {
   ai_overview?: boolean;
   safe_search?: "moderate" | "strict" | "off";
   spell_check?: boolean;
+  byo_urls?: string[];
 }
 
 interface RelatedIndex {
