@@ -18,6 +18,12 @@ export interface SpeechToTextResponse extends BaseResponse {
   }>;
   status?: "processing" | "error";
   id?: string;
+  speakers?: {
+    //  available when by_speaker is true
+    speaker: string;
+    timestamp: number[];
+    text: string;
+  }[];
 }
 
 export interface SpeechToTextWebhookResponse extends BaseResponse {
