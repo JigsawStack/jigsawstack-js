@@ -43,6 +43,7 @@ const JigsawStack = (config?: BaseConfig) => {
     summary: general.summary,
     prediction: general.prediction,
     text_to_sql: general.text_to_sql,
+    embedding: general.embedding,
     audio,
     geo,
     vision,
