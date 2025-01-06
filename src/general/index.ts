@@ -2,6 +2,8 @@ import { BaseResponse } from "../../types";
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import {
+  EmbeddingParams,
+  EmbeddingResponse,
   PredictionParams,
   PredictionResponse,
   SentimentResponse,
@@ -68,6 +70,10 @@ class General {
 
   prediction = async (params: PredictionParams): Promise<PredictionResponse> => {
     return await this.client.fetchJSS("/ai/prediction", "POST", params);
+  };
+
+  embedding = async (params: EmbeddingParams): Promise<EmbeddingResponse> => {
+    return await this.client.fetchJSS("/embedding", "POST", params);
   };
 }
 
