@@ -2,6 +2,7 @@ export interface VOCRParams {
   prompt: string | string[];
   url?: string;
   file_store_key?: string;
+  page_range?: Array<number>;
 }
 
 export interface VOCRResponse {
