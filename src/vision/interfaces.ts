@@ -13,6 +13,8 @@ export interface VOCRResponse {
   tags: string[];
   has_text: boolean;
   sections: Array<any>;
+  total_pages?: number; // only available for PDFs
+  page_range?: Array<number>; // only available when page_range is specified
 }
 
 export interface ObjectDetentionParams {
