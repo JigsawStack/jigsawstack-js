@@ -38,6 +38,14 @@ export interface ScrapeParams {
   width?: number;
   height?: number;
   cookies?: Array<CookieParameter>;
+  force_rotate_proxy?: boolean;
+  byo_proxy?: {
+    server: string;
+    auth?: {
+      username: string;
+      password: string;
+    };
+  };
 }
 
 export interface ScrapeResponse {
@@ -65,4 +73,6 @@ export interface AIScrapeResponse extends ScrapeResponse {
 
 export interface AIScrapeParams extends Omit<ScrapeParams, "elements"> {
   element_prompts: string[];
+  root_element_selector?: string;
+  page_position?: number;
 }
