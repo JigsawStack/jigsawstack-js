@@ -69,7 +69,7 @@ export interface AIScrapeResponse extends ScrapeResponse {
   page_position_length: number;
   context: Record<string, Array<string>>;
   selectors: Record<string, Array<string>>;
-  links: Array<{
+  link: Array<{
     href: string;
     text: string;
   }>;
