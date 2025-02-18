@@ -69,6 +69,10 @@ export interface AIScrapeResponse extends ScrapeResponse {
   page_position_length: number;
   context: Record<string, Array<string>>;
   selectors: Record<string, Array<string>>;
+  links: Array<{
+    href: string;
+    text: string;
+  }>;
 }
 
 export interface AIScrapeParams extends Omit<ScrapeParams, "elements"> {
