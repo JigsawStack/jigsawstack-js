@@ -54,7 +54,12 @@ class General {
     return respToFileChoice(resp);
   };
 
-  text_to_sql = async (params: { prompt: string; sql_schema?: string; file_store_key?: string }): Promise<TextToSQLResponse> => {
+  text_to_sql = async (params: {
+    prompt: string;
+    sql_schema?: string;
+    file_store_key?: string;
+    database?: "postgresql" | "mysql" | "sqlite";
+  }): Promise<TextToSQLResponse> => {
     return await this.client.fetchJSS("/ai/sql", "POST", params);
   };
 
