@@ -7,7 +7,7 @@ import Vision from "./src/vision/vision";
 import Web from "./src/web/web";
 import PromptEngine from "./src/prompt_engine";
 import General from "./src/general";
-import { File, KV } from "./src/store";
+import { File } from "./src/store";
 import Validate from "./src/validate";
 import { BaseConfig } from "./types";
 
@@ -29,7 +29,6 @@ const JigsawStack = (config?: BaseConfig) => {
   const file = new File(client);
   const validate = new Validate(client);
   const store = {
-    kv: new KV(client),
     upload: file.upload,
     retrieve: file.retrieve,
     delete: file.delete,
