@@ -1,6 +1,6 @@
 import { BaseResponse } from "../../types";
-import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
+import { respToFileChoice } from "../helpers";
 import {
   EmbeddingParams,
   EmbeddingResponse,
@@ -38,16 +38,14 @@ class General {
 
   image_generation = async (params: {
     prompt: string;
-    model?: "sd1.5" | "sdxl" | "ead1.0" | "rv1.3" | "rv3" | "rv5.1" | "ar1.8";
-    size?: "small" | "medium" | "large";
+    aspect_ratio?: "1:1" | "16:9" | "21:9" | "3:2" | "2:3" | "4:5" | "5:4" | "3:4" | "4:3" | "9:16" | "9:21";
     width?: number;
     height?: number;
+    steps?: number;
     advance_config?: {
       negative_prompt?: string;
-      steps?: number;
-      guidance?: string;
+      guidance?: number;
       seed?: number;
-      scheduler?: "dpmsolver++" | "lms" | "ddim" | "euler" | "euler_a" | "pndm";
     };
   }) => {
     const resp: Response = await this.client.fetchJSS("/ai/image_generation", "POST", params);
