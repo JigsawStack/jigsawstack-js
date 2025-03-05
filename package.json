@@ -1,7 +1,12 @@
 {
   "name": "jigsawstack",
   "description": "JigsawStack - The AI SDK for Typescript and Javascript",
-  "keywords": ["framework", "ai", "nextjs", "react"],
+  "keywords": [
+    "framework",
+    "ai",
+    "nextjs",
+    "react"
+  ],
   "type": "module",
   "license": "MIT",
   "version": "0.0.28",
@@ -20,7 +25,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "exports": {
     "require": {
       "types": "./dist/index.d.cts",
@@ -41,7 +48,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.0.2",
-    "pkgroll": "^2.4.2",
+    "pkgroll": "^2.11.2",
     "tsx": "^4.16.4",
     "typescript": "^5.5.4"
   }
