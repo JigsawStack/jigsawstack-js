@@ -78,7 +78,7 @@ export interface EmbeddingParams {
   file_store_key?: string;
   file_content?: any;
   type: "text" | "text-other" | "image" | "audio" | "pdf";
-  token_overflow_mode?: "chunk" | "truncate" | "error";
+  token_overflow_mode?: "truncate" | "error";
 }
 
 export interface EmbeddingResponse extends BaseResponse {

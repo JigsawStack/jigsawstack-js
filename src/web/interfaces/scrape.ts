@@ -71,7 +71,8 @@ export interface AIScrapeResponse extends ScrapeResponse {
   selectors: Record<string, Array<string>>;
   link: Array<{
     href: string;
-    text: string;
+    text: string | null;
+    type: "a" | "img";
   }>;
 }
 

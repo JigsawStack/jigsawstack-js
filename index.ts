@@ -1,14 +1,14 @@
 import "isomorphic-fetch";
 import AudioApis from "./src/audio/audio";
+import General from "./src/general";
 import Geo from "./src/geo/geo";
+import PromptEngine from "./src/prompt_engine";
 import { RequestClient } from "./src/request";
 import Search from "./src/search/search";
+import { File } from "./src/store/file";
+import Validate from "./src/validate";
 import Vision from "./src/vision/vision";
 import Web from "./src/web/web";
-import PromptEngine from "./src/prompt_engine";
-import General from "./src/general";
-import { File, KV } from "./src/store";
-import Validate from "./src/validate";
 import { BaseConfig } from "./types";
 
 const JigsawStack = (config?: BaseConfig) => {
@@ -29,7 +29,6 @@ const JigsawStack = (config?: BaseConfig) => {
   const file = new File(client);
   const validate = new Validate(client);
   const store = {
-    kv: new KV(client),
     upload: file.upload,
     retrieve: file.retrieve,
     delete: file.delete,
@@ -50,7 +49,6 @@ const JigsawStack = (config?: BaseConfig) => {
     web: {
       ai_scrape: web.ai_scrape,
       scrape: web.scrape,
-      dns: web.dns,
       html_to_any: web.html_to_any,
       search: search.search,
       search_suggestions: search.suggestion,

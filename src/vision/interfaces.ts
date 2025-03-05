@@ -5,6 +5,25 @@ export interface VOCRParams {
   page_range?: Array<number>;
 }
 
+interface Bounds {
+  top_left: {
+    x: number;
+    y: number;
+  };
+  top_right: {
+    x: number;
+    y: number;
+  };
+  bottom_left: {
+    x: number;
+    y: number;
+  };
+  bottom_right: {
+    x: number;
+    y: number;
+  };
+}
+
 export interface VOCRResponse {
   success: boolean;
   context: string;
@@ -12,7 +31,17 @@ export interface VOCRResponse {
   height: number;
   tags: string[];
   has_text: boolean;
-  sections: Array<any>;
+  sections: Array<{
+    text: string;
+    lines: Array<{
+      text: string;
+      bounds: Bounds;
+      words: Array<{
+        text: string;
+        bounds: Bounds;
+      }>;
+    }>;
+  }>;
   total_pages?: number; // only available for PDFs
   page_range?: Array<number>; // only available when page_range is specified
 }

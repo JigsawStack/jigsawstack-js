@@ -19,11 +19,11 @@ export class File {
     );
   };
   retrieve = async (key: string) => {
-    const resp = await this.client.fetchJSS(`/store/file/${key}`, "GET", {});
+    const resp = await this.client.fetchJSS(`/store/file/read/${key}`, "GET");
     return respToFileChoice(resp);
   };
 
   delete = async (key: string): Promise<BaseResponse> => {
-    return await this.client.fetchJSS(`/store/file/${key}`, "DELETE", {});
+    return await this.client.fetchJSS(`/store/file/read/${key}`, "DELETE");
   };
 }

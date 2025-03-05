@@ -1,6 +1,6 @@
 import { BaseResponse } from "../../types";
-import { RequestClient } from "../request";
 import { respToFileChoice } from "../helpers";
+import { RequestClient } from "../request";
 import {
   EmbeddingParams,
   EmbeddingResponse,
@@ -20,11 +20,11 @@ class General {
     this.client = client;
     this.summary = this.summary.bind(this);
     this.translate = this.translate.bind(this);
+    this.embedding = this.embedding.bind(this);
   }
 
   translate(params: TranslateParams & { text: string[] }): Promise<BaseResponse & { translated_text: string[] }>;
   translate(params: TranslateParams & { text: string }): Promise<TranslateResponse>;
-
   async translate(params: TranslateParams): Promise<TranslateResponse | (BaseResponse & { translated_text: string[] })> {
     if (Array.isArray(params.text)) {
       const resp = await this.client.fetchJSS("/ai/translate", "POST", params);
@@ -75,9 +75,14 @@ class General {
     return await this.client.fetchJSS("/ai/prediction", "POST", params);
   };
 
-  embedding = async (params: EmbeddingParams): Promise<EmbeddingResponse> => {
+  embedding(params: EmbeddingParams): Promise<EmbeddingResponse>;
+  embedding(file: Blob | Buffer, params: Omit<EmbeddingParams, "url" | "file_store_key" | "file_content">): Promise<EmbeddingResponse>;
+  async embedding(params: EmbeddingParams | Blob | Buffer, options?: EmbeddingParams): Promise<EmbeddingResponse> {
+    if (params instanceof Blob || params instanceof Buffer) {
+      return await this.client.fetchJSS("/embedding", "POST", params, options);
+    }
     return await this.client.fetchJSS("/embedding", "POST", params);
-  };
+  }
 }
 
 export default General;

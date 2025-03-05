@@ -1,6 +1,5 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
-import { DNSParams, DNSResponse } from "./interfaces/dns";
 import { HTMLAnyParams } from "./interfaces/html_to_any";
 import { AIScrapeParams, AIScrapeResponse, ScrapeParams, ScrapeResponse } from "./interfaces/scrape";
 class Web {
@@ -12,10 +11,6 @@ class Web {
 
   scrape = async (params: ScrapeParams): Promise<ScrapeResponse> => {
     return await this.client.fetchJSS("/web/scrape", "POST", params);
-  };
-
-  dns = async (params: DNSParams): Promise<DNSResponse> => {
-    return await this.client.fetchJSS("/web/dns", "GET", {}, params);
   };
 
   html_to_any = async (params: HTMLAnyParams) => {
