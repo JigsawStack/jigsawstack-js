@@ -11,3 +11,9 @@ export const respToFileChoice = (resp: Response) => {
     },
   };
 };
+
+export const removeUndefinedProperties = (currentOBJ: any) => {
+  const obj = { ...currentOBJ };
+  Object.keys(obj).forEach((key) => (obj[key] === undefined ? delete obj[key] : {}));
+  return obj;
+};

@@ -1,7 +1,6 @@
-import "isomorphic-fetch";
+import "isomorphic-unfetch";
 import AudioApis from "./src/audio/audio";
 import General from "./src/general";
-import Geo from "./src/geo/geo";
 import PromptEngine from "./src/prompt_engine";
 import { RequestClient } from "./src/request";
 import Search from "./src/search/search";
@@ -24,7 +23,6 @@ const JigsawStack = (config?: BaseConfig) => {
   const search = new Search(client);
   const vision = new Vision(client);
   const audio = new AudioApis(client);
-  const geo = new Geo(client);
   const promptengine = new PromptEngine(client);
   const file = new File(client);
   const validate = new Validate(client);
@@ -44,11 +42,9 @@ const JigsawStack = (config?: BaseConfig) => {
     text_to_sql: general.text_to_sql,
     embedding: general.embedding,
     audio,
-    geo,
     vision,
     web: {
       ai_scrape: web.ai_scrape,
-      scrape: web.scrape,
       html_to_any: web.html_to_any,
       search: search.search,
       search_suggestions: search.suggestion,

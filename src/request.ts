@@ -1,4 +1,5 @@
 import { BaseConfig } from "../types";
+import { removeUndefinedProperties } from "./helpers";
 
 const baseURL = "https://api.jigsawstack.com/v1";
 
@@ -18,6 +19,8 @@ export class RequestClient {
   ) => {
     const disableRequestLogging = this.config?.disableRequestLogging;
     const isFileUpload = body instanceof Blob || body instanceof Buffer;
+
+    searchParams = searchParams ? removeUndefinedProperties(searchParams) : undefined;
 
     const _headers = {
       "x-api-key": this.config?.apiKey,

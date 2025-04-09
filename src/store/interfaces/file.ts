@@ -2,7 +2,7 @@ import { BaseResponse } from "../../../types";
 
 export interface FileUploadParams {
   overwrite?: boolean;
-  filename: string;
+  filename?: string;
   content_type?: string;
 }
 

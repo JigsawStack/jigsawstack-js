@@ -10,6 +10,7 @@ import {
   SummaryParams,
   SummaryResponse,
   TextToSQLResponse,
+  TranslateImageParams,
   TranslateParams,
   TranslateResponse,
 } from "./interfaces";
@@ -19,19 +20,23 @@ class General {
   constructor(client: RequestClient) {
     this.client = client;
     this.summary = this.summary.bind(this);
-    this.translate = this.translate.bind(this);
     this.embedding = this.embedding.bind(this);
   }
 
-  translate(params: TranslateParams & { text: string[] }): Promise<BaseResponse & { translated_text: string[] }>;
-  translate(params: TranslateParams & { text: string }): Promise<TranslateResponse>;
-  async translate(params: TranslateParams): Promise<TranslateResponse | (BaseResponse & { translated_text: string[] })> {
-    if (Array.isArray(params.text)) {
-      const resp = await this.client.fetchJSS("/ai/translate", "POST", params);
-      return resp as BaseResponse & { translated_text: string[] };
-    }
-    return await this.client.fetchJSS("/ai/translate", "POST", params);
-  }
+  translate = {
+    text: async (params: TranslateParams): Promise<TranslateResponse | (BaseResponse & { translated_text: string[] })> => {
+      if (Array.isArray(params.text)) {
+        const resp = await this.client.fetchJSS("/ai/translate", "POST", params);
+        return resp as BaseResponse & { translated_text: string[] };
+      }
+      return await this.client.fetchJSS("/ai/translate", "POST", params);
+    },
+    image: async (params: TranslateImageParams) => {
+      const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params);
+      return respToFileChoice(resp);
+    },
+  };
+
   sentiment = async (params: { text: string }): Promise<SentimentResponse> => {
     return await this.client.fetchJSS("/ai/sentiment", "POST", params);
   };

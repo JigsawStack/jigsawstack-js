@@ -24,6 +24,12 @@ export interface TranslateParams {
   text: string | string[];
 }
 
+export interface TranslateImageParams {
+  target_language: string;
+  url?: string;
+  file_store_key?: string;
+}
+
 export interface SpeechToTextResponse extends BaseResponse {
   text: string;
   chunks: {

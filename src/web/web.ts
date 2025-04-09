@@ -1,16 +1,12 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { HTMLAnyParams } from "./interfaces/html_to_any";
-import { AIScrapeParams, AIScrapeResponse, ScrapeParams, ScrapeResponse } from "./interfaces/scrape";
+import { AIScrapeParams, AIScrapeResponse } from "./interfaces/scrape";
 class Web {
   constructor(private readonly client: RequestClient) {}
 
   ai_scrape = async (params: AIScrapeParams): Promise<AIScrapeResponse> => {
     return await this.client.fetchJSS("/ai/scrape", "POST", params);
-  };
-
-  scrape = async (params: ScrapeParams): Promise<ScrapeResponse> => {
-    return await this.client.fetchJSS("/web/scrape", "POST", params);
   };
 
   html_to_any = async (params: HTMLAnyParams) => {
