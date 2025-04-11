@@ -48,12 +48,12 @@ export interface BaseAIScrapeParams {
 }
 
 export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
-  selector: Array<string>;
+  selectors: Array<string>;
   element_prompts?: string[];
 }
 
 export interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
-  selector?: Array<string>;
+  selectors?: Array<string>;
   element_prompts: string[];
 }
 
