@@ -12,11 +12,10 @@ export interface CookieParameter {
   sameParty?: boolean;
 }
 
-export interface ScrapeParams {
+export interface BaseAIScrapeParams {
   url: string;
-  elements?: Array<{
-    selector: string;
-  }>;
+  root_element_selector?: string;
+  page_position?: number;
   http_headers?: object;
   reject_request_pattern?: string[];
   goto_options?: {
@@ -48,7 +47,19 @@ export interface ScrapeParams {
   };
 }
 
-export interface ScrapeResponse {
+export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
+  selector: Array<string>;
+  element_prompts?: string[];
+}
+
+export interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
+  selector?: Array<string>;
+  element_prompts: string[];
+}
+
+export type AIScrapeParams = AIScrapeParamsWithSelector | AIScrapeParamsWithPrompts;
+
+export interface AIScrapeResponse {
   success: boolean;
   data: Array<{
     key: string;
@@ -62,9 +73,6 @@ export interface ScrapeResponse {
       }>;
     }>;
   }>;
-}
-
-export interface AIScrapeResponse extends ScrapeResponse {
   page_position: number;
   page_position_length: number;
   context: Record<string, Array<string>>;
@@ -74,10 +82,4 @@ export interface AIScrapeResponse extends ScrapeResponse {
     text: string | null;
     type: "a" | "img";
   }>;
-}
-
-export interface AIScrapeParams extends Omit<ScrapeParams, "elements"> {
-  element_prompts: string[];
-  root_element_selector?: string;
-  page_position?: number;
 }
