@@ -24,9 +24,7 @@ To learn more about all available JigsawStack AI services, view the [Documentati
 | **👀 Vision**     | vOCR, Object Detection                             |
 | **🧠 LLMs**       | Prompt Engine                                      |
 | **🖼️ Generative** | AI Image (Flux, SD, SDXL-Fast & more), HTML to Any |
-| **🌍 Geo**        | Location search                                    |
 | **✅ Validation** | Email, NSFW images, profanity & more               |
-| **📁 Store**      | Simple File Storage                                |
 
 Learn more of about each category in the [API reference](https://jigsawstack.com/docs/api-reference)
 
