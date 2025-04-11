@@ -20,7 +20,7 @@ To learn more about all available JigsawStack AI services, view the [Documentati
 | ----------------- | -------------------------------------------------- |
 | **👉 General**    | Translation, Summarization, Sentiment Analysis     |
 | **🌐 Web**        | AI Web Scraping, AI Web Search                     |
-| **🎵 Audio**      | Text to Speech, Speech to Text (Whisper large v3)  |
+| **🎵 Audio**      | Text to Speech, Speech to Text                     |
 | **👀 Vision**     | vOCR, Object Detection                             |
 | **🧠 LLMs**       | Prompt Engine                                      |
 | **🖼️ Generative** | AI Image (Flux, SD, SDXL-Fast & more), HTML to Any |
