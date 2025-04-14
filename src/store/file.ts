@@ -11,7 +11,7 @@ export class File {
       "POST",
       file,
       {
-        key: params?.filename,
+        key: params?.key,
         overwrite: params?.overwrite,
       },
       params?.content_type && {
