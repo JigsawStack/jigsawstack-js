@@ -4,7 +4,7 @@
   "keywords": ["framework", "ai", "nextjs", "react"],
   "type": "module",
   "license": "MIT",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://jigsawstack.com",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "format": "biome check --write ."
   },
   "dependencies": {
-    "isomorphic-unfetch": "^4.0.2"
+    "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

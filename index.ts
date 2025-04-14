@@ -1,4 +1,4 @@
-import "isomorphic-unfetch";
+import "isomorphic-fetch";
 import AudioApis from "./src/audio/audio";
 import General from "./src/general";
 import PromptEngine from "./src/prompt_engine";
