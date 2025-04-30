@@ -13,6 +13,7 @@ export class File {
       {
         key: params?.key,
         overwrite: params?.overwrite,
+        temp_public_url: params?.temp_public_url,
       },
       params?.content_type && {
         "Content-Type": params.content_type,
