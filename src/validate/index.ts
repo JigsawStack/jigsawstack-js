@@ -1,6 +1,7 @@
 import { RequestClient } from "../request";
 import {
   EmailValidationResponse,
+  NSFWParams,
   NSFWValidationResponse,
   ProfanityParams,
   ProfanityValidationResponse,
@@ -19,10 +20,9 @@ class Validate {
       email,
     });
   };
-  nsfw = async (url: string): Promise<NSFWValidationResponse> => {
-    return await this.client.fetchJSS(`/validate/nsfw`, "POST", {
-      url,
-    });
+
+  nsfw = async ({ url, file_store_key }: NSFWParams): Promise<NSFWValidationResponse> => {
+    return await this.client.fetchJSS(`/validate/nsfw`, "POST", { url, file_store_key });
   };
   profanity = async ({ text, censor_replacement = "*" }: ProfanityParams): Promise<ProfanityValidationResponse> => {
     return await this.client.fetchJSS("/validate/profanity", "POST", { text, censor_replacement });
