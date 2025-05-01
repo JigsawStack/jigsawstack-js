@@ -21,9 +21,15 @@ class Validate {
     });
   };
 
-  nsfw = async ({ url, file_store_key }: NSFWParams): Promise<NSFWValidationResponse> => {
-    return await this.client.fetchJSS(`/validate/nsfw`, "POST", { url, file_store_key });
-  };
+  nsfw(params: NSFWParams): Promise<NSFWValidationResponse>;
+  nsfw(file: Blob | Buffer, params?: Omit<NSFWParams, "url" | "file_store_key">): Promise<NSFWValidationResponse>;
+  async nsfw(params: NSFWParams | Blob | Buffer, options?: Omit<NSFWParams, "url" | "file_store_key">): Promise<NSFWValidationResponse> {
+    if (params instanceof Blob || params instanceof Buffer) {
+      return await this.client.fetchJSS("/validate/nsfw", "POST", params, options);
+    }
+    return await this.client.fetchJSS("/validate/nsfw", "POST", params);
+  }
+
   profanity = async ({ text, censor_replacement = "*" }: ProfanityParams): Promise<ProfanityValidationResponse> => {
     return await this.client.fetchJSS("/validate/profanity", "POST", { text, censor_replacement });
   };
