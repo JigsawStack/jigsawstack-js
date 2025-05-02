@@ -53,3 +53,8 @@ export interface SpamCheckValidationArrayResponse {
     score: number;
   }[];
 }
+
+export interface NSFWParams {
+  url?: string;
+  file_store_key?: string;
+}

@@ -8,6 +8,7 @@ export interface SpeechToTextParams {
   by_speaker?: boolean;
   webhook_url?: string;
   batch_size?: number;
+  chunk_duration?: number;
 }
 
 export interface SpeechToTextResponse extends BaseResponse {
