@@ -31,7 +31,14 @@ class General {
       }
       return await this.client.fetchJSS("/ai/translate", "POST", params);
     },
-    image: async (params: TranslateImageParams) => {
+    image: async (
+      params: Blob | Buffer | TranslateImageParams,
+      options?: Omit<TranslateImageParams, "file_store_key" | "url">
+    ): Promise<ReturnType<typeof respToFileChoice>> => {
+      if (params instanceof Blob || params instanceof Buffer) {
+        const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
+        return respToFileChoice(resp);
+      }
       const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params);
       return respToFileChoice(resp);
     },
