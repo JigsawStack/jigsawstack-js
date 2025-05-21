@@ -134,5 +134,6 @@ test.js
 .DS_Store
 
 runTest
+runTest/*
 
 beach_house.jpg
