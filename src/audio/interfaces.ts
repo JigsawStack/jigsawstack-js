@@ -35,8 +35,18 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
 export interface TextToSpeechParams {
   text: string;
   accent?: SupportedAccents; // see https://docs.jigsawstack.com/additional-resources/speaker-voices for the list of supported accents.
-  speaker_clone_url?: string;
-  speaker_clone_file_store_key?: string;
+  voice_clone_id?: string;
+}
+
+export interface TTSCloneParams {
+  url?: string;
+  file_store_key?: string;
+  name: string;
+}
+
+export interface GetTTSVoiceClonesParams {
+  limit?: number;
+  page?: number;
 }
 
 export interface TextToSpeechResponse {
