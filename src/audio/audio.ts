@@ -25,7 +25,7 @@ class Audio {
     return await this.client.fetchJSS("/ai/tts/clone", "POST", params);
   };
 
-  get_clones = async (params: GetTTSVoiceClonesParams) => {
+  get_clones = async (params?: GetTTSVoiceClonesParams) => {
     return await this.client.fetchJSS("/ai/tts/clone", "GET", undefined, params);
   };
 
