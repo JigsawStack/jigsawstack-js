@@ -1,6 +1,6 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
-import { GetTTSVoiceClonesParams, SpeechToTextParams, SpeechToTextResponse, TextToSpeechParams, TTSCloneParams } from "./interfaces";
+import { GetTTSVoiceClonesParams, SpeechToTextParams, SpeechToTextResponse, TTSCloneParams, TextToSpeechParams } from "./interfaces";
 class Audio {
   constructor(private readonly client: RequestClient) {}
   speech_to_text(params: SpeechToTextParams): Promise<SpeechToTextResponse>;
