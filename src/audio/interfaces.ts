@@ -44,7 +44,7 @@ export interface TTSCloneParams {
   name: string;
 }
 
-export interface GetTTSVoiceClonesParams {
+export interface ListTTSVoiceClonesParams {
   limit?: number;
   page?: number;
 }
