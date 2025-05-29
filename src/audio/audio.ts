@@ -1,6 +1,6 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
-import { GetTTSVoiceClonesParams, SpeechToTextParams, SpeechToTextResponse, TTSCloneParams, TextToSpeechParams } from "./interfaces";
+import { ListTTSVoiceClonesParams, SpeechToTextParams, SpeechToTextResponse, TTSCloneParams, TextToSpeechParams } from "./interfaces";
 class Audio {
   constructor(private readonly client: RequestClient) {}
   speech_to_text(params: SpeechToTextParams): Promise<SpeechToTextResponse>;
@@ -25,7 +25,7 @@ class Audio {
     return await this.client.fetchJSS("/ai/tts/clone", "POST", params);
   };
 
-  get_clones = async (params?: GetTTSVoiceClonesParams) => {
+  list_clones = async (params?: ListTTSVoiceClonesParams) => {
     return await this.client.fetchJSS("/ai/tts/clone", "GET", undefined, params);
   };
 
