@@ -33,6 +33,8 @@ export interface SearchResponse {
     snippets: string[];
     related_index: RelatedIndex[];
   }[];
+  image_urls: string[];
+  links: string[];
 }
 
 export interface SuggestionResponse {
