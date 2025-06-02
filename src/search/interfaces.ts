@@ -18,7 +18,7 @@ export interface SearchResponse {
   query: string;
   ai_overview?: string;
   is_safe: boolean;
-  spell_fixed: string;
+  spell_fixed?: string;
   results: {
     title: string;
     url: string;
