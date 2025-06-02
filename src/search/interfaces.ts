@@ -16,9 +16,9 @@ interface RelatedIndex {
 export interface SearchResponse {
   success: boolean;
   query: string;
-  spell_fixed: string;
+  ai_overview?: string;
   is_safe: boolean;
-  ai_overview: string;
+  spell_fixed: string;
   results: {
     title: string;
     url: string;
@@ -35,6 +35,25 @@ export interface SearchResponse {
   }[];
   image_urls: string[];
   links: string[];
+  geo_results: {
+    type: string;
+    full_address: string;
+    name: string;
+    name_preferred: string;
+    place_formatted: string;
+    postcode?: string;
+    district?: string;
+    place?: string;
+    region?: Omit<any, "mapbox_id">;
+    country?: Omit<any, "mapbox_id">;
+    language: string;
+    geoloc: {
+      type: string;
+      coordinates: number[];
+    };
+    poi_category?: string;
+    additional_properties?: any;
+  }[];
 }
 
 export interface SuggestionResponse {
