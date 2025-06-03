@@ -1,9 +1,18 @@
 export interface SearchParams {
   query: string;
-  ai_overview?: boolean;
-  safe_search?: "moderate" | "strict" | "off";
   spell_check?: boolean;
+  safe_search: "strict" | "moderate" | "off";
+  ai_overview?: boolean;
   byo_urls?: string[];
+  country_code?: string;
+  auto_scrape: boolean;
+  deep_research?: boolean;
+  deep_research_config?: {
+    max_depth?: number;
+    max_breadth?: number;
+    max_output_tokens?: number;
+    target_output_tokens?: number;
+  };
 }
 
 interface RelatedIndex {
