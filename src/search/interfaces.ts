@@ -26,8 +26,8 @@ export interface SearchResponse {
   success: boolean;
   query: string;
   ai_overview?: string;
+  spell_fixed: boolean;
   is_safe: boolean;
-  spell_fixed?: string;
   results: {
     title: string;
     url: string;
