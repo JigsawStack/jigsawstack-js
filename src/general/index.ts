@@ -54,11 +54,14 @@ class General {
     width?: number;
     height?: number;
     steps?: number;
+    output_format?: "png" | "svg";
     advance_config?: {
       negative_prompt?: string;
       guidance?: number;
       seed?: number;
     };
+    url?: string;
+    file_store_key?: string;
   }) => {
     const resp: Response = await this.client.fetchJSS("/ai/image_generation", "POST", params);
     return respToFileChoice(resp);
