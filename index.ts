@@ -56,3 +56,4 @@ const JigsawStack = (config?: BaseConfig) => {
 };
 
 export { JigsawStack };
+export { JigsawStackToolSet } from "./src/vercel-ai-toolkit";

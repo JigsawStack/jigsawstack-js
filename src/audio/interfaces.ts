@@ -54,7 +54,7 @@ export interface TextToSpeechResponse {
   id: string;
 }
 
-type SupportedAccents =
+export type SupportedAccents =
   | "af-ZA-female-1"
   | "af-ZA-male-1"
   | "am-ET-female-1"
