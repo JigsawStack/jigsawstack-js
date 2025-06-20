@@ -1,4 +1,8 @@
-export const respToFileChoice = (resp: Response) => {
+export const respToFileChoice = ({ resp, return_type }: { resp: Response; return_type?: "url" | "binary" | "base64" }) => {
+  if (return_type === "url") {
+    return resp;
+  }
+
   return {
     blob: () => resp.blob(),
     buffer: async () => {

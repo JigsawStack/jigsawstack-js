@@ -65,38 +65,6 @@ export class JigsawStackToolSet {
         },
       }),
 
-      image_generation: tool({
-        description: "Generate images from text prompts",
-        parameters: z.object({
-          prompt: z.string().describe("The text prompt for image generation"),
-          aspect_ratio: z.enum(["1:1", "16:9", "21:9", "3:2", "2:3", "4:5", "5:4", "3:4", "4:3", "9:16", "9:21"]).optional(),
-          width: z.number().optional(),
-          height: z.number().optional(),
-          steps: z.number().optional(),
-          output_format: z.enum(["png", "svg"]).optional(),
-        }),
-        execute: async ({ prompt, aspect_ratio, width, height, steps, output_format }) => {
-          // Return AI-friendly response instead of binary data
-          await this.jigsawStack.image_generation({
-            prompt,
-            aspect_ratio,
-            width,
-            height,
-            steps,
-            output_format,
-          });
-
-          return {
-            success: true,
-            message: `Successfully generated image with prompt: "${prompt}"`,
-            prompt_used: prompt,
-            aspect_ratio: aspect_ratio || "1:1",
-            format: output_format || "png",
-            note: "Image has been generated. Use jigsawStack.image_generation() directly to get the binary data.",
-          };
-        },
-      }),
-
       translate_text: tool({
         description: "Translate text from one language to another",
         parameters: z.object({
@@ -248,17 +216,13 @@ export class JigsawStackToolSet {
         parameters: z.object({
           query: z.string().describe("Search query"),
           safe_search: z.enum(["strict", "moderate", "off"]).default("moderate"),
-          ai_overview: z.boolean().optional().describe("Include AI overview in results"),
-          country_code: z.string().optional().describe("Country code for localized results"),
-          auto_scrape: z.boolean().default(true).describe("Auto-scrape content from results"),
         }),
-        execute: async ({ query, safe_search, ai_overview, country_code, auto_scrape }) => {
+        execute: async ({ query, safe_search }) => {
           return await this.jigsawStack.web.search({
             query,
             safe_search,
-            ai_overview,
-            country_code,
-            auto_scrape,
+            ai_overview: false,
+            auto_scrape: false,
           });
         },
       }),

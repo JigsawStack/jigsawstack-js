@@ -36,6 +36,7 @@ export interface TextToSpeechParams {
   text: string;
   accent?: SupportedAccents; // see https://docs.jigsawstack.com/additional-resources/speaker-voices for the list of supported accents.
   voice_clone_id?: string;
+  return_type?: "url" | "binary" | "base64";
 }
 
 export interface TTSCloneParams {

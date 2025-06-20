@@ -28,6 +28,7 @@ export interface TranslateImageParams {
   target_language: string;
   url?: string;
   file_store_key?: string;
+  return_type?: "url" | "binary" | "base64";
 }
 
 export interface SpeechToTextResponse extends BaseResponse {
