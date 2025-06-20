@@ -1,6 +1,8 @@
 import "isomorphic-fetch";
+import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
 import General from "./general";
+import ObjectDetection from "./object_detection";
 import PromptEngine from "./prompt_engine";
 import { RequestClient } from "./request";
 import Search from "./search/search";
@@ -8,8 +10,6 @@ import { File } from "./store/file";
 import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
-
-import { BaseConfig } from "../types";
 
 export const JigsawStack = (config?: BaseConfig) => {
   const _apiKey = config?.apiKey || process?.env?.JIGSAWSTACK_API_KEY;
@@ -27,6 +27,7 @@ export const JigsawStack = (config?: BaseConfig) => {
   const promptengine = new PromptEngine(client);
   const file = new File(client);
   const validate = new Validate(client);
+  const object_detection = new ObjectDetection(client);
   const store = {
     upload: file.upload,
     retrieve: file.retrieve,
@@ -42,6 +43,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     prediction: general.prediction,
     text_to_sql: general.text_to_sql,
     embedding: general.embedding,
+    object_detection,
     audio,
     vision,
     web: {

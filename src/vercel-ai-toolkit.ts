@@ -1,8 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { JigsawStack } from "./jigsawstack";
 import { BaseConfig } from "../types";
 import { SupportedAccents } from "./audio/interfaces";
+import { JigsawStack } from "./jigsawstack";
 
 export interface JigsawStackToolOptions {
   tools?: string[];
