@@ -36,11 +36,11 @@ class General {
       options?: Omit<TranslateImageParams, "file_store_key" | "url">
     ): Promise<ReturnType<typeof respToFileChoice>> => {
       if (params instanceof Blob || params instanceof Buffer) {
-        const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
-        return respToFileChoice({ resp, return_type: options?.return_type });
+        const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
+        return respToFileChoice(resp);
       }
-      const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params);
-      return respToFileChoice({ resp, return_type: params.return_type });
+      const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params);
+      return respToFileChoice(resp);
     },
   };
 
@@ -64,9 +64,9 @@ class General {
     url?: string;
     file_store_key?: string;
   }) => {
-    const resp: Response = await this.client.fetchJSS("/ai/image_generation", "POST", params);
+    const resp = await this.client.fetchJSS("/ai/image_generation", "POST", params);
 
-    return respToFileChoice({ resp, return_type: params.return_type });
+    return respToFileChoice(resp);
   };
 
   text_to_sql = async (params: {

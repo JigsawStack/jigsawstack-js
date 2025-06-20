@@ -2,7 +2,7 @@ import { tool } from "ai";
 import { z } from "zod";
 import { BaseConfig } from "../types";
 import { SupportedAccents } from "./audio/interfaces";
-import { JigsawStack } from "./jigsawstack";
+import { JigsawStack } from "./core";
 
 export interface JigsawStackToolOptions {
   tools?: string[];

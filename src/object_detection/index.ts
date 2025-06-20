@@ -9,26 +9,6 @@ interface ObjectDetectionParams {
   return_type?: "url" | "base64";
 }
 
-// .object({
-//     url: z
-//       .string()
-//       .refine(isValidURL, {
-//         message: "Invalid url",
-//       })
-//       .optional(),
-//     file_store_key: z.string().optional(),
-//     prompts: z.array(z.string().min(1).max(150, "Max 150 characters")).optional().nullable(),
-//     features: z
-//       .array(z.enum(["object_detection", "gui"]))
-//       .min(1)
-//       .default(["object_detection", "gui"]),
-//     annotated_image: z.boolean().default(false),
-//     return_type: z.enum(["url", "base64"]).default("url"),
-//   })
-//   .refine((params) => params.url || params.file_store_key, {
-//     message: "Either url or file_store_key is required",
-//   });
-
 interface ObjectDetectionResponse {
   // Optional annotated image - included only if annotated_image=true and objects/gui_elements exist
   annotated_image?: string; // URL or base64 string depending on return_type

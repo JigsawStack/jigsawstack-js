@@ -14,7 +14,7 @@ class Audio {
 
   text_to_speech = async (params: TextToSpeechParams) => {
     const resp = await this.client.fetchJSS("/ai/tts", "POST", params);
-    return respToFileChoice({ resp, return_type: params.return_type });
+    return respToFileChoice(resp);
   };
 
   speaker_voice_accents = async () => {

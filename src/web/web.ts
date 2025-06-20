@@ -11,7 +11,7 @@ class Web {
 
   html_to_any = async (params: HTMLAnyParams) => {
     const resp = await this.client.fetchJSS("/web/html_to_any", "POST", params);
-    return respToFileChoice({ resp, return_type: params.return_type });
+    return respToFileChoice(resp);
   };
 }
 

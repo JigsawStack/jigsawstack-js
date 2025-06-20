@@ -1,5 +1,5 @@
-export const respToFileChoice = ({ resp, return_type }: { resp: Response; return_type?: "url" | "binary" | "base64" }) => {
-  if (return_type === "url") {
+export const respToFileChoice = (resp) => {
+  if (!(resp instanceof Response)) {
     return resp;
   }
 
