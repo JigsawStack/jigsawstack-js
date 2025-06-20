@@ -1,8 +1,8 @@
-import { tool } from "./vercel-tool";
 import { z } from "zod";
 import { BaseConfig } from "../types";
 import { SupportedAccents } from "./audio/interfaces";
 import { JigsawStack } from "./core";
+import { tool } from "./vercel-tool";
 
 export interface JigsawStackToolOptions {
   tools?: string[];

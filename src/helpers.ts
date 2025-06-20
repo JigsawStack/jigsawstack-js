@@ -21,4 +21,3 @@ export const removeUndefinedProperties = (currentOBJ: any) => {
   Object.keys(obj).forEach((key) => (obj[key] === undefined ? delete obj[key] : {}));
   return obj;
 };
-
