@@ -1,4 +1,4 @@
-import { tool } from "ai";
+import { tool } from "./vercel-tool";
 import { z } from "zod";
 import { BaseConfig } from "../types";
 import { SupportedAccents } from "./audio/interfaces";
