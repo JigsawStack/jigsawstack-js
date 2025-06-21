@@ -1,4 +1,8 @@
-export const respToFileChoice = (resp: Response) => {
+export const respToFileChoice = (resp) => {
+  if (!(resp instanceof Response)) {
+    return resp;
+  }
+
   return {
     blob: () => resp.blob(),
     buffer: async () => {

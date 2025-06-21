@@ -36,10 +36,10 @@ class General {
       options?: Omit<TranslateImageParams, "file_store_key" | "url">
     ): Promise<ReturnType<typeof respToFileChoice>> => {
       if (params instanceof Blob || params instanceof Buffer) {
-        const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
+        const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
         return respToFileChoice(resp);
       }
-      const resp: Response = await this.client.fetchJSS("/ai/translate/image", "POST", params);
+      const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params);
       return respToFileChoice(resp);
     },
   };
@@ -55,6 +55,7 @@ class General {
     height?: number;
     steps?: number;
     output_format?: "png" | "svg";
+    return_type?: "url" | "binary" | "base64";
     advance_config?: {
       negative_prompt?: string;
       guidance?: number;
@@ -63,7 +64,8 @@ class General {
     url?: string;
     file_store_key?: string;
   }) => {
-    const resp: Response = await this.client.fetchJSS("/ai/image_generation", "POST", params);
+    const resp = await this.client.fetchJSS("/ai/image_generation", "POST", params);
+
     return respToFileChoice(resp);
   };
 

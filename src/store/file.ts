@@ -23,6 +23,7 @@ export class File {
 
   retrieve = async (key: string) => {
     const resp = await this.client.fetchJSS(`/store/file/read/${key}`, "GET");
+
     return respToFileChoice(resp);
   };
 

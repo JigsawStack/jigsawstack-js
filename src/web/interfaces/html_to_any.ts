@@ -19,4 +19,5 @@ export interface HTMLAnyParams {
     timeout: number;
     wait_until: string;
   };
+  return_type?: "url" | "binary" | "base64";
 }
