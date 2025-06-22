@@ -1,11 +1,11 @@
 export interface SearchParams {
   query: string;
   spell_check?: boolean;
-  safe_search: "strict" | "moderate" | "off";
+  safe_search?: "strict" | "moderate" | "off";
   ai_overview?: boolean;
   byo_urls?: string[];
   country_code?: string;
-  auto_scrape: boolean;
+  auto_scrape?: boolean;
   deep_research?: boolean;
   deep_research_config?: {
     max_depth?: number;
