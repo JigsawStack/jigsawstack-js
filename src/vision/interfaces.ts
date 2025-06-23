@@ -46,16 +46,46 @@ export interface VOCRResponse {
   page_range?: Array<number>; // only available when page_range is specified
 }
 
-export interface ObjectDetentionParams {
+export interface ObjectDetectionParams {
   url?: string;
   file_store_key?: string;
+  prompts?: string[];
+  features?: ("object_detection" | "gui")[];
+  annotated_image?: boolean;
+  return_type?: "url" | "base64";
 }
 
-export interface ObjectDetectionResponse extends Omit<VOCRResponse, "context"> {
-  success: boolean;
+export interface ObjectDetectionResponse {
+  // Optional annotated image - included only if annotated_image=true and objects/gui_elements exist
+  annotated_image?: string; // URL or base64 string depending on return_type
+
+  // Optional GUI elements - included only if features includes "gui"
+  gui_elements?: GuiElement[];
+
+  // Optional detected objects - included only if features includes "object_detection"
+  objects?: DetectedObject[];
+}
+
+interface GuiElement {
+  bounds: BoundingBox;
+  content: string | null; // Can be null if no object detected
+}
+
+interface DetectedObject {
+  bounds: BoundingBox;
+  mask?: string; // URL or base64 string depending on return_type - only present for some objects
+}
+
+interface BoundingBox {
+  top_left: Point;
+  top_right: Point;
+  bottom_left: Point;
+  bottom_right: Point;
   width: number;
   height: number;
-  tags: string[];
-  has_text: boolean;
-  sections: Array<any>;
+}
+
+interface Point {
+  x: number;
+  y: number;
 }
