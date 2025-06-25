@@ -42,7 +42,10 @@ export const JigsawStack = (config?: BaseConfig) => {
     text_to_sql: general.text_to_sql,
     embedding: general.embedding,
     audio,
-    vision,
+    vision: {
+      vocr: vision.vocr,
+      object_detection: vision.object_detection,
+    },
     web: {
       ai_scrape: web.ai_scrape,
       html_to_any: web.html_to_any,
