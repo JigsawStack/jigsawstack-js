@@ -1,2 +1,2 @@
-export { JigsawStack } from "./src/core";
-export { JigsawStackToolSet } from "./src/vercel-ai-toolkit";
+export { Soham } from "./src/core";
+export { SohamToolSet } from "./src/vercel-ai-toolkit";

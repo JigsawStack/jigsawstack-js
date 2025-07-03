@@ -1,6 +1,6 @@
-# JigsawStack AI SDK
+# Soham AI SDK
 
-The JigsawStack AI SDK is a Typescript/Javascript library that allows you to interact with powerful AI services to build AI-powered applications in any framework like Next.js, React, Vue, Svelte, and more that supports JS.
+The Soham AI SDK is a Typescript/Javascript library that allows you to interact with powerful AI services to build AI-powered applications in any framework like Next.js, React, Vue, Svelte, and more that supports JS.
 
 - 🧩 Powerful AI services all in one SDK
 - 🧑‍💻 Native JS/TS SDK
@@ -12,7 +12,7 @@ The JigsawStack AI SDK is a Typescript/Javascript library that allows you to int
 
 ## Learn more
 
-To learn more about all available JigsawStack AI services, view the [Documentation](https://docs.jigsawstack.com) or [Website](https://jigsawstack.com).
+To learn more about all available Soham AI services, view the [Documentation](https://docs.jigsawstack.com) or [Website](https://jigsawstack.com).
 
 ## All APIs
 
@@ -33,23 +33,23 @@ Learn more of about each category in the [API reference](https://jigsawstack.com
 You will need Node.js 18+ on your local development machine.
 
 ```bash
-npm install jigsawstack
+npm install soham-ai
 # or
-yarn add jigsawstack
+yarn add soham-ai
 # or
-bun add jigsawstack
+bun add soham-ai
 ```
 
 ## Setup
 
-First, get your API key from the [JigsawStack Dashboard](https://jigsawstack.com/dashboard)
+First, get your API key from the [Soham Dashboard](https://jigsawstack.com/dashboard)
 
 Then, initialize the SDK:
 
 ```ts
-import { JigsawStack } from "jigsawstack";
+import { Soham } from "soham-ai";
 
-const jigsaw = JigsawStack({ apiKey: "your-api-key" });
+const soham = Soham({ apiKey: "your-api-key" });
 ```
 
 ## Usage
@@ -57,7 +57,7 @@ const jigsaw = JigsawStack({ apiKey: "your-api-key" });
 AI Scraping Example:
 
 ```ts
-const resp = await jigsaw.web.ai_scrape({
+const resp = await soham.web.ai_scrape({
   url: "https://www.amazon.com/Cadbury-Mini-Caramel-Eggs-Bulk/dp/B0CWM99G5W",
   element_prompts: ["prices"],
 });
@@ -66,7 +66,7 @@ const resp = await jigsaw.web.ai_scrape({
 Text to Speech Example:
 
 ```ts
-const resp = await jigsaw.audio.text_to_speech({
+const resp = await soham.audio.text_to_speech({
   text: "Hello, how are you doing?",
 });
 ```
@@ -77,23 +77,23 @@ Upload a file to use across any API example:
 const file =
   /*reference to file blob or buffer*/
 
-  await jigsaw.store.upload(file, {
+  await soham.store.upload(file, {
     filename: "receipt.png",
   });
 
 // Now you can use the file_key in any API call
-const ocrResp = await jigsaw.vision.vocr({
+const ocrResp = await soham.vision.vocr({
   file_store_key: "receipt.png",
 });
 
-const objectDetectionResp = await jigsaw.vision.object_detection({
+const objectDetectionResp = await soham.vision.object_detection({
   file_store_key: "receipt.png",
 });
 ```
 
 ## Community
 
-Join JigsawStack community on [Discord](https://discord.gg/dj8fMBpnqd) to connect with other developers, share ideas, and get help with the SDK.
+Join Soham community on [Discord](https://discord.gg/dj8fMBpnqd) to connect with other developers, share ideas, and get help with the SDK.
 
 ## Related Projects
 
@@ -102,4 +102,4 @@ Join JigsawStack community on [Discord](https://discord.gg/dj8fMBpnqd) to connec
 
 ## Contributing
 
-JigsawStack AI SDK is open-source and welcomes contributions. Please open an issue or submit a pull request with your changes. Make sure to be as descriptive as possible with your submissions, include examples if relevant.
+Soham AI SDK is open-source and welcomes contributions. Please open an issue or submit a pull request with your changes. Make sure to be as descriptive as possible with your submissions, include examples if relevant.

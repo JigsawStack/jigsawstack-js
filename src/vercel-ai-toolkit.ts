@@ -1,21 +1,21 @@
 import { z } from "zod";
 import { BaseConfig } from "../types";
 import { SupportedAccents } from "./audio/interfaces";
-import { JigsawStack } from "./core";
+import { Soham } from "./core";
 import { tool } from "./vercel-tool";
 
-export interface JigsawStackToolOptions {
+export interface sohamToolOptions {
   tools?: string[];
 }
 
-export class JigsawStackToolSet {
-  private jigsawStack: ReturnType<typeof JigsawStack>;
+export class SohamToolSet {
+  private soham: ReturnType<typeof Soham>;
 
   constructor(config?: BaseConfig) {
-    this.jigsawStack = JigsawStack(config);
+    this.soham = Soham(config);
   }
 
-  async getTools(options: JigsawStackToolOptions = {}) {
+  async getTools(options: sohamToolOptions = {}) {
     const { tools: requestedTools = [] } = options;
     const availableTools = this.getAllTools();
 
@@ -42,7 +42,7 @@ export class JigsawStackToolSet {
           text: z.string().describe("The text to analyze sentiment for"),
         }),
         execute: async ({ text }) => {
-          return await this.jigsawStack.sentiment({ text });
+          return await this.soham.sentiment({ text });
         },
       }),
 
@@ -55,7 +55,7 @@ export class JigsawStackToolSet {
           max_characters: z.number().optional().describe("Maximum characters in summary"),
         }),
         execute: async ({ text, url, file_store_key, max_characters }) => {
-          return await this.jigsawStack.summary({
+          return await this.soham.summary({
             text,
             url,
             file_store_key,
@@ -73,7 +73,7 @@ export class JigsawStackToolSet {
           current_language: z.string().optional().describe("Current language code (auto-detected if not provided)"),
         }),
         execute: async ({ text, target_language, current_language }) => {
-          return await this.jigsawStack.translate.text({
+          return await this.soham.translate.text({
             text,
             target_language,
             current_language,
@@ -89,7 +89,7 @@ export class JigsawStackToolSet {
           target_language: z.string().describe('Target language code (e.g., "en", "es", "fr")'),
         }),
         execute: async ({ url, file_store_key, target_language }) => {
-          await this.jigsawStack.translate.image({
+          await this.soham.translate.image({
             url,
             file_store_key,
             target_language,
@@ -99,7 +99,7 @@ export class JigsawStackToolSet {
             success: true,
             message: `Successfully translated image to ${target_language}`,
             target_language,
-            note: "Image has been translated. Use jigsawStack.translate.image() directly to get the binary data.",
+            note: "Image has been translated. Use soham.translate.image() directly to get the binary data.",
           };
         },
       }),
@@ -114,7 +114,7 @@ export class JigsawStackToolSet {
           token_overflow_mode: z.enum(["truncate", "error"]).optional().describe("How to handle token overflow"),
         }),
         execute: async ({ text, url, file_store_key, type, token_overflow_mode }) => {
-          return await this.jigsawStack.embedding({
+          return await this.soham.embedding({
             text,
             url,
             file_store_key,
@@ -138,7 +138,7 @@ export class JigsawStackToolSet {
           steps: z.number().describe("Number of prediction steps"),
         }),
         execute: async ({ dataset, steps }) => {
-          return await this.jigsawStack.prediction({
+          return await this.soham.prediction({
             dataset: dataset as { value: string | number; date: string }[],
             steps,
           });
@@ -154,7 +154,7 @@ export class JigsawStackToolSet {
           database: z.enum(["postgresql", "mysql", "sqlite"]).optional().describe("Database type"),
         }),
         execute: async ({ prompt, sql_schema, file_store_key, database }) => {
-          return await this.jigsawStack.text_to_sql({
+          return await this.soham.text_to_sql({
             prompt,
             sql_schema,
             file_store_key,
@@ -173,7 +173,7 @@ export class JigsawStackToolSet {
           root_element_selector: z.string().optional().describe("Root element selector to limit scraping scope"),
         }),
         execute: async ({ url, element_prompts, selectors, root_element_selector }) => {
-          return await this.jigsawStack.web.ai_scrape({
+          return await this.soham.web.ai_scrape({
             url,
             element_prompts,
             selectors,
@@ -193,7 +193,7 @@ export class JigsawStackToolSet {
           full_page: z.boolean().optional().describe("Capture full page"),
         }),
         execute: async ({ html, url, type, width, height, full_page }) => {
-          await this.jigsawStack.web.html_to_any({
+          await this.soham.web.html_to_any({
             html,
             url,
             type,
@@ -206,7 +206,7 @@ export class JigsawStackToolSet {
             success: true,
             message: "Successfully converted HTML content",
             format: type || "default",
-            note: "Content has been converted. Use jigsawStack.web.html_to_any() directly to get the binary data.",
+            note: "Content has been converted. Use soham.web.html_to_any() directly to get the binary data.",
           };
         },
       }),
@@ -218,7 +218,7 @@ export class JigsawStackToolSet {
           safe_search: z.enum(["strict", "moderate", "off"]).default("moderate"),
         }),
         execute: async ({ query, safe_search }) => {
-          return await this.jigsawStack.web.search({
+          return await this.soham.web.search({
             query,
             safe_search,
             ai_overview: false,
@@ -233,7 +233,7 @@ export class JigsawStackToolSet {
           query: z.string().describe("Query to get suggestions for"),
         }),
         execute: async ({ query }) => {
-          return await this.jigsawStack.web.search_suggestions(query);
+            return await this.soham.web.search_suggestions(query);
         },
       }),
 
@@ -247,7 +247,7 @@ export class JigsawStackToolSet {
           page_range: z.array(z.number()).optional().describe("Page range for PDF files"),
         }),
         execute: async ({ prompt, url, file_store_key, page_range }) => {
-          return await this.jigsawStack.vision.vocr({
+          return await this.soham.vision.vocr({
             prompt,
             url,
             file_store_key,
@@ -263,7 +263,7 @@ export class JigsawStackToolSet {
           file_store_key: z.string().optional().describe("File store key of uploaded image"),
         }),
         execute: async ({ url, file_store_key }) => {
-          return await this.jigsawStack.vision.object_detection({
+          return await this.soham.vision.object_detection({
             url,
             file_store_key,
           });
@@ -281,7 +281,7 @@ export class JigsawStackToolSet {
           by_speaker: z.boolean().optional().describe("Separate by speaker"),
         }),
         execute: async ({ url, file_store_key, language, translate, by_speaker }) => {
-          return await this.jigsawStack.audio.speech_to_text({
+          return await this.soham.audio.speech_to_text({
             url,
             file_store_key,
             language,
@@ -295,11 +295,11 @@ export class JigsawStackToolSet {
         description: "Convert text to speech",
         parameters: z.object({
           text: z.string().describe("Text to convert to speech"),
-          accent: z.string().optional().describe("Voice accent (see JigsawStack docs for supported accents)"),
+          accent: z.string().optional().describe("Voice accent (see soham docs for supported accents)"),
           voice_clone_id: z.string().optional().describe("ID of cloned voice to use"),
         }),
         execute: async ({ text, accent, voice_clone_id }) => {
-          await this.jigsawStack.audio.text_to_speech({
+          await this.soham.audio.text_to_speech({
             text,
             accent: accent as SupportedAccents,
             voice_clone_id,
@@ -310,7 +310,7 @@ export class JigsawStackToolSet {
             message: "Successfully converted text to speech",
             text_length: text.length,
             accent_used: accent || "default",
-            note: "Audio has been generated. Use jigsawStack.audio.text_to_speech() directly to get the binary data.",
+            note: "Audio has been generated. Use soham.audio.text_to_speech() directly to get the binary data.",
           };
         },
       }),
@@ -323,7 +323,7 @@ export class JigsawStackToolSet {
           file_store_key: z.string().optional().describe("File store key of uploaded image"),
         }),
         execute: async ({ url, file_store_key }) => {
-          return await this.jigsawStack.validate.nsfw({
+          return await this.soham.validate.nsfw({
             url,
             file_store_key,
           });
@@ -337,7 +337,7 @@ export class JigsawStackToolSet {
           censor_replacement: z.string().optional().default("*").describe("Character to replace profanity with"),
         }),
         execute: async ({ text, censor_replacement }) => {
-          return await this.jigsawStack.validate.profanity({
+          return await this.soham.validate.profanity({
             text,
             censor_replacement,
           });
@@ -351,7 +351,7 @@ export class JigsawStackToolSet {
           language_code: z.string().optional().default("en").describe("Language code for spell checking"),
         }),
         execute: async ({ text, language_code }) => {
-          return await this.jigsawStack.validate.spellcheck({
+          return await this.soham.validate.spellcheck({
             text,
             language_code,
           });
@@ -364,7 +364,7 @@ export class JigsawStackToolSet {
           text: z.string().describe("Text to check for spam"),
         }),
         execute: async ({ text }) => {
-          return await this.jigsawStack.validate.spamcheck(text);
+          return await this.soham.validate.spamcheck(text);
         },
       }),
     };

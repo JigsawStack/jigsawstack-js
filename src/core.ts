@@ -10,7 +10,7 @@ import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
 
-export const JigsawStack = (config?: BaseConfig) => {
+export const Soham = (config?: BaseConfig) => {
   const _apiKey = config?.apiKey || process?.env?.JIGSAWSTACK_API_KEY;
 
   if (!_apiKey) {
