@@ -6,7 +6,7 @@ class Vision {
     return await this.client.fetchJSS("/vocr", "POST", params);
   };
   object_detection = async (params: ObjectDetectionParams): Promise<ObjectDetectionResponse> => {
-    return await this.client.fetchJSS("/ai/object_detection", "POST", params);
+    return await this.client.fetchJSS("/object_detection", "POST", params);
   };
 }
 
