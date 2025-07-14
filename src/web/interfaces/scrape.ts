@@ -73,7 +73,6 @@ export interface AIScrapeResponse {
       }>;
     }>;
   }>;
-  used_proxy: any;
   page_position: number;
   page_position_length: number;
   advance_config: any;
