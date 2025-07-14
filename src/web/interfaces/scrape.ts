@@ -73,10 +73,20 @@ export interface AIScrapeResponse {
       }>;
     }>;
   }>;
+  used_proxy: any;
   page_position: number;
   page_position_length: number;
-  context: Record<string, Array<string>>;
+  advance_config: any;
+  context: any;
   selectors: Record<string, Array<string>>;
+  meta:
+    | {
+        title: string | undefined;
+        description: string | undefined;
+        keywords: string | undefined;
+        og_image: string | undefined;
+      }
+    | undefined;
   link: Array<{
     href: string;
     text: string | null;
