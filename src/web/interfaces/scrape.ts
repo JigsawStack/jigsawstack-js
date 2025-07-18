@@ -45,6 +45,7 @@ export interface BaseAIScrapeParams {
       password: string;
     };
   };
+  features?: Array<"meta" | "link"> | null;
 }
 
 export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
