@@ -23,7 +23,7 @@ export interface ProfanityValidationResponse {
   message: string;
   clean_text: string;
   profanities: string[];
-  profanities_found: number;
+  profanities_found: boolean;
 }
 
 export interface SpellCheckParams {

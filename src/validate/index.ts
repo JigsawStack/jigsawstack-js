@@ -15,11 +15,6 @@ class Validate {
   constructor(private readonly client: RequestClient) {
     this.spamcheck = this.spamcheck.bind(this);
   }
-  email = async (email: string): Promise<EmailValidationResponse> => {
-    return await this.client.fetchJSS(`/validate/email`, "GET", undefined, {
-      email,
-    });
-  };
 
   nsfw(params: NSFWParams | Blob | Buffer): Promise<NSFWValidationResponse> {
     return this.client.fetchJSS("/validate/nsfw", "POST", params);
