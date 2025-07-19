@@ -45,6 +45,7 @@ export interface BaseAIScrapeParams {
       password: string;
     };
   };
+  features?: Array<"meta" | "link"> | null;
 }
 
 export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
@@ -75,8 +76,23 @@ export interface AIScrapeResponse {
   }>;
   page_position: number;
   page_position_length: number;
-  context: Record<string, Array<string>>;
+  advance_config:
+    | {
+        console?: any[];
+        network?: any[];
+        cookies?: any[];
+      }
+    | undefined;
+  context: any;
   selectors: Record<string, Array<string>>;
+  meta:
+    | {
+        title: string | undefined;
+        description: string | undefined;
+        keywords: string | undefined;
+        og_image: string | undefined;
+      }
+    | undefined;
   link: Array<{
     href: string;
     text: string | null;
