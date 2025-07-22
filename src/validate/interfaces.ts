@@ -28,7 +28,11 @@ export interface ProfanityValidationResponse {
   success: boolean;
   message: string;
   clean_text: string;
-  profanities: string[];
+  profanities: {
+    profanity: string;
+    startIndex: number;
+    endIndex: number;
+  }[];
   profanities_found: boolean;
 }
 

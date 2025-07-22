@@ -170,10 +170,16 @@ describe("Profanity validation", () => {
     expectArray(result.profanities);
     expectType(result.profanities_found, "boolean"); // Corrected: should be boolean
 
-    // If profanities are found, each item in the array should be a string
+    // If profanities are found, each item in the array should be an object with specific properties
     if (result.profanities_found === true) {
       result.profanities.forEach((profanity) => {
-        expectType(profanity, "string");
+        expectType(profanity, "object");
+        expectProperty(profanity, "profanity");
+        expectProperty(profanity, "startIndex");
+        expectProperty(profanity, "endIndex");
+        expectType(profanity.profanity, "string");
+        expectType(profanity.startIndex, "number");
+        expectType(profanity.endIndex, "number");
       });
 
       // When profanities are found, the array should not be empty
