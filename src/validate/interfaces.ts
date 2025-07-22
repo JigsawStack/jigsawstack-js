@@ -11,6 +11,12 @@ export interface EmailValidationResponse {
 
 export interface NSFWValidationResponse {
   success: boolean;
+  nsfw: boolean;
+  nudity: boolean;
+  gore: boolean;
+  nsfw_score: number;
+  nudity_score: number;
+  gore_score: number;
 }
 
 export interface ProfanityParams {
