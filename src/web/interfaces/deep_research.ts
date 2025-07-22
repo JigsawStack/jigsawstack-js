@@ -21,9 +21,9 @@ export interface DeepResearchResponse {
 }
 
 interface SearchResult {
-  title: string;
-  url: string;
-  description: string;
+  title?: string;
+  url?: string;
+  description?: string;
   content: string | null;
   site_name?: string;
   site_long_name?: string;
@@ -31,7 +31,7 @@ interface SearchResult {
   language?: string;
   image_urls: string[];
   links: string[];
-  is_safe: boolean;
+  is_safe?: boolean;
   favicon: string;
   thumbnail?: string;
   snippets?: any[];
@@ -39,10 +39,10 @@ interface SearchResult {
 }
 
 interface RelatedResult {
-  title: string;
-  url: string;
-  description: string;
-  is_safe: boolean;
+  title?: string;
+  url?: string;
+  description?: string;
+  is_safe?: boolean;
 }
 
 interface GeoResult {
