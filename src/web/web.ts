@@ -1,8 +1,8 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
+import { DeepResearchParams, DeepResearchResponse } from "./interfaces/deep_research";
 import { HTMLAnyParams } from "./interfaces/html_to_any";
 import { AIScrapeParams, AIScrapeResponse } from "./interfaces/scrape";
-import { DeepResearchParams, DeepResearchResponse } from "./interfaces/deep_research";
 class Web {
   constructor(private readonly client: RequestClient) {}
 
