@@ -53,8 +53,8 @@ export function createJigsawStackClient() {
 }
 
 export function expectSuccess(result: any): void {
-  if (!result || result.success === false) {
-    throw new Error(`Expected successful response, got: ${JSON.stringify(result)}`);
+  if (!result || result.success !== true) {
+    throw new Error(`Expected successful response with success: true, got: ${JSON.stringify(result)}`);
   }
 }
 

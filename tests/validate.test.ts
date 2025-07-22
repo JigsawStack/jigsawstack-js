@@ -327,9 +327,21 @@ describe("NSFW validation", () => {
 
     // Verify all required response properties exist
     expectProperty(result, "success");
+    expectProperty(result, "nsfw");
+    expectProperty(result, "nudity");
+    expectProperty(result, "gore");
+    expectProperty(result, "nsfw_score");
+    expectProperty(result, "nudity_score");
+    expectProperty(result, "gore_score");
 
     // Verify correct types
     expectType(result.success, "boolean");
+    expectType(result.nsfw, "boolean");
+    expectType(result.nudity, "boolean");
+    expectType(result.gore, "boolean");
+    expectType(result.nsfw_score, "number");
+    expectType(result.nudity_score, "number");
+    expectType(result.gore_score, "number");
     expectType(result, "object");
   });
 
@@ -343,7 +355,20 @@ describe("NSFW validation", () => {
 
       expectSuccess(result);
       expectProperty(result, "success");
+      expectProperty(result, "nsfw");
+      expectProperty(result, "nudity");
+      expectProperty(result, "gore");
+      expectProperty(result, "nsfw_score");
+      expectProperty(result, "nudity_score");
+      expectProperty(result, "gore_score");
+
       expectType(result.success, "boolean");
+      expectType(result.nsfw, "boolean");
+      expectType(result.nudity, "boolean");
+      expectType(result.gore, "boolean");
+      expectType(result.nsfw_score, "number");
+      expectType(result.nudity_score, "number");
+      expectType(result.gore_score, "number");
     } catch (error) {
       // Expected to fail with invalid file_store_key, but structure should be correct
       expectType(error, "object");
@@ -396,7 +421,20 @@ describe("NSFW validation", () => {
 
         expectSuccess(result);
         expectProperty(result, "success");
+        expectProperty(result, "nsfw");
+        expectProperty(result, "nudity");
+        expectProperty(result, "gore");
+        expectProperty(result, "nsfw_score");
+        expectProperty(result, "nudity_score");
+        expectProperty(result, "gore_score");
+
         expectType(result.success, "boolean");
+        expectType(result.nsfw, "boolean");
+        expectType(result.nudity, "boolean");
+        expectType(result.gore, "boolean");
+        expectType(result.nsfw_score, "number");
+        expectType(result.nudity_score, "number");
+        expectType(result.gore_score, "number");
         console.log(`✓ ${url.split(".").pop()?.toUpperCase()} format works`);
       } catch (error) {
         console.log(`Note: ${url} failed - may not be accessible or supported format`);
@@ -435,7 +473,20 @@ describe("NSFW validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
+    expectProperty(result, "nsfw");
+    expectProperty(result, "nudity");
+    expectProperty(result, "gore");
+    expectProperty(result, "nsfw_score");
+    expectProperty(result, "nudity_score");
+    expectProperty(result, "gore_score");
+
     expectType(result.success, "boolean");
+    expectType(result.nsfw, "boolean");
+    expectType(result.nudity, "boolean");
+    expectType(result.gore, "boolean");
+    expectType(result.nsfw_score, "number");
+    expectType(result.nudity_score, "number");
+    expectType(result.gore_score, "number");
   });
 
   test("should validate response structure completely", async () => {
@@ -447,19 +498,38 @@ describe("NSFW validation", () => {
     expectSuccess(result);
     expectType(result, "object");
 
-    // Check if response has only expected properties
-    const allowedProperties = ["success"];
+    // Check if response has expected properties
+    const expectedProperties = ["success", "nsfw", "nudity", "gore", "nsfw_score", "nudity_score", "gore_score"];
     const resultKeys = Object.keys(result);
 
+    // Ensure all expected properties exist
+    for (const expectedProp of expectedProperties) {
+      expectProperty(result, expectedProp);
+    }
+
+    // Log any additional properties (like _usage)
     for (const key of resultKeys) {
-      if (!allowedProperties.includes(key)) {
-        console.log(`Note: Unexpected property '${key}' found in NSFW response`);
+      if (!expectedProperties.includes(key)) {
+        console.log(`Note: Additional property '${key}' found in NSFW response`);
       }
     }
 
-    // Ensure success property exists and is boolean
+    // Validate all property types
     expectProperty(result, "success");
+    expectProperty(result, "nsfw");
+    expectProperty(result, "nudity");
+    expectProperty(result, "gore");
+    expectProperty(result, "nsfw_score");
+    expectProperty(result, "nudity_score");
+    expectProperty(result, "gore_score");
+
     expectType(result.success, "boolean");
+    expectType(result.nsfw, "boolean");
+    expectType(result.nudity, "boolean");
+    expectType(result.gore, "boolean");
+    expectType(result.nsfw_score, "number");
+    expectType(result.nudity_score, "number");
+    expectType(result.gore_score, "number");
   });
 
   test("should handle very long URL", async () => {
@@ -471,7 +541,20 @@ describe("NSFW validation", () => {
 
       expectSuccess(result);
       expectProperty(result, "success");
+      expectProperty(result, "nsfw");
+      expectProperty(result, "nudity");
+      expectProperty(result, "gore");
+      expectProperty(result, "nsfw_score");
+      expectProperty(result, "nudity_score");
+      expectProperty(result, "gore_score");
+
       expectType(result.success, "boolean");
+      expectType(result.nsfw, "boolean");
+      expectType(result.nudity, "boolean");
+      expectType(result.gore, "boolean");
+      expectType(result.nsfw_score, "number");
+      expectType(result.nudity_score, "number");
+      expectType(result.gore_score, "number");
     } catch (error) {
       console.log("Note: Very long URL failed (may be expected)");
       expectType(error, "object");
@@ -486,7 +569,20 @@ describe("NSFW validation", () => {
     expectSuccess(result);
     expectType(result, "object");
     expectProperty(result, "success");
+    expectProperty(result, "nsfw");
+    expectProperty(result, "nudity");
+    expectProperty(result, "gore");
+    expectProperty(result, "nsfw_score");
+    expectProperty(result, "nudity_score");
+    expectProperty(result, "gore_score");
+
     expectType(result.success, "boolean");
+    expectType(result.nsfw, "boolean");
+    expectType(result.nudity, "boolean");
+    expectType(result.gore, "boolean");
+    expectType(result.nsfw_score, "number");
+    expectType(result.nudity_score, "number");
+    expectType(result.gore_score, "number");
   });
 
   test("NSFW detection with safe image URL", async () => {
@@ -497,11 +593,35 @@ describe("NSFW validation", () => {
     expectSuccess(result);
     expectType(result, "object");
     expectProperty(result, "success");
+    expectProperty(result, "nsfw");
+    expectProperty(result, "nudity");
+    expectProperty(result, "gore");
+    expectProperty(result, "nsfw_score");
+    expectProperty(result, "nudity_score");
+    expectProperty(result, "gore_score");
+
     expectType(result.success, "boolean");
+    expectType(result.nsfw, "boolean");
+    expectType(result.nudity, "boolean");
+    expectType(result.gore, "boolean");
+    expectType(result.nsfw_score, "number");
+    expectType(result.nudity_score, "number");
+    expectType(result.gore_score, "number");
 
     // Safe image should return success: true (assuming this means the API processed successfully)
     if (result.success !== true) {
       console.log("Note: NSFW API returned success: false for safe image");
+    }
+
+    // For a safe image, we expect NSFW flags to be false
+    if (result.nsfw === true) {
+      console.log("Note: Safe image was flagged as NSFW");
+    }
+    if (result.nudity === true) {
+      console.log("Note: Safe image was flagged as nudity");
+    }
+    if (result.gore === true) {
+      console.log("Note: Safe image was flagged as gore");
     }
   });
 });
@@ -556,17 +676,14 @@ describe("SpellCheck validation", () => {
     // Verify all required response properties exist
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     // Verify correct types
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
-
-    // Verify default language_code behavior (should use "en")
-    if (result.misspellings_found < 0) {
-      throw new Error("misspellings_found should not be negative");
-    }
   });
 
   test("should work with custom language_code parameter", async () => {
@@ -578,10 +695,12 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
   });
 
@@ -593,14 +712,16 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
 
     // Empty text should have no misspellings
-    if (result.misspellings_found !== 0) {
+    if (result.misspellings_found !== false) {
       console.log("Note: Misspellings found in empty text");
     }
   });
@@ -614,15 +735,34 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
 
     // Should find misspellings in our intentionally misspelled text
-    if (result.misspellings_found === 0) {
+    if (result.misspellings_found === false) {
       console.log("Note: No misspellings found in intentionally misspelled text");
+    }
+
+    // Validate misspellings array structure when misspellings are found
+    if (result.misspellings_found === true) {
+      result.misspellings.forEach((misspelling) => {
+        expectType(misspelling, "object");
+        expectProperty(misspelling, "word");
+        expectProperty(misspelling, "startIndex");
+        expectProperty(misspelling, "endIndex");
+        expectProperty(misspelling, "expected");
+        expectProperty(misspelling, "auto_corrected");
+        expectType(misspelling.word, "string");
+        expectType(misspelling.startIndex, "number");
+        expectType(misspelling.endIndex, "number");
+        expectArray(misspelling.expected);
+        expectType(misspelling.auto_corrected, "boolean");
+      });
     }
 
     // Auto-corrected text should be different from original
@@ -640,10 +780,12 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
   });
 
@@ -656,10 +798,12 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
   });
 
@@ -672,10 +816,12 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
   });
 
@@ -689,10 +835,12 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
   });
 
@@ -715,10 +863,12 @@ describe("SpellCheck validation", () => {
         expectSuccess(result);
         expectProperty(result, "success");
         expectProperty(result, "misspellings_found");
+        expectProperty(result, "misspellings");
         expectProperty(result, "auto_correct_text");
 
         expectType(result.success, "boolean");
-        expectType(result.misspellings_found, "number");
+        expectType(result.misspellings_found, "boolean");
+        expectArray(result.misspellings);
         expectType(result.auto_correct_text, "string");
 
         console.log(`✓ ${testCase.name} (${testCase.language_code}) works`);
@@ -777,7 +927,7 @@ describe("SpellCheck validation", () => {
     expectType(result, "object");
 
     // Check if response has expected properties
-    const expectedProperties = ["success", "misspellings_found", "auto_correct_text"];
+    const expectedProperties = ["success", "misspellings_found", "misspellings", "auto_correct_text"];
     const resultKeys = Object.keys(result);
 
     // Ensure all expected properties exist
@@ -794,13 +944,24 @@ describe("SpellCheck validation", () => {
 
     // Validate types
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
 
-    // Validate logical constraints
-    if (result.misspellings_found < 0) {
-      throw new Error("misspellings_found should not be negative");
-    }
+    // Validate misspellings array structure
+    result.misspellings.forEach((misspelling) => {
+      expectType(misspelling, "object");
+      expectProperty(misspelling, "word");
+      expectProperty(misspelling, "startIndex");
+      expectProperty(misspelling, "endIndex");
+      expectProperty(misspelling, "expected");
+      expectProperty(misspelling, "auto_corrected");
+      expectType(misspelling.word, "string");
+      expectType(misspelling.startIndex, "number");
+      expectType(misspelling.endIndex, "number");
+      expectArray(misspelling.expected);
+      expectType(misspelling.auto_corrected, "boolean");
+    });
   });
 
   test("should handle whitespace-only text", async () => {
@@ -812,14 +973,16 @@ describe("SpellCheck validation", () => {
     expectSuccess(result);
     expectProperty(result, "success");
     expectProperty(result, "misspellings_found");
+    expectProperty(result, "misspellings");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "number");
+    expectType(result.misspellings_found, "boolean");
+    expectArray(result.misspellings);
     expectType(result.auto_correct_text, "string");
 
     // Whitespace-only text should have no misspellings
-    if (result.misspellings_found !== 0) {
+    if (result.misspellings_found !== false) {
       console.log("Note: Misspellings found in whitespace-only text");
     }
   });
