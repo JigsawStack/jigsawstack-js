@@ -16,7 +16,7 @@ export interface NSFWValidationResponse {
   gore: boolean;
   nsfw_score: number;
   nudity_score: number;
-  gore_score: number;  
+  gore_score: number;
 }
 
 export interface ProfanityParams {
