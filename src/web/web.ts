@@ -2,6 +2,7 @@ import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { HTMLAnyParams } from "./interfaces/html_to_any";
 import { AIScrapeParams, AIScrapeResponse } from "./interfaces/scrape";
+import { DeepResearchParams, DeepResearchResponse } from "./interfaces/deep_research";
 class Web {
   constructor(private readonly client: RequestClient) {}
 
@@ -12,6 +13,10 @@ class Web {
   html_to_any = async (params: HTMLAnyParams) => {
     const resp = await this.client.fetchJSS("/web/html_to_any", "POST", params);
     return respToFileChoice(resp);
+  };
+
+  deep_research = async (params: DeepResearchParams): Promise<DeepResearchResponse> => {
+    return await this.client.fetchJSS("/web/deep_research", "POST", params);
   };
 }
 
