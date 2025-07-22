@@ -1,11 +1,15 @@
-import { test, describe } from "node:test";
+import { test, describe, beforeEach } from "node:test";
 import { createJigsawStackClient, expectSuccess, expectProperty, expectType, expectArray } from "./test-helpers.js";
 
 // Comprehensive Profanity API Tests
 describe("Profanity validation", () => {
-  test("should fail when text parameter is missing", async () => {
-    const client = createJigsawStackClient();
+  let client: ReturnType<typeof createJigsawStackClient>;
 
+  beforeEach(() => {
+    client = createJigsawStackClient();
+  });
+
+  test("should fail when text parameter is missing", async () => {
     try {
       // @ts-expect-error Testing missing required parameter
       await client.validate.profanity({});
@@ -17,8 +21,6 @@ describe("Profanity validation", () => {
   });
 
   test("should fail when text parameter is undefined", async () => {
-    const client = createJigsawStackClient();
-
     try {
       // @ts-expect-error Testing undefined required parameter
       await client.validate.profanity({ text: undefined });
@@ -29,8 +31,6 @@ describe("Profanity validation", () => {
   });
 
   test("should fail when text parameter is null", async () => {
-    const client = createJigsawStackClient();
-
     try {
       // @ts-expect-error Testing null required parameter
       await client.validate.profanity({ text: null });
@@ -41,7 +41,6 @@ describe("Profanity validation", () => {
   });
 
   test("should work with only required text parameter", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "This is a clean sentence.",
     });
@@ -51,14 +50,12 @@ describe("Profanity validation", () => {
 
     // Verify all required response properties exist
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "clean_text");
     expectProperty(result, "profanities");
     expectProperty(result, "profanities_found");
 
     // Verify correct types
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.clean_text, "string");
     expectArray(result.profanities);
     expectType(result.profanities_found, "boolean"); // Corrected: should be boolean
@@ -70,7 +67,6 @@ describe("Profanity validation", () => {
   });
 
   test("should work with custom censor_replacement parameter", async () => {
-    const client = createJigsawStackClient();
     const customReplacement = "[CENSORED]";
     const result = await client.validate.profanity({
       text: "This damn text contains profanity.",
@@ -88,7 +84,6 @@ describe("Profanity validation", () => {
   });
 
   test("should handle empty text", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "",
     });
@@ -109,7 +104,6 @@ describe("Profanity validation", () => {
   });
 
   test("should handle text with special characters", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "Special chars: !@#$%^&*()_+-=[]{}|;':\",./<>?",
       censor_replacement: "***",
@@ -126,7 +120,6 @@ describe("Profanity validation", () => {
   });
 
   test("should handle unicode characters", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "Unicode: 你好 🌟 émojis 🚀 ñoño",
       censor_replacement: "🌟",
@@ -143,7 +136,6 @@ describe("Profanity validation", () => {
   });
 
   test("should handle very long text", async () => {
-    const client = createJigsawStackClient();
     const longText = "This is a very long text. ".repeat(100);
     const result = await client.validate.profanity({
       text: longText,
@@ -160,7 +152,6 @@ describe("Profanity validation", () => {
   });
 
   test("should validate profanities array structure when profanities are found", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "This damn shit is fucking terrible.",
       censor_replacement: "*",
@@ -170,16 +161,16 @@ describe("Profanity validation", () => {
     expectArray(result.profanities);
     expectType(result.profanities_found, "boolean"); // Corrected: should be boolean
 
-    // If profanities are found, each item in the array should be an object with specific properties
+    // If profanities are found, each item in the array should be an object with the correct structure
     if (result.profanities_found === true) {
-      result.profanities.forEach((profanity) => {
-        expectType(profanity, "object");
-        expectProperty(profanity, "profanity");
-        expectProperty(profanity, "startIndex");
-        expectProperty(profanity, "endIndex");
-        expectType(profanity.profanity, "string");
-        expectType(profanity.startIndex, "number");
-        expectType(profanity.endIndex, "number");
+      result.profanities.forEach((profanityObj) => {
+        expectType(profanityObj, "object");
+        expectProperty(profanityObj, "profanity");
+        expectProperty(profanityObj, "startIndex");
+        expectProperty(profanityObj, "endIndex");
+        expectType(profanityObj.profanity, "string");
+        expectType(profanityObj.startIndex, "number");
+        expectType(profanityObj.endIndex, "number");
       });
 
       // When profanities are found, the array should not be empty
@@ -195,7 +186,6 @@ describe("Profanity validation", () => {
   });
 
   test("should handle different censor_replacement values", async () => {
-    const client = createJigsawStackClient();
     const testCases = [
       { replacement: "*", name: "asterisk" },
       { replacement: "#", name: "hash" },
@@ -219,7 +209,6 @@ describe("Profanity validation", () => {
   });
 
   test("profanity check with clean text", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "This is a nice and clean sentence.",
       censor_replacement: "*",
@@ -240,7 +229,6 @@ describe("Profanity validation", () => {
   });
 
   test("profanity check with profane text", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "This damn text contains actual profanity.",
       censor_replacement: "*",
@@ -262,7 +250,6 @@ describe("Profanity validation", () => {
   });
 
   test("profanity check with custom replacement", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.profanity({
       text: "This is a profane sentence.",
       censor_replacement: "[CENSORED]",
@@ -276,9 +263,13 @@ describe("Profanity validation", () => {
 
 // Comprehensive NSFW API Tests
 describe("NSFW validation", () => {
-  test("should fail when no parameters are provided", async () => {
-    const client = createJigsawStackClient();
+  let client: ReturnType<typeof createJigsawStackClient>;
 
+  beforeEach(() => {
+    client = createJigsawStackClient();
+  });
+
+  test("should fail when no parameters are provided", async () => {
     try {
       await client.validate.nsfw({});
       throw new Error("Expected API call to fail with no parameters");
@@ -289,8 +280,6 @@ describe("NSFW validation", () => {
   });
 
   test("should fail when url parameter is undefined", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({ url: undefined });
       throw new Error("Expected API call to fail with undefined url parameter");
@@ -300,8 +289,6 @@ describe("NSFW validation", () => {
   });
 
   test("should fail when url parameter is null", async () => {
-    const client = createJigsawStackClient();
-
     try {
       // @ts-expect-error Testing null parameter
       await client.validate.nsfw({ url: null });
@@ -312,8 +299,6 @@ describe("NSFW validation", () => {
   });
 
   test("should fail when file_store_key parameter is undefined", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({ file_store_key: undefined });
       throw new Error("Expected API call to fail with undefined file_store_key parameter");
@@ -323,8 +308,6 @@ describe("NSFW validation", () => {
   });
 
   test("should fail when file_store_key parameter is null", async () => {
-    const client = createJigsawStackClient();
-
     try {
       // @ts-expect-error Testing null parameter
       await client.validate.nsfw({ file_store_key: null });
@@ -335,7 +318,6 @@ describe("NSFW validation", () => {
   });
 
   test("should work with valid URL parameter", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.nsfw({
       url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png",
     });
@@ -352,8 +334,6 @@ describe("NSFW validation", () => {
   });
 
   test("should work with valid file_store_key parameter", async () => {
-    const client = createJigsawStackClient();
-
     // Note: This test will likely fail in actual execution unless we have a valid file_store_key
     // But it tests the parameter structure
     try {
@@ -372,8 +352,6 @@ describe("NSFW validation", () => {
   });
 
   test("should handle invalid URL gracefully", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({
         url: "not-a-valid-url",
@@ -385,8 +363,6 @@ describe("NSFW validation", () => {
   });
 
   test("should handle non-image URL gracefully", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({
         url: "https://www.google.com",
@@ -398,8 +374,6 @@ describe("NSFW validation", () => {
   });
 
   test("should handle unreachable URL gracefully", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({
         url: "https://example.com/non-existent-image.jpg",
@@ -411,7 +385,6 @@ describe("NSFW validation", () => {
   });
 
   test("should work with different image formats", async () => {
-    const client = createJigsawStackClient();
     const imageUrls = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png", // PNG
       "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", // SVG
@@ -433,8 +406,6 @@ describe("NSFW validation", () => {
   });
 
   test("should handle empty string URL", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({
         url: "",
@@ -446,8 +417,6 @@ describe("NSFW validation", () => {
   });
 
   test("should handle empty string file_store_key", async () => {
-    const client = createJigsawStackClient();
-
     try {
       await client.validate.nsfw({
         file_store_key: "",
@@ -459,8 +428,6 @@ describe("NSFW validation", () => {
   });
 
   test("should prioritize url when both parameters are provided", async () => {
-    const client = createJigsawStackClient();
-
     const result = await client.validate.nsfw({
       url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png",
       file_store_key: "test_key", // This should be ignored in favor of URL
@@ -472,7 +439,6 @@ describe("NSFW validation", () => {
   });
 
   test("should validate response structure completely", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.nsfw({
       url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png",
     });
@@ -497,7 +463,6 @@ describe("NSFW validation", () => {
   });
 
   test("should handle very long URL", async () => {
-    const client = createJigsawStackClient();
     const longUrl =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png" + "?param=" + "a".repeat(1000);
 
@@ -514,7 +479,6 @@ describe("NSFW validation", () => {
   });
 
   test("NSFW detection with URL", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.nsfw({
       url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png",
     });
@@ -526,7 +490,6 @@ describe("NSFW validation", () => {
   });
 
   test("NSFW detection with safe image URL", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.nsfw({
       url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png",
     });
@@ -545,9 +508,13 @@ describe("NSFW validation", () => {
 
 // Comprehensive SpellCheck API Tests
 describe("SpellCheck validation", () => {
-  test("should fail when text parameter is missing", async () => {
-    const client = createJigsawStackClient();
+  let client: ReturnType<typeof createJigsawStackClient>;
 
+  beforeEach(() => {
+    client = createJigsawStackClient();
+  });
+
+  test("should fail when text parameter is missing", async () => {
     try {
       // @ts-expect-error Testing missing required parameter
       await client.validate.spellcheck({});
@@ -559,8 +526,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should fail when text parameter is undefined", async () => {
-    const client = createJigsawStackClient();
-
     try {
       // @ts-expect-error Testing undefined required parameter
       await client.validate.spellcheck({ text: undefined });
@@ -571,8 +536,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should fail when text parameter is null", async () => {
-    const client = createJigsawStackClient();
-
     try {
       // @ts-expect-error Testing null required parameter
       await client.validate.spellcheck({ text: null });
@@ -583,7 +546,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should work with only required text parameter", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "This is a correctly spelled sentence.",
     });
@@ -593,13 +555,11 @@ describe("SpellCheck validation", () => {
 
     // Verify all required response properties exist
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     // Verify correct types
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
 
@@ -610,7 +570,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should work with custom language_code parameter", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "Hola mundo como estas",
       language_code: "es",
@@ -618,30 +577,25 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
   });
 
   test("should handle empty text", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "",
     });
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
 
@@ -652,7 +606,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should handle text with intentional misspellings", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "Ths is a mispelled sentance with erors.",
       language_code: "en",
@@ -660,12 +613,10 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
 
@@ -681,7 +632,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should handle text with special characters", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "Special chars: !@#$%^&*()_+-=[]{}|;':\",./<>?",
       language_code: "en",
@@ -689,18 +639,15 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
   });
 
   test("should handle text with numbers", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "The year 2024 has 365 days and 12 months.",
       language_code: "en",
@@ -708,18 +655,15 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
   });
 
   test("should handle unicode characters", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "Unicode: 你好 🌟 émojis 🚀 ñoño café résumé",
       language_code: "en",
@@ -727,18 +671,15 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
   });
 
   test("should handle very long text", async () => {
-    const client = createJigsawStackClient();
     const longText = "This is a very long text that contains many words. ".repeat(50);
     const result = await client.validate.spellcheck({
       text: longText,
@@ -747,18 +688,15 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
   });
 
   test("should handle different supported language codes", async () => {
-    const client = createJigsawStackClient();
     const testCases = [
       { text: "Hello world", language_code: "en", name: "English" },
       { text: "Hola mundo", language_code: "es", name: "Spanish" },
@@ -776,12 +714,10 @@ describe("SpellCheck validation", () => {
 
         expectSuccess(result);
         expectProperty(result, "success");
-        expectProperty(result, "message");
         expectProperty(result, "misspellings_found");
         expectProperty(result, "auto_correct_text");
 
         expectType(result.success, "boolean");
-        expectType(result.message, "string");
         expectType(result.misspellings_found, "number");
         expectType(result.auto_correct_text, "string");
 
@@ -794,8 +730,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should handle invalid language code", async () => {
-    const client = createJigsawStackClient();
-
     try {
       const result = await client.validate.spellcheck({
         text: "This is a test sentence.",
@@ -805,7 +739,6 @@ describe("SpellCheck validation", () => {
       // If it doesn't throw an error, validate the response
       expectSuccess(result);
       expectProperty(result, "success");
-      expectProperty(result, "message");
       expectProperty(result, "misspellings_found");
       expectProperty(result, "auto_correct_text");
 
@@ -817,8 +750,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should handle empty language code", async () => {
-    const client = createJigsawStackClient();
-
     try {
       const result = await client.validate.spellcheck({
         text: "This is a test sentence.",
@@ -827,7 +758,6 @@ describe("SpellCheck validation", () => {
 
       expectSuccess(result);
       expectProperty(result, "success");
-      expectProperty(result, "message");
       expectProperty(result, "misspellings_found");
       expectProperty(result, "auto_correct_text");
     } catch (error) {
@@ -837,7 +767,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should validate response structure completely", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "This is a test sentence with some mispellings.",
       language_code: "en",
@@ -848,7 +777,7 @@ describe("SpellCheck validation", () => {
     expectType(result, "object");
 
     // Check if response has expected properties
-    const expectedProperties = ["success", "message", "misspellings_found", "auto_correct_text"];
+    const expectedProperties = ["success", "misspellings_found", "auto_correct_text"];
     const resultKeys = Object.keys(result);
 
     // Ensure all expected properties exist
@@ -865,7 +794,6 @@ describe("SpellCheck validation", () => {
 
     // Validate types
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
 
@@ -876,7 +804,6 @@ describe("SpellCheck validation", () => {
   });
 
   test("should handle whitespace-only text", async () => {
-    const client = createJigsawStackClient();
     const result = await client.validate.spellcheck({
       text: "   \t\n   ",
       language_code: "en",
@@ -884,12 +811,10 @@ describe("SpellCheck validation", () => {
 
     expectSuccess(result);
     expectProperty(result, "success");
-    expectProperty(result, "message");
     expectProperty(result, "misspellings_found");
     expectProperty(result, "auto_correct_text");
 
     expectType(result.success, "boolean");
-    expectType(result.message, "string");
     expectType(result.misspellings_found, "number");
     expectType(result.auto_correct_text, "string");
 

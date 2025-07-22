@@ -43,7 +43,6 @@ export interface SpellCheckParams {
 
 export interface SpellCheckValidationResponse {
   success: boolean;
-  message: string;
   misspellings_found: number;
   auto_correct_text: string;
 }

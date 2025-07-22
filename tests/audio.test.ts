@@ -1,12 +1,17 @@
-import { test, describe } from "node:test";
+import { test, describe, beforeEach } from "node:test";
 import { createJigsawStackClient, expectSuccess, expectProperty, expectType } from "./test-helpers.js";
 
 const audioUrl = "https://jigsawstack.com/preview/stt-example.wav";
 const text = "Hello World";
 
 describe("STT APIs", () => {
+  let client: ReturnType<typeof createJigsawStackClient>;
+
+  beforeEach(() => {
+    client = createJigsawStackClient();
+  });
+
   test("speech to text from URL", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.speech_to_text({
       url: audioUrl,
       language: "en",
@@ -23,7 +28,6 @@ describe("STT APIs", () => {
   });
 
   test("speech to text with speaker separation", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.speech_to_text({
       url: audioUrl,
       language: "en",
@@ -41,7 +45,6 @@ describe("STT APIs", () => {
   });
 
   test("speech to text with translation", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.speech_to_text({
       url: audioUrl,
       translate: true,
@@ -53,7 +56,6 @@ describe("STT APIs", () => {
   });
 
   test("speech to text with translation and speaker separation", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.speech_to_text({
       url: audioUrl,
       translate: true,
@@ -67,8 +69,13 @@ describe("STT APIs", () => {
 });
 
 describe("TTS APIs", () => {
+  let client: ReturnType<typeof createJigsawStackClient>;
+
+  beforeEach(() => {
+    client = createJigsawStackClient();
+  });
+
   test("text to speech basic", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.text_to_speech({
       text: text,
       accent: "en-US-female-3",
@@ -84,7 +91,6 @@ describe("TTS APIs", () => {
   });
 
   test("text to speech with different accent", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.text_to_speech({
       text: text,
       accent: "en-GB-male-2",
@@ -96,7 +102,6 @@ describe("TTS APIs", () => {
   });
 
   test("text to speech with return type base64", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.text_to_speech({
       text: text,
       accent: "en-US-female-3",
@@ -109,7 +114,6 @@ describe("TTS APIs", () => {
   });
 
   test("text to speech with return type binary", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.text_to_speech({
       text: text,
       accent: "en-US-female-3",
@@ -122,7 +126,6 @@ describe("TTS APIs", () => {
   });
 
   test("get speaker voice accents", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.speaker_voice_accents();
 
     expectSuccess(result);
@@ -130,7 +133,6 @@ describe("TTS APIs", () => {
   });
 
   test("list voice clones", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.list_clones({
       limit: 10,
       page: 0,
@@ -141,7 +143,6 @@ describe("TTS APIs", () => {
   });
 
   test("list voice clones with default params", async () => {
-    const client = createJigsawStackClient();
     const result = await client.audio.list_clones();
 
     expectSuccess(result);
