@@ -1,5 +1,5 @@
-import { test, describe, beforeEach } from "node:test";
-import { createJigsawStackClient, expectSuccess, expectProperty, expectType, expectArray } from "./test-helpers.js";
+import { beforeEach, describe, test } from "node:test";
+import { createJigsawStackClient, expectArray, expectProperty, expectSuccess, expectType } from "./test-helpers.js";
 
 const TEST_URLS = {
   image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
