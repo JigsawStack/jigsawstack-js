@@ -4,7 +4,6 @@ import AudioApis from "./audio/audio";
 import General from "./general";
 import PromptEngine from "./prompt_engine";
 import { RequestClient } from "./request";
-import Search from "./search/search";
 import { File } from "./store/file";
 import Validate from "./validate";
 import Vision from "./vision/vision";
@@ -20,7 +19,6 @@ export const JigsawStack = (config?: BaseConfig) => {
   const client = new RequestClient({ ...config, apiKey: _apiKey });
   const general = new General(client);
   const web = new Web(client);
-  const search = new Search(client);
   const vision = new Vision(client);
   const audio = new AudioApis(client);
   const promptengine = new PromptEngine(client);
@@ -49,8 +47,8 @@ export const JigsawStack = (config?: BaseConfig) => {
     web: {
       ai_scrape: web.ai_scrape,
       html_to_any: web.html_to_any,
-      search: search.search,
-      search_suggestions: search.suggestion,
+      search: web.search,
+      search_suggestions: web.search_suggestions,
     },
     prompt_engine: promptengine,
     store,

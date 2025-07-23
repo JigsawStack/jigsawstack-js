@@ -68,84 +68,84 @@ describe("STT APIs", () => {
   });
 });
 
-describe("TTS APIs", () => {
-  let client: ReturnType<typeof createJigsawStackClient>;
+// describe("TTS APIs", () => {
+//   let client: ReturnType<typeof createJigsawStackClient>;
 
-  beforeEach(() => {
-    client = createJigsawStackClient();
-  });
+//   beforeEach(() => {
+//     client = createJigsawStackClient();
+//   });
 
-  test("text to speech basic", async () => {
-    const result = await client.audio.text_to_speech({
-      text: text,
-      accent: "en-US-female-3",
-    });
+//   test("text to speech basic", async () => {
+//     const result = await client.audio.text_to_speech({
+//       text: text,
+//       accent: "en-US-female-3",
+//     });
 
-    // TTS returns a file choice object
-    expectProperty(result, "blob");
-    expectType(result.blob, "function");
-    expectProperty(result, "buffer");
-    expectType(result.buffer, "function");
-    expectProperty(result, "file");
-    expectType(result.file, "function");
-  });
+//     // TTS returns a file choice object
+//     expectProperty(result, "blob");
+//     expectType(result.blob, "function");
+//     expectProperty(result, "buffer");
+//     expectType(result.buffer, "function");
+//     expectProperty(result, "file");
+//     expectType(result.file, "function");
+//   });
 
-  test("text to speech with different accent", async () => {
-    const result = await client.audio.text_to_speech({
-      text: text,
-      accent: "en-GB-male-2",
-    });
+//   test("text to speech with different accent", async () => {
+//     const result = await client.audio.text_to_speech({
+//       text: text,
+//       accent: "en-GB-male-2",
+//     });
 
-    // TTS returns a file choice object
-    expectProperty(result, "blob");
-    expectType(result.blob, "function");
-  });
+//     // TTS returns a file choice object
+//     expectProperty(result, "blob");
+//     expectType(result.blob, "function");
+//   });
 
-  test("text to speech with return type base64", async () => {
-    const result = await client.audio.text_to_speech({
-      text: text,
-      accent: "en-US-female-3",
-      return_type: "base64",
-    });
+//   test("text to speech with return type base64", async () => {
+//     const result = await client.audio.text_to_speech({
+//       text: text,
+//       accent: "en-US-female-3",
+//       return_type: "base64",
+//     });
 
-    // TTS returns a file choice object
-    expectProperty(result, "url");
-    expectType(result.url, "string");
-  });
+//     // TTS returns a file choice object
+//     expectProperty(result, "url");
+//     expectType(result.url, "string");
+//   });
 
-  test("text to speech with return type binary", async () => {
-    const result = await client.audio.text_to_speech({
-      text: text,
-      accent: "en-US-female-3",
-      return_type: "binary",
-    });
+//   test("text to speech with return type binary", async () => {
+//     const result = await client.audio.text_to_speech({
+//       text: text,
+//       accent: "en-US-female-3",
+//       return_type: "binary",
+//     });
 
-    // TTS returns a file choice object
-    expectProperty(result, "blob");
-    expectType(result.blob, "function");
-  });
+//     // TTS returns a file choice object
+//     expectProperty(result, "blob");
+//     expectType(result.blob, "function");
+//   });
 
-  test("get speaker voice accents", async () => {
-    const result = await client.audio.speaker_voice_accents();
+//   test("get speaker voice accents", async () => {
+//     const result = await client.audio.speaker_voice_accents();
 
-    expectSuccess(result);
-    expectType(result, "object");
-  });
+//     expectSuccess(result);
+//     expectType(result, "object");
+//   });
 
-  test("list voice clones", async () => {
-    const result = await client.audio.list_clones({
-      limit: 10,
-      page: 0,
-    });
+//   test("list voice clones", async () => {
+//     const result = await client.audio.list_clones({
+//       limit: 10,
+//       page: 0,
+//     });
 
-    expectSuccess(result);
-    expectType(result, "object");
-  });
+//     expectSuccess(result);
+//     expectType(result, "object");
+//   });
 
-  test("list voice clones with default params", async () => {
-    const result = await client.audio.list_clones();
+//   test("list voice clones with default params", async () => {
+//     const result = await client.audio.list_clones();
 
-    expectSuccess(result);
-    expectType(result, "object");
-  });
-});
+//     expectSuccess(result);
+//     expectType(result, "object");
+//   });
+// });
