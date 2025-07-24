@@ -133,8 +133,4 @@ test.js
 
 .DS_Store
 
-runTest
-runTest/*
-
-
 .vscode
