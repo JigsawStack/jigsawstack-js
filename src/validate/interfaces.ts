@@ -28,8 +28,12 @@ export interface ProfanityValidationResponse {
   success: boolean;
   message: string;
   clean_text: string;
-  profanities: string[];
-  profanities_found: number;
+  profanities: {
+    profanity: string;
+    startIndex: number;
+    endIndex: number;
+  }[];
+  profanities_found: boolean;
 }
 
 export interface SpellCheckParams {
@@ -39,8 +43,14 @@ export interface SpellCheckParams {
 
 export interface SpellCheckValidationResponse {
   success: boolean;
-  message: string;
-  misspellings_found: number;
+  misspellings_found: boolean;
+  misspellings: Array<{
+    word: string;
+    startIndex: number;
+    endIndex: number;
+    expected: string[];
+    auto_corrected: boolean;
+  }>;
   auto_correct_text: string;
 }
 

@@ -13,23 +13,24 @@ export interface CookieParameter {
 }
 
 export interface BaseAIScrapeParams {
-  url: string;
+  url?: string;
+  html?: string;
   root_element_selector?: string;
   page_position?: number;
   http_headers?: object;
   reject_request_pattern?: string[];
   goto_options?: {
-    timeout: number;
-    wait_until: string;
-  };
+    timeout?: number;
+    wait_until?: "load" | "domcontentloaded" | "networkidle0" | "networkidle2";
+  } | null;
   wait_for?: {
     mode: string;
     value: string | number;
   };
   advance_config?: {
-    console: boolean;
-    network: boolean;
-    cookies: boolean;
+    console?: boolean;
+    network?: boolean;
+    cookies?: boolean;
   };
   size_preset?: string;
   is_mobile?: boolean;
@@ -55,7 +56,7 @@ export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
 
 export interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
   selectors?: Array<string>;
-  element_prompts: string[];
+  element_prompts?: string[];
 }
 
 export type AIScrapeParams = AIScrapeParamsWithSelector | AIScrapeParamsWithPrompts;
