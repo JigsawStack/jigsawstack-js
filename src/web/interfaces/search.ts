@@ -32,7 +32,13 @@ export interface SearchResponse {
     title: string;
     url: string;
     description: string;
-    content: string;
+    content:
+      | string
+      | {
+          text: string;
+          image_urls: string[];
+          links: string[];
+        };
     is_safe: boolean;
     site_name: string;
     site_long_name: string;
