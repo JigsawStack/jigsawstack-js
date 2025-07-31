@@ -267,12 +267,19 @@ export class JigsawStackToolSet {
           page_range: z.array(z.number()).optional().describe("Page range for PDF files"),
         }),
         execute: async ({ prompt, url, file_store_key, page_range }) => {
-          return await this.jigsawStack.vision.vocr({
-            prompt,
-            url,
-            file_store_key,
-            page_range,
-          });
+          if (url) {
+            return await this.jigsawStack.vision.vocr({
+              prompt,
+              url,
+              page_range,
+            });
+          } else if (file_store_key) {
+            return await this.jigsawStack.vision.vocr({
+              prompt,
+              file_store_key,
+              page_range,
+            });
+          }
         },
       }),
 
@@ -283,10 +290,17 @@ export class JigsawStackToolSet {
           file_store_key: z.string().optional().describe("File store key of uploaded image"),
         }),
         execute: async ({ url, file_store_key }) => {
-          return await this.jigsawStack.vision.object_detection({
-            url,
-            file_store_key,
-          });
+          if (url) {
+            return await this.jigsawStack.vision.object_detection({
+              url,
+              return_type: "url",
+            });
+          } else if (file_store_key) {
+            return await this.jigsawStack.vision.object_detection({
+              file_store_key,
+              return_type: "url",
+            });
+          }
         },
       }),
 
