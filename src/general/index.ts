@@ -14,6 +14,7 @@ import {
   TranslateParams,
   TranslateResponse,
   ImageGenerationParams,
+  TextToSQLParams,
 } from "./interfaces";
 
 class General {
@@ -54,12 +55,7 @@ class General {
     return respToFileChoice(resp);
   };
 
-  text_to_sql = async (params: {
-    prompt: string;
-    sql_schema?: string;
-    file_store_key?: string;
-    database?: "postgresql" | "mysql" | "sqlite";
-  }): Promise<TextToSQLResponse> => {
+  text_to_sql = async (params: TextToSQLParams): Promise<TextToSQLResponse> => {
     return await this.client.fetchJSS("/ai/sql", "POST", params);
   };
 

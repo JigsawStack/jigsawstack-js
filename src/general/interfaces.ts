@@ -1,6 +1,15 @@
 import { BaseResponse } from "../../types";
 
 
+export type TextToSQLParams = {
+  prompt: string;
+  database?: "postgresql" | "mysql" | "sqlite";
+} & (
+  | { sql_schema: string; file_store_key?: never }
+  | { file_store_key: string; sql_schema?: never }
+  | { sql_schema?: undefined; file_store_key?: undefined }
+);
+
 export interface ImageGenerationParams {
   prompt: string;
   aspect_ratio?: "1:1" | "16:9" | "21:9" | "3:2" | "2:3" | "4:5" | "5:4" | "3:4" | "4:3" | "9:16" | "9:21";

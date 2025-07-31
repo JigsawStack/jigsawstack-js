@@ -154,12 +154,24 @@ export class JigsawStackToolSet {
           database: z.enum(["postgresql", "mysql", "sqlite"]).optional().describe("Database type"),
         }),
         execute: async ({ prompt, sql_schema, file_store_key, database }) => {
-          return await this.jigsawStack.text_to_sql({
-            prompt,
-            sql_schema,
-            file_store_key,
-            database,
-          });
+          if (file_store_key) {
+            return await this.jigsawStack.text_to_sql({
+              prompt,
+              file_store_key,
+              database,
+            });
+          } else if (sql_schema) {
+            return await this.jigsawStack.text_to_sql({
+              prompt,
+              sql_schema,
+              database,
+            });
+          } else {
+            return await this.jigsawStack.text_to_sql({
+              prompt,
+              database,
+            });
+          }
         },
       }),
 
