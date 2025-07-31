@@ -11,16 +11,13 @@ export interface SpeechToTextParams {
   chunk_duration?: number;
 }
 
-export interface SpeechToTextResponse extends BaseResponse {
+export interface SpeechToTextSyncResponse extends BaseResponse {
   text: string;
   chunks: Array<{
     timestamp: number[];
     text: string;
   }>;
-  status?: "processing" | "error";
-  id?: string;
   speakers?: {
-    //  available when by_speaker is true
     speaker: string;
     timestamp: number[];
     text: string;
@@ -32,9 +29,16 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
   id: string;
 }
 
+export type SpeechToTextResponse<T extends SpeechToTextParams = SpeechToTextParams> = 
+  T extends { webhook_url: string }
+    ? SpeechToTextWebhookResponse
+    : T extends { webhook_url?: undefined }
+    ? SpeechToTextSyncResponse  
+    : SpeechToTextSyncResponse | SpeechToTextWebhookResponse;
+
 export interface TextToSpeechParams {
   text: string;
-  accent?: SupportedAccents; // see https://docs.jigsawstack.com/additional-resources/speaker-voices for the list of supported accents.
+  accent?: SupportedAccents;
   voice_clone_id?: string;
   return_type?: "url" | "binary" | "base64";
 }

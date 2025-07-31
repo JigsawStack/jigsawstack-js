@@ -13,6 +13,7 @@ import {
   TranslateImageParams,
   TranslateParams,
   TranslateResponse,
+  ImageGenerationParams,
 } from "./interfaces";
 
 class General {
@@ -48,24 +49,8 @@ class General {
     return await this.client.fetchJSS("/ai/sentiment", "POST", params);
   };
 
-  image_generation = async (params: {
-    prompt: string;
-    aspect_ratio?: "1:1" | "16:9" | "21:9" | "3:2" | "2:3" | "4:5" | "5:4" | "3:4" | "4:3" | "9:16" | "9:21";
-    width?: number;
-    height?: number;
-    steps?: number;
-    output_format?: "png" | "svg";
-    return_type?: "url" | "binary" | "base64";
-    advance_config?: {
-      negative_prompt?: string;
-      guidance?: number;
-      seed?: number;
-    };
-    url?: string;
-    file_store_key?: string;
-  }) => {
+  image_generation = async (params: ImageGenerationParams) => {
     const resp = await this.client.fetchJSS("/ai/image_generation", "POST", params);
-
     return respToFileChoice(resp);
   };
 
