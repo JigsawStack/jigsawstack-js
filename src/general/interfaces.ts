@@ -55,12 +55,13 @@ export interface TranslateParams {
   text: string | string[];
 }
 
-export interface TranslateImageParams {
+export type TranslateImageParams=  {
   target_language: string;
-  url?: string;
-  file_store_key?: string;
   return_type?: "url" | "binary" | "base64";
-}
+} & (
+  | { url: string; file_store_key?: never }
+  | { file_store_key: string; url?: never }
+)
 
 export interface SpeechToTextResponse extends BaseResponse {
   text: string;

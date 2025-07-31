@@ -89,11 +89,19 @@ export class JigsawStackToolSet {
           target_language: z.string().describe('Target language code (e.g., "en", "es", "fr")'),
         }),
         execute: async ({ url, file_store_key, target_language }) => {
-          await this.jigsawStack.translate.image({
-            url,
-            file_store_key,
-            target_language,
-          });
+          if (url) {
+            return await this.jigsawStack.translate.image({
+              url,
+              target_language,
+              return_type: "url",
+            });
+          } else if (file_store_key) {
+            return await this.jigsawStack.translate.image({
+              file_store_key,
+              target_language,
+              return_type: "url",
+            });
+          }
 
           return {
             success: true,
