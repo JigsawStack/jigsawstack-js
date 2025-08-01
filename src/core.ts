@@ -31,7 +31,6 @@ export const JigsawStack = (config?: BaseConfig) => {
   };
 
   return {
-    fetch: client.fetchJSS,
     sentiment: general.sentiment,
     translate: general.translate,
     image_generation: general.image_generation,

@@ -1,4 +1,10 @@
-export const respToFileChoice = (resp) => {
+export const respToFileChoice = (
+  resp: Response
+): {
+  blob: () => Promise<Blob>;
+  buffer: () => Promise<Buffer>;
+  file: (filename: string, options?: FilePropertyBag) => Promise<File>;
+} => {
   if (!(resp instanceof Response)) {
     return resp;
   }
