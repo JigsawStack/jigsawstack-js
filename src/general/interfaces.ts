@@ -1,6 +1,5 @@
 import { BaseResponse } from "../../types";
 
-
 export type TextToSQLParams = {
   prompt: string;
   database?: "postgresql" | "mysql" | "sqlite";
@@ -55,13 +54,10 @@ export interface TranslateParams {
   text: string | string[];
 }
 
-export type TranslateImageParams=  {
+export type TranslateImageParams = {
   target_language: string;
   return_type?: "url" | "binary" | "base64";
-} & (
-  | { url: string; file_store_key?: never }
-  | { file_store_key: string; url?: never }
-)
+} & ({ url: string; file_store_key?: never } | { file_store_key: string; url?: never });
 
 export interface SpeechToTextResponse extends BaseResponse {
   text: string;

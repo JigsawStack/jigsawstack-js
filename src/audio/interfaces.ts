@@ -29,11 +29,10 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
   id: string;
 }
 
-export type SpeechToTextResponse<T extends SpeechToTextParams = SpeechToTextParams> = 
-  T extends { webhook_url: string }
-    ? SpeechToTextWebhookResponse
-    : T extends { webhook_url?: undefined }
-    ? SpeechToTextSyncResponse  
+export type SpeechToTextResponse<T extends SpeechToTextParams = SpeechToTextParams> = T extends { webhook_url: string }
+  ? SpeechToTextWebhookResponse
+  : T extends { webhook_url?: undefined }
+    ? SpeechToTextSyncResponse
     : SpeechToTextSyncResponse | SpeechToTextWebhookResponse;
 
 export interface TextToSpeechParams {

@@ -4,17 +4,17 @@ import { RequestClient } from "../request";
 import {
   EmbeddingParams,
   EmbeddingResponse,
+  ImageGenerationParams,
   PredictionParams,
   PredictionResponse,
   SentimentResponse,
   SummaryParams,
   SummaryResponse,
+  TextToSQLParams,
   TextToSQLResponse,
   TranslateImageParams,
   TranslateParams,
   TranslateResponse,
-  ImageGenerationParams,
-  TextToSQLParams,
 } from "./interfaces";
 
 class General {
