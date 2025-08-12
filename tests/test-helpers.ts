@@ -5,6 +5,7 @@ import { RequestClient } from "../src/request";
 import Validate from "../src/validate/index";
 import Vision from "../src/vision/vision";
 import Web from "../src/web/web";
+import Classification from "../src/classification/index";
 
 export function createJigsawStackClient() {
   const apiKey = process.env.JIGSAWSTACK_API_KEY;
@@ -26,6 +27,7 @@ export function createJigsawStackClient() {
     text_to_sql: (params: any) => new General(client).text_to_sql(params),
     prediction: (params: any) => new General(client).prediction(params),
     image_generation: (params: any) => new General(client).image_generation(params),
+    classification: (params: any) => new Classification(client).classification(params),
 
     // Audio APIs
     audio: new Audio(client),

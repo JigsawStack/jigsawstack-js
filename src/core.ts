@@ -1,6 +1,7 @@
 import "isomorphic-fetch";
 import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
+import Classification from "./classification";
 import General from "./general";
 import PromptEngine from "./prompt_engine";
 import { RequestClient } from "./request";
@@ -21,6 +22,7 @@ export const JigsawStack = (config?: BaseConfig) => {
   const web = new Web(client);
   const vision = new Vision(client);
   const audio = new AudioApis(client);
+  const classification = new Classification(client);
   const promptengine = new PromptEngine(client);
   const file = new File(client);
   const validate = new Validate(client);
@@ -40,6 +42,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     text_to_sql: general.text_to_sql,
     embedding: general.embedding,
     audio,
+    classification,
     vision: {
       vocr: vision.vocr,
       object_detection: vision.object_detection,
