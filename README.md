@@ -22,7 +22,6 @@ To learn more about all available JigsawStack AI services, view the [Documentati
 | **🌐 Web**        | AI Web Scraping, AI Web Search                     |
 | **🎵 Audio**      | Speech to Text                                     |
 | **👀 Vision**     | vOCR, Object Detection                             |
-| **🧠 LLMs**       | Prompt Engine                                      |
 | **🖼️ Generative** | AI Image (Flux, SD, SDXL-Fast & more), HTML to Any |
 | **✅ Validation** | Email, NSFW images, profanity & more               |
 
