@@ -20,7 +20,7 @@ To learn more about all available JigsawStack AI services, view the [Documentati
 | ----------------- | -------------------------------------------------- |
 | **👉 General**    | Translation, Summarization, Sentiment Analysis     |
 | **🌐 Web**        | AI Web Scraping, AI Web Search                     |
-| **🎵 Audio**      | Text to Speech, Speech to Text                     |
+| **🎵 Audio**      | Speech to Text                                     |
 | **👀 Vision**     | vOCR, Object Detection                             |
 | **🧠 LLMs**       | Prompt Engine                                      |
 | **🖼️ Generative** | AI Image (Flux, SD, SDXL-Fast & more), HTML to Any |
@@ -63,13 +63,6 @@ const resp = await jigsaw.web.ai_scrape({
 });
 ```
 
-Text to Speech Example:
-
-```ts
-const resp = await jigsaw.audio.text_to_speech({
-  text: "Hello, how are you doing?",
-});
-```
 
 Upload a file to use across any API example:
 
