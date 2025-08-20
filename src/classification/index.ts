@@ -1,5 +1,5 @@
 import { RequestClient } from "../request";
-import { ClassificationTextParams, ClassificationImageParams, ClassificationResponse } from "./interfaces";
+import { ClassificationImageParams, ClassificationResponse, ClassificationTextParams } from "./interfaces";
 
 class Classification {
   private readonly client: RequestClient;
