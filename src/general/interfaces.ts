@@ -55,6 +55,7 @@ export interface TranslateParams {
 }
 
 export type TranslateImageParams = {
+  url?: string;
   target_language: string;
   return_type?: "url" | "binary" | "base64";
 };
