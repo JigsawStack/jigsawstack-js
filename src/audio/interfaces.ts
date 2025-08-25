@@ -3,7 +3,7 @@ import { BaseResponse } from "../../types";
 export interface SpeechToTextParams {
   url?: string;
   file_store_key?: string;
-  language?: string;
+  language?: string | "auto";
   translate?: boolean;
   by_speaker?: boolean;
   webhook_url?: string;
