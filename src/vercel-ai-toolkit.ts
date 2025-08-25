@@ -89,11 +89,17 @@ export class JigsawStackToolSet {
           target_language: z.string().describe('Target language code (e.g., "en", "es", "fr")'),
         }),
         execute: async ({ url, file_store_key, target_language }) => {
-          await this.jigsawStack.translate.image({
-            url,
-            file_store_key,
-            target_language,
-          });
+          if (url) {
+            return await this.jigsawStack.translate.image({
+              target_language,
+              return_type: "url",
+            });
+          } else if (file_store_key) {
+            return await this.jigsawStack.translate.image({
+              target_language,
+              return_type: "url",
+            });
+          }
 
           return {
             success: true,
@@ -154,12 +160,24 @@ export class JigsawStackToolSet {
           database: z.enum(["postgresql", "mysql", "sqlite"]).optional().describe("Database type"),
         }),
         execute: async ({ prompt, sql_schema, file_store_key, database }) => {
-          return await this.jigsawStack.text_to_sql({
-            prompt,
-            sql_schema,
-            file_store_key,
-            database,
-          });
+          if (file_store_key) {
+            return await this.jigsawStack.text_to_sql({
+              prompt,
+              file_store_key,
+              database,
+            });
+          } else if (sql_schema) {
+            return await this.jigsawStack.text_to_sql({
+              prompt,
+              sql_schema,
+              database,
+            });
+          } else {
+            return await this.jigsawStack.text_to_sql({
+              prompt,
+              database,
+            });
+          }
         },
       }),
 
@@ -247,12 +265,19 @@ export class JigsawStackToolSet {
           page_range: z.array(z.number()).optional().describe("Page range for PDF files"),
         }),
         execute: async ({ prompt, url, file_store_key, page_range }) => {
-          return await this.jigsawStack.vision.vocr({
-            prompt,
-            url,
-            file_store_key,
-            page_range,
-          });
+          if (url) {
+            return await this.jigsawStack.vision.vocr({
+              prompt,
+              url,
+              page_range,
+            });
+          } else if (file_store_key) {
+            return await this.jigsawStack.vision.vocr({
+              prompt,
+              file_store_key,
+              page_range,
+            });
+          }
         },
       }),
 
@@ -263,10 +288,17 @@ export class JigsawStackToolSet {
           file_store_key: z.string().optional().describe("File store key of uploaded image"),
         }),
         execute: async ({ url, file_store_key }) => {
-          return await this.jigsawStack.vision.object_detection({
-            url,
-            file_store_key,
-          });
+          if (url) {
+            return await this.jigsawStack.vision.object_detection({
+              url,
+              return_type: "url",
+            });
+          } else if (file_store_key) {
+            return await this.jigsawStack.vision.object_detection({
+              file_store_key,
+              return_type: "url",
+            });
+          }
         },
       }),
 
