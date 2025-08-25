@@ -91,13 +91,11 @@ export class JigsawStackToolSet {
         execute: async ({ url, file_store_key, target_language }) => {
           if (url) {
             return await this.jigsawStack.translate.image({
-              url,
               target_language,
               return_type: "url",
             });
           } else if (file_store_key) {
             return await this.jigsawStack.translate.image({
-              file_store_key,
               target_language,
               return_type: "url",
             });
