@@ -291,30 +291,6 @@ export class JigsawStackToolSet {
         },
       }),
 
-      text_to_speech: tool({
-        description: "Convert text to speech",
-        parameters: z.object({
-          text: z.string().describe("Text to convert to speech"),
-          accent: z.string().optional().describe("Voice accent (see JigsawStack docs for supported accents)"),
-          voice_clone_id: z.string().optional().describe("ID of cloned voice to use"),
-        }),
-        execute: async ({ text, accent, voice_clone_id }) => {
-          await this.jigsawStack.audio.text_to_speech({
-            text,
-            accent: accent as SupportedAccents,
-            voice_clone_id,
-          });
-
-          return {
-            success: true,
-            message: "Successfully converted text to speech",
-            text_length: text.length,
-            accent_used: accent || "default",
-            note: "Audio has been generated. Use jigsawStack.audio.text_to_speech() directly to get the binary data.",
-          };
-        },
-      }),
-
       // ========== VALIDATION TOOLS ==========
       nsfw_detection: tool({
         description: "Detect NSFW (Not Safe For Work) content in images",

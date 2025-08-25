@@ -1,5 +1,6 @@
 // tests/test-helpers.ts - Fix the client structure
 import Audio from "../src/audio/audio";
+import Classification from "../src/classification/index";
 import General from "../src/general/index";
 import { RequestClient } from "../src/request";
 import Validate from "../src/validate/index";
@@ -35,6 +36,9 @@ export function createJigsawStackClient() {
 
     // Web APIs - Include both web scraping AND search
     web: new Web(client),
+
+    // Classification APIs
+    classification: new Classification(client),
 
     // Validation APIs
     validate: new Validate(client),
