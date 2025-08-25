@@ -31,7 +31,17 @@ export class RequestClient {
       ["x-jigsaw-no-request-log"]: disableRequestLogging && "true",
     };
 
-    const _body = isFormData ? body : isFileUpload ? body : JSON.stringify(body);
+    let _body;
+
+    switch (true) {
+      case isFileUpload:
+      case isFormData:
+        _body = body;
+        break;
+      default:
+        _body = JSON.stringify(body);
+    }
+
     const url = `${this.config?.baseURL || baseURL}${path}`;
     const urlParams = searchParams && Object.keys(searchParams).length ? `?${new URLSearchParams(searchParams).toString()}` : "";
 
