@@ -2,10 +2,9 @@ import { beforeEach, describe, test } from "node:test";
 import { createJigsawStackClient, expectArray, expectProperty, expectSuccess, expectType } from "./test-helpers.js";
 
 const TEST_URLS = {
-  image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
+  image: "https://jigsawstack.com/preview/object-detection-example-input.jpg",
   pdf: "https://www.w3.org/WAI/WCAG21/working-examples/pdf-table/table.pdf",
-  textImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Vd-Orig.png/256px-Vd-Orig.png",
-  receipt: "https://jigsawstack.com/preview/receipt-example.jpg", // Example receipt image
+  textImage: "https://jigsawstack.com/preview/vocr-example.jpg",
 };
 
 // Comprehensive VOCR API Tests
@@ -32,6 +31,19 @@ describe("VOCR (Visual OCR) API", () => {
         url: TEST_URLS.textImage,
       } as any);
       throw new Error("Expected API call to fail with missing prompt parameter");
+    } catch (error) {
+      expectType(error, "object");
+    }
+  });
+
+  test("should work with file upload", async () => {
+    try {
+      const imageResponse = await fetch(TEST_URLS.image);
+      const imageBlob = await imageResponse.blob();
+      const result = await client.vision.vocr(imageBlob);
+
+      expectSuccess(result);
+      expectType(result, "object");
     } catch (error) {
       expectType(error, "object");
     }
@@ -734,5 +746,14 @@ describe("Object Detection API", () => {
     if (result.annotated_image !== undefined) {
       expectType(result.annotated_image, "string");
     }
+  });
+
+  test("should work with file upload", async () => {
+    const imageResponse = await fetch(TEST_URLS.image);
+    const imageBlob = await imageResponse.blob();
+    const result = await client.vision.object_detection(imageBlob);
+
+    expectSuccess(result);
+    expectType(result, "object");
   });
 });

@@ -66,4 +66,14 @@ describe("STT APIs", () => {
     expectProperty(result, "text");
     expectType(result.text, "string");
   });
+
+  test("speech to text with file upload", async () => {
+    const audioResponse = await fetch("https://jigsawstack.com/preview/stt-example.wav");
+    const audioBlob = await audioResponse.blob();
+    const result = await client.audio.speech_to_text(audioBlob);
+
+    expectSuccess(result);
+    expectProperty(result, "text");
+    expectType(result.text, "string");
+  });
 });

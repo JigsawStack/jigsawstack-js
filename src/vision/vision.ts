@@ -19,7 +19,6 @@ class Vision {
   async object_detection(params: ObjectDetectionParams | Blob | Buffer, options?: ObjectDetectionParams): Promise<ObjectDetectionResponse> {
     if (params instanceof Blob || params instanceof Buffer) {
       const formData = createFileUploadFormData(params, options);
-      console.log(formData);
       return await this.client.fetchJSS("/object_detection", "POST", formData);
     }
     return await this.client.fetchJSS("/object_detection", "POST", params);
