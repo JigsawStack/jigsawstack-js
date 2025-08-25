@@ -2,10 +2,9 @@ import { beforeEach, describe, test } from "node:test";
 import { createJigsawStackClient, expectArray, expectProperty, expectSuccess, expectType } from "./test-helpers.js";
 
 const TEST_URLS = {
-  image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
+  image: "https://jigsawstack.com/preview/object-detection-example-input.jpg",
   pdf: "https://www.w3.org/WAI/WCAG21/working-examples/pdf-table/table.pdf",
   textImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Vd-Orig.png/256px-Vd-Orig.png",
-  receipt: "https://jigsawstack.com/preview/receipt-example.jpg", // Example receipt image
 };
 
 // Comprehensive VOCR API Tests
