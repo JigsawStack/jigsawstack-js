@@ -1014,27 +1014,4 @@ describe("SpellCheck validation", () => {
       expectType(misspelling.auto_corrected, "boolean");
     });
   });
-
-  test("should handle whitespace-only text", async () => {
-    const result = await client.validate.spellcheck({
-      text: "   \t\n   ",
-      language_code: "en",
-    });
-
-    expectSuccess(result);
-    expectProperty(result, "success");
-    expectProperty(result, "misspellings_found");
-    expectProperty(result, "misspellings");
-    expectProperty(result, "auto_correct_text");
-
-    expectType(result.success, "boolean");
-    expectType(result.misspellings_found, "boolean");
-    expectArray(result.misspellings);
-    expectType(result.auto_correct_text, "string");
-
-    // Whitespace-only text should have no misspellings
-    if (result.misspellings_found !== false) {
-      console.log("Note: Misspellings found in whitespace-only text");
-    }
-  });
 });

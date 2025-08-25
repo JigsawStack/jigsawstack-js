@@ -21,6 +21,7 @@ export function createJigsawStackClient() {
     sentiment: (params: any) => new General(client).sentiment(params),
     translate: {
       text: (params: any) => new General(client).translate.text(params),
+      image: (params: any) => new General(client).translate.image(params),
     },
     summary: (params: any) => new General(client).summary(params),
     embedding: (params: any) => new General(client).embedding(params),
