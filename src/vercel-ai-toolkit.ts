@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { BaseConfig } from "../types";
+import { LanguageCodes } from "./audio/interfaces";
 import { JigsawStack } from "./core";
 import { tool } from "./vercel-tool";
 
@@ -283,7 +284,7 @@ export class JigsawStackToolSet {
           return await this.jigsawStack.audio.speech_to_text({
             url,
             file_store_key,
-            language,
+            language: language as LanguageCodes | "auto",
             translate,
             by_speaker,
           });
