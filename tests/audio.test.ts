@@ -76,4 +76,25 @@ describe("STT APIs", () => {
     expectProperty(result, "text");
     expectType(result.text, "string");
   });
+
+  test("speech to text with auto language", async () => {
+    const result = await client.audio.speech_to_text({
+      url: audioUrl,
+      language: "auto",
+    });
+
+    expectSuccess(result);
+    expectProperty(result, "text");
+    expectType(result.text, "string");
+  });
+
+  test("speech to text with invalid language", async () => {
+    const result = await client.audio.speech_to_text({
+      url: audioUrl,
+    });
+
+    expectSuccess(result);
+    expectProperty(result, "text");
+    expectType(result.text, "string");
+  });
 });
