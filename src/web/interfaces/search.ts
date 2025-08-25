@@ -1,6 +1,7 @@
 export interface SearchParams {
   query: string;
   spell_check?: boolean;
+  max_results?: number;
   safe_search?: "strict" | "moderate" | "off";
   ai_overview?: boolean;
   byo_urls?: string[];

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { BaseConfig } from "../types";
-import { SupportedAccents } from "./audio/interfaces";
+import { LanguageCodes } from "./audio/interfaces";
 import { JigsawStack } from "./core";
 import { tool } from "./vercel-tool";
 
@@ -318,34 +318,10 @@ export class JigsawStackToolSet {
           return await this.jigsawStack.audio.speech_to_text({
             url,
             file_store_key,
-            language,
+            language: language as LanguageCodes | "auto",
             translate,
             by_speaker,
           });
-        },
-      }),
-
-      text_to_speech: tool({
-        description: "Convert text to speech",
-        parameters: z.object({
-          text: z.string().describe("Text to convert to speech"),
-          accent: z.string().optional().describe("Voice accent (see JigsawStack docs for supported accents)"),
-          voice_clone_id: z.string().optional().describe("ID of cloned voice to use"),
-        }),
-        execute: async ({ text, accent, voice_clone_id }) => {
-          await this.jigsawStack.audio.text_to_speech({
-            text,
-            accent: accent as SupportedAccents,
-            voice_clone_id,
-          });
-
-          return {
-            success: true,
-            message: "Successfully converted text to speech",
-            text_length: text.length,
-            accent_used: accent || "default",
-            note: "Audio has been generated. Use jigsawStack.audio.text_to_speech() directly to get the binary data.",
-          };
         },
       }),
 

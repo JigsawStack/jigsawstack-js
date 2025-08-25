@@ -1223,5 +1223,3 @@ describe("Web Search Suggestions API", () => {
     expectArray(result.suggestions);
   });
 });
-
-

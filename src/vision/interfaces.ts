@@ -1,5 +1,7 @@
 export type VOCRParams = {
-  prompt: string | string[];
+  prompt?: string | string[];
+  url?: string;
+  file_store_key?: string;
   page_range?: Array<number>;
 } & ({ url: string; file_store_key?: never } | { file_store_key: string; url?: never });
 

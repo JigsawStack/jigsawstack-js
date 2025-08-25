@@ -2,7 +2,6 @@ import "isomorphic-fetch";
 import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
 import General from "./general";
-import PromptEngine from "./prompt_engine";
 import { RequestClient } from "./request";
 import { File } from "./store/file";
 import Validate from "./validate";
@@ -21,7 +20,6 @@ export const JigsawStack = (config?: BaseConfig) => {
   const web = new Web(client);
   const vision = new Vision(client);
   const audio = new AudioApis(client);
-  const promptengine = new PromptEngine(client);
   const file = new File(client);
   const validate = new Validate(client);
   const store = {
@@ -49,7 +47,6 @@ export const JigsawStack = (config?: BaseConfig) => {
       search: web.search,
       search_suggestions: web.search_suggestions,
     },
-    prompt_engine: promptengine,
     store,
     validate,
   };
