@@ -1,6 +1,7 @@
 import { BaseResponse } from "../../types";
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
+import { createFileUploadFormData } from "../utils";
 import {
   EmbeddingParams,
   EmbeddingResponse,
@@ -36,7 +37,8 @@ class General {
       options?: Omit<TranslateImageParams, "file_store_key" | "url">
     ): Promise<ReturnType<typeof respToFileChoice>> => {
       if (params instanceof Blob || params instanceof Buffer) {
-        const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
+        const formData = createFileUploadFormData(params, options);
+        const resp = await this.client.fetchJSS("/ai/translate/image", "POST", formData);
         return respToFileChoice(resp);
       }
       const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params);

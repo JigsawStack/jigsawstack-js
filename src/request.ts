@@ -2,6 +2,7 @@ import { BaseConfig } from "../types";
 import { removeUndefinedProperties } from "./helpers";
 
 const baseURL = "https://api.jigsawstack.com/v1";
+// const baseURL = "http://localhost:3000";
 
 export class RequestClient {
   constructor(private readonly config: BaseConfig) {}
@@ -9,7 +10,7 @@ export class RequestClient {
   readonly fetchJSS = async (
     path: string,
     method: "POST" | "GET" | "DELETE",
-    body?: Record<string, any> | Blob,
+    body?: Record<string, any> | Blob | FormData,
     searchParams?: {
       [key: string]: any;
     },
@@ -19,17 +20,18 @@ export class RequestClient {
   ) => {
     const disableRequestLogging = this.config?.disableRequestLogging;
     const isFileUpload = body instanceof Blob || body instanceof Buffer;
+    const isFormData = body instanceof FormData;
 
     searchParams = searchParams ? removeUndefinedProperties(searchParams) : undefined;
 
     const _headers = {
       "x-api-key": this.config?.apiKey,
-      "Content-Type": isFileUpload ? "application/octet-stream" : "application/json",
+      ...(!isFormData && { "Content-Type": isFileUpload ? "application/octet-stream" : "application/json" }),
       ...headers,
       ["x-jigsaw-no-request-log"]: disableRequestLogging && "true",
     };
 
-    const _body = isFileUpload ? body : JSON.stringify(body);
+    const _body = isFormData ? body : isFileUpload ? body : JSON.stringify(body);
     const url = `${this.config?.baseURL || baseURL}${path}`;
     const urlParams = searchParams && Object.keys(searchParams).length ? `?${new URLSearchParams(searchParams).toString()}` : "";
 

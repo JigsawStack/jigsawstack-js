@@ -1,6 +1,6 @@
 import { RequestClient } from "../request";
+import { createFileUploadFormData } from "../utils";
 import {
-  EmailValidationResponse,
   NSFWParams,
   NSFWValidationResponse,
   ProfanityParams,
@@ -16,8 +16,14 @@ class Validate {
     this.spamcheck = this.spamcheck.bind(this);
   }
 
-  nsfw(params: NSFWParams | Blob | Buffer): Promise<NSFWValidationResponse> {
-    return this.client.fetchJSS("/validate/nsfw", "POST", params);
+  nsfw(params: NSFWParams): Promise<NSFWValidationResponse>;
+  nsfw(file: Blob | Buffer, params?: Omit<NSFWParams, "url" | "file_store_key">): Promise<NSFWValidationResponse>;
+  async nsfw(params: NSFWParams | Blob | Buffer, options?: NSFWParams): Promise<NSFWValidationResponse> {
+    if (params instanceof Blob || params instanceof Buffer) {
+      const formData = createFileUploadFormData(params, options);
+      return await this.client.fetchJSS("/validate/nsfw", "POST", formData);
+    }
+    return await this.client.fetchJSS("/validate/nsfw", "POST", params);
   }
 
   profanity = async ({ text, censor_replacement = "*" }: ProfanityParams): Promise<ProfanityValidationResponse> => {
