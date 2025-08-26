@@ -3,7 +3,7 @@ export type VOCRParams = {
   url?: string;
   file_store_key?: string;
   page_range?: Array<number>;
-} & ({ url: string; file_store_key?: never } | { file_store_key: string; url?: never });
+};
 
 interface Bounds {
   top_left: {
@@ -47,11 +47,13 @@ export interface VOCRResponse {
 }
 
 export type ObjectDetectionParams = {
+  url?: string;
+  file_store_key?: string;
   prompts?: string[];
   features?: ("object_detection" | "gui")[];
   annotated_image?: boolean;
   return_type?: "url" | "base64";
-} & ({ url: string; file_store_key?: never } | { file_store_key: string; url?: never });
+};
 
 export interface ObjectDetectionResponse {
   // Optional annotated image - included only if annotated_image=true and objects/gui_elements exist
