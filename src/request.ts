@@ -18,7 +18,6 @@ export class RequestClient {
       [key: string]: string;
     }
   ) => {
-    const disableRequestLogging = this.config?.disableRequestLogging;
     const isFileUpload = body instanceof Blob || body instanceof Buffer;
     const isFormData = body instanceof FormData;
 
@@ -27,8 +26,8 @@ export class RequestClient {
     const _headers = {
       "x-api-key": this.config?.apiKey,
       ...(!isFormData && { "Content-Type": isFileUpload ? "application/octet-stream" : "application/json" }),
+      ...this.config?.headers,
       ...headers,
-      ["x-jigsaw-no-request-log"]: disableRequestLogging && "true",
     };
 
     let _body;

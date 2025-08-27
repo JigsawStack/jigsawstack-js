@@ -1,6 +1,7 @@
 import "isomorphic-fetch";
 import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
+import Classification from "./classification/index";
 import General from "./general";
 import { RequestClient } from "./request";
 import { File } from "./store/file";
@@ -27,6 +28,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     retrieve: file.retrieve,
     delete: file.delete,
   };
+  const classification = new Classification(client);
 
   return {
     sentiment: general.sentiment,
@@ -38,16 +40,17 @@ export const JigsawStack = (config?: BaseConfig) => {
     embedding: general.embedding,
     audio,
     vision: {
-      vocr: vision.vocr,
-      object_detection: vision.object_detection,
+      vocr: vision.vocr.bind(vision),
+      object_detection: vision.object_detection.bind(vision),
     },
     web: {
-      ai_scrape: web.ai_scrape,
-      html_to_any: web.html_to_any,
-      search: web.search,
-      search_suggestions: web.search_suggestions,
+      ai_scrape: web.ai_scrape.bind(web),
+      html_to_any: web.html_to_any.bind(web),
+      search: web.search.bind(web),
+      search_suggestions: web.search_suggestions.bind(web),
     },
     store,
     validate,
+    classification,
   };
 };

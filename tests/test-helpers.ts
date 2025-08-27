@@ -1,11 +1,5 @@
 // tests/test-helpers.ts - Fix the client structure
-import Audio from "../src/audio/audio";
-import Classification from "../src/classification/index";
-import General from "../src/general/index";
-import { RequestClient } from "../src/request";
-import Validate from "../src/validate/index";
-import Vision from "../src/vision/vision";
-import Web from "../src/web/web";
+import { JigsawStack } from "jigsawstack";
 
 export function createJigsawStackClient() {
   const apiKey = process.env.JIGSAWSTACK_API_KEY;
@@ -14,36 +8,7 @@ export function createJigsawStackClient() {
     throw new Error("JIGSAWSTACK_API_KEY environment variable is required for testing");
   }
 
-  const client = new RequestClient({ apiKey });
-
-  return {
-    // General APIs
-    sentiment: (params: any) => new General(client).sentiment(params),
-    translate: {
-      text: (params: any) => new General(client).translate.text(params),
-      image: (params: any) => new General(client).translate.image(params),
-    },
-    summary: (params: any) => new General(client).summary(params),
-    embedding: (params: any) => new General(client).embedding(params),
-    text_to_sql: (params: any) => new General(client).text_to_sql(params),
-    prediction: (params: any) => new General(client).prediction(params),
-    image_generation: (params: any) => new General(client).image_generation(params),
-
-    // Audio APIs
-    audio: new Audio(client),
-
-    // Vision APIs
-    vision: new Vision(client),
-
-    // Web APIs - Include both web scraping AND search
-    web: new Web(client),
-
-    // Classification APIs
-    classification: new Classification(client),
-
-    // Validation APIs
-    validate: new Validate(client),
-  };
+  return JigsawStack({ apiKey });
 }
 
 export function expectSuccess(result: any): void {

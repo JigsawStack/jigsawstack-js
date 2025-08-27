@@ -11,5 +11,5 @@ export interface BaseResponse {
 export interface BaseConfig {
   apiKey?: string;
   baseURL?: string;
-  disableRequestLogging?: boolean; // Controls how requests are logged. Default is false.
+  headers?: Record<string, string>; // Additional headers to be sent with the request.
 }
