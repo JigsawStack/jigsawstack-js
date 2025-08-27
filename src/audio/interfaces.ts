@@ -11,16 +11,13 @@ export interface SpeechToTextParams {
   chunk_duration?: number;
 }
 
-export interface SpeechToTextResponse extends BaseResponse {
+export interface SpeechToTextSyncResponse extends BaseResponse {
   text: string;
   chunks: Array<{
     timestamp: number[];
     text: string;
   }>;
-  status?: "processing" | "error";
-  id?: string;
   speakers?: {
-    //  available when by_speaker is true
     speaker: string;
     timestamp: number[];
     text: string;
