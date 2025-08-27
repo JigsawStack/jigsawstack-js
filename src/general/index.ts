@@ -1,6 +1,7 @@
 import { BaseResponse } from "../../types";
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
+import { createFileUploadFormData } from "../utils";
 import {
   EmbeddingParams,
   EmbeddingResponse,
@@ -38,7 +39,8 @@ class General {
       options?: Omit<TranslateImageParams, "file_store_key" | "url">
     ): Promise<ReturnType<typeof respToFileChoice>> => {
       if (params instanceof Blob || params instanceof Buffer) {
-        const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params, options);
+        const formData = createFileUploadFormData(params, options);
+        const resp = await this.client.fetchJSS("/ai/translate/image", "POST", formData);
         return respToFileChoice(resp);
       }
       const resp = await this.client.fetchJSS("/ai/translate/image", "POST", params);
@@ -77,7 +79,8 @@ class General {
   embedding(file: Blob | Buffer, params: Omit<EmbeddingParams, "url" | "file_store_key" | "file_content">): Promise<EmbeddingResponse>;
   async embedding(params: EmbeddingParams | Blob | Buffer, options?: EmbeddingParams): Promise<EmbeddingResponse> {
     if (params instanceof Blob || params instanceof Buffer) {
-      return await this.client.fetchJSS("/embedding", "POST", params, options);
+      const formData = createFileUploadFormData(params, options);
+      return await this.client.fetchJSS("/embedding", "POST", formData);
     }
     return await this.client.fetchJSS("/embedding", "POST", params);
   }
