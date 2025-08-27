@@ -1,5 +1,33 @@
 import { BaseResponse } from "../../types";
 
+export type TextToSQLParams = {
+  prompt: string;
+  database?: "postgresql" | "mysql" | "sqlite";
+  sql_schema?: string;
+  file_store_key?: string;
+};
+
+export interface ImageGenerationParams {
+  prompt: string;
+  aspect_ratio?: "1:1" | "16:9" | "21:9" | "3:2" | "2:3" | "4:5" | "5:4" | "3:4" | "4:3" | "9:16" | "9:21";
+  width?: number;
+  height?: number;
+  steps?: number;
+  output_format?: "png" | "svg";
+  return_type?: "url" | "binary" | "base64";
+  advance_config?: {
+    negative_prompt?: string;
+    guidance?: number;
+    seed?: number;
+  };
+  url?: string;
+  file_store_key?: string;
+}
+
+export interface ImageGenerationResponse extends BaseResponse {
+  url: string;
+}
+
 export interface SentimentResponse extends BaseResponse {
   sentiment: {
     emotion: string;
@@ -24,12 +52,11 @@ export interface TranslateParams {
   text: string | string[];
 }
 
-export interface TranslateImageParams {
-  target_language: string;
+export type TranslateImageParams = {
   url?: string;
-  file_store_key?: string;
+  target_language: string;
   return_type?: "url" | "binary" | "base64";
-}
+};
 
 export interface SpeechToTextResponse extends BaseResponse {
   text: string;
