@@ -3,11 +3,9 @@ import { BaseResponse } from "../../types";
 export type TextToSQLParams = {
   prompt: string;
   database?: "postgresql" | "mysql" | "sqlite";
-} & (
-  | { sql_schema: string; file_store_key?: never }
-  | { file_store_key: string; sql_schema?: never }
-  | { sql_schema?: undefined; file_store_key?: undefined }
-);
+  sql_schema?: string;
+  file_store_key?: string;
+};
 
 export interface ImageGenerationParams {
   prompt: string;
