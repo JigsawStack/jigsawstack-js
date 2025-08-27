@@ -426,7 +426,7 @@ describe("NSFW validation", () => {
 
   test("should work with different image formats", async () => {
     const imageUrls = [
-      imageUrl, // jpg 
+      imageUrl, // jpg
     ];
 
     // Run all API calls in parallel
