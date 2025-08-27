@@ -25,7 +25,7 @@ export class RequestClient {
 
     const _headers = {
       "x-api-key": this.config?.apiKey,
-      "Content-Type": isFileUpload ? "application/octet-stream" : "application/json",
+      ...(!isFormData && { "Content-Type": isFileUpload ? "application/octet-stream" : "application/json" }),
       ...this.config?.headers,
       ...headers,
     };

@@ -7,6 +7,7 @@ import { File } from "./store/file";
 import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
+import Classification from "./classification/index";
 
 export const JigsawStack = (config?: BaseConfig) => {
   const _apiKey = config?.apiKey || process?.env?.JIGSAWSTACK_API_KEY;
@@ -27,6 +28,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     retrieve: file.retrieve,
     delete: file.delete,
   };
+  const classification = new Classification(client);
 
   return {
     sentiment: general.sentiment,
@@ -38,16 +40,17 @@ export const JigsawStack = (config?: BaseConfig) => {
     embedding: general.embedding,
     audio,
     vision: {
-      vocr: vision.vocr,
-      object_detection: vision.object_detection,
+      vocr: vision.vocr.bind(vision),
+      object_detection: vision.object_detection.bind(vision),
     },
     web: {
-      ai_scrape: web.ai_scrape,
-      html_to_any: web.html_to_any,
-      search: web.search,
-      search_suggestions: web.search_suggestions,
+      ai_scrape: web.ai_scrape.bind(web),
+      html_to_any: web.html_to_any.bind(web),
+      search: web.search.bind(web),
+      search_suggestions: web.search_suggestions.bind(web),
     },
     store,
     validate,
+    classification,
   };
 };
