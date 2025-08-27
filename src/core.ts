@@ -1,13 +1,13 @@
 import "isomorphic-fetch";
 import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
+import Classification from "./classification/index";
 import General from "./general";
 import { RequestClient } from "./request";
 import { File } from "./store/file";
 import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
-import Classification from "./classification/index";
 
 export const JigsawStack = (config?: BaseConfig) => {
   const _apiKey = config?.apiKey || process?.env?.JIGSAWSTACK_API_KEY;
