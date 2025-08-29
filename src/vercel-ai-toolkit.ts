@@ -3,7 +3,6 @@ import { BaseConfig } from "../types";
 import { LanguageCodes } from "./audio/interfaces";
 import { JigsawStack } from "./core";
 import { tool } from "./vercel-tool";
-
 export interface JigsawStackToolOptions {
   tools?: string[];
 }
