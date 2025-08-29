@@ -14,7 +14,7 @@ export class JigsawStackToolSet {
     this.jigsawStack = JigsawStack(config);
   }
 
-  async getTools(options: JigsawStackToolOptions = {}): Promise<Record<string, any>> {
+  async getTools(options: JigsawStackToolOptions = {}) {
     const { tools: requestedTools = [] } = options;
     const availableTools = this.getAllTools();
 
