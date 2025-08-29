@@ -1,4 +1,5 @@
-export interface EmailValidationResponse {
+import { BaseResponse } from "../../types";
+export interface EmailValidationResponse extends BaseResponse {
   email: string;
   disposable: boolean;
   role_account: boolean;
@@ -9,7 +10,7 @@ export interface EmailValidationResponse {
   valid: boolean;
 }
 
-export interface NSFWValidationResponse {
+export interface NSFWValidationResponse extends BaseResponse {
   success: boolean;
   nsfw: boolean;
   nudity: boolean;
@@ -24,7 +25,7 @@ export interface ProfanityParams {
   censor_replacement?: string;
 }
 
-export interface ProfanityValidationResponse {
+export interface ProfanityValidationResponse extends BaseResponse {
   success: boolean;
   message: string;
   clean_text: string;
@@ -41,7 +42,7 @@ export interface SpellCheckParams {
   language_code?: string;
 }
 
-export interface SpellCheckValidationResponse {
+export interface SpellCheckValidationResponse extends BaseResponse {
   success: boolean;
   misspellings_found: boolean;
   misspellings: Array<{
@@ -54,7 +55,7 @@ export interface SpellCheckValidationResponse {
   auto_correct_text: string;
 }
 
-export interface SpamCheckValidationResponse {
+export interface SpamCheckValidationResponse extends BaseResponse {
   success: boolean;
   check: {
     is_spam: boolean;
@@ -62,7 +63,7 @@ export interface SpamCheckValidationResponse {
   };
 }
 
-export interface SpamCheckValidationArrayResponse {
+export interface SpamCheckValidationArrayResponse extends BaseResponse {
   success: boolean;
   check: {
     is_spam: boolean;
