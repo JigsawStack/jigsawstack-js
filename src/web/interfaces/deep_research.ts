@@ -1,3 +1,4 @@
+import { BaseResponse } from "../../../types";
 // Input parameters interface for reference
 export interface DeepResearchParams {
   query: string;
@@ -10,8 +11,7 @@ export interface DeepResearchParams {
   target_output_tokens?: number;
 }
 
-export interface DeepResearchResponse {
-  success: boolean;
+export interface DeepResearchResponse extends BaseResponse {
   query: string;
   results: string;
   sources: SearchResult[];

@@ -1,3 +1,5 @@
+import { BaseResponse } from "../../types";
+
 export type VOCRParams = {
   prompt?: string | string[];
   url?: string;
@@ -24,8 +26,7 @@ interface Bounds {
   };
 }
 
-export interface VOCRResponse {
-  success: boolean;
+export interface VOCRResponse extends BaseResponse {
   context: string;
   width: number;
   height: number;
@@ -55,7 +56,7 @@ export type ObjectDetectionParams = {
   return_type?: "url" | "base64";
 };
 
-export interface ObjectDetectionResponse {
+export interface ObjectDetectionResponse extends BaseResponse {
   // Optional annotated image - included only if annotated_image=true and objects/gui_elements exist
   annotated_image?: string; // URL or base64 string depending on return_type
 

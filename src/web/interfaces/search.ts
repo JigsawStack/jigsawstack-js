@@ -1,3 +1,4 @@
+import { BaseResponse } from "../../../types";
 export interface SearchParams {
   query: string;
   spell_check?: boolean;
@@ -23,8 +24,7 @@ interface RelatedIndex {
   is_safe?: boolean;
 }
 
-export interface SearchResponse {
-  success: boolean;
+export interface SearchResponse extends BaseResponse {
   query: string;
   ai_overview?: string;
   spell_fixed: boolean;
@@ -72,7 +72,6 @@ export interface SearchResponse {
   }[];
 }
 
-export interface SuggestionResponse {
-  success: boolean;
+export interface SuggestionResponse extends BaseResponse {
   suggestions: string[];
 }
