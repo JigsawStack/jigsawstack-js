@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { BaseConfig } from "../types";
 import { LanguageCodes } from "./audio/interfaces";
-import { JigsawStack } from "./core";
+// import { JigsawStack } from "./core";
 import { tool } from "./vercel-tool";
-
+import { JigsawStack } from "../dist/index.cjs";
 export interface JigsawStackToolOptions {
   tools?: string[];
 }
@@ -15,7 +15,7 @@ export class JigsawStackToolSet {
     this.jigsawStack = JigsawStack(config);
   }
 
-  async getTools(options: JigsawStackToolOptions = {}) {
+  async getTools(options: JigsawStackToolOptions = {}): Promise<Record<string, any>> {
     const { tools: requestedTools = [] } = options;
     const availableTools = this.getAllTools();
 
