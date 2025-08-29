@@ -1,4 +1,5 @@
-export interface CookieParameter {
+import { BaseResponse } from "../../../types";
+interface CookieParameter {
   name: string;
   value: string;
   url?: string;
@@ -49,20 +50,19 @@ export interface BaseAIScrapeParams {
   features?: Array<"meta" | "link"> | null;
 }
 
-export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
+interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
   selectors: Array<string>;
   element_prompts?: string[];
 }
 
-export interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
+interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
   selectors?: Array<string>;
   element_prompts?: string[];
 }
 
 export type AIScrapeParams = AIScrapeParamsWithSelector | AIScrapeParamsWithPrompts;
 
-export interface AIScrapeResponse {
-  success: boolean;
+export interface AIScrapeResponse extends BaseResponse {
   data: Array<{
     key: string;
     selector: string;

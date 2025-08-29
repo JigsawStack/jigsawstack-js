@@ -1,7 +1,7 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { DeepResearchParams, DeepResearchResponse } from "./interfaces/deep_research";
-import { HTMLAnyParams } from "./interfaces/html_to_any";
+import { HTMLAnyParams, HTMLAnyURLResponse, HTMLAnyBinaryResponse, HTMLAnyURLParams, HTMLAnyBinaryParams } from "./interfaces/html_to_any";
 import { AIScrapeParams, AIScrapeResponse } from "./interfaces/scrape";
 import { SearchParams, SearchResponse, SuggestionResponse } from "./interfaces/search";
 class Web {
@@ -11,10 +11,17 @@ class Web {
     return await this.client.fetchJSS("/ai/scrape", "POST", params);
   };
 
-  html_to_any = async (params: HTMLAnyParams) => {
-    const resp = await this.client.fetchJSS("/web/html_to_any", "POST", params);
-    return respToFileChoice(resp);
-  };
+  // Simplified function overloads
+  html_to_any(params: HTMLAnyURLParams): Promise<HTMLAnyURLResponse>;
+  html_to_any(params: HTMLAnyBinaryParams): Promise<HTMLAnyBinaryResponse>;
+  html_to_any(params: HTMLAnyParams): Promise<HTMLAnyURLResponse | HTMLAnyBinaryResponse>;
+  async html_to_any(params: HTMLAnyParams): Promise<HTMLAnyURLResponse | HTMLAnyBinaryResponse> {
+    if (params.return_type === "binary") {
+      return (await this.client.fetchJSS("/web/html_to_any", "POST", params)) as HTMLAnyBinaryResponse;
+    }
+    // For both "url" and "base64", return the same structure with url property
+    return (await this.client.fetchJSS("/web/html_to_any", "POST", params)) as HTMLAnyURLResponse;
+  }
 
   deep_research = async (params: DeepResearchParams): Promise<DeepResearchResponse> => {
     return await this.client.fetchJSS("/web/deep_research", "POST", params);

@@ -27,7 +27,6 @@ interface Bounds {
 }
 
 export interface VOCRResponse extends BaseResponse {
-  success: boolean;
   context: string;
   width: number;
   height: number;

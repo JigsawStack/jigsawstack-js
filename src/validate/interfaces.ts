@@ -11,7 +11,6 @@ export interface EmailValidationResponse extends BaseResponse {
 }
 
 export interface NSFWValidationResponse extends BaseResponse {
-  success: boolean;
   nsfw: boolean;
   nudity: boolean;
   gore: boolean;
@@ -26,7 +25,6 @@ export interface ProfanityParams {
 }
 
 export interface ProfanityValidationResponse extends BaseResponse {
-  success: boolean;
   message: string;
   clean_text: string;
   profanities: {
@@ -43,7 +41,6 @@ export interface SpellCheckParams {
 }
 
 export interface SpellCheckValidationResponse extends BaseResponse {
-  success: boolean;
   misspellings_found: boolean;
   misspellings: Array<{
     word: string;
@@ -56,7 +53,6 @@ export interface SpellCheckValidationResponse extends BaseResponse {
 }
 
 export interface SpamCheckValidationResponse extends BaseResponse {
-  success: boolean;
   check: {
     is_spam: boolean;
     score: number;
@@ -64,7 +60,6 @@ export interface SpamCheckValidationResponse extends BaseResponse {
 }
 
 export interface SpamCheckValidationArrayResponse extends BaseResponse {
-  success: boolean;
   check: {
     is_spam: boolean;
     score: number;
