@@ -9,6 +9,12 @@ import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
 
+type BoundMethod<T> = T extends (...args: any[]) => any ? T : never;
+
+const createBoundMethod = <T extends (...args: any[]) => any>(obj: any, method: T): BoundMethod<T> => {
+  return ((...args: any[]) => method.apply(obj, args)) as BoundMethod<T>;
+};
+
 export const JigsawStack = (config?: BaseConfig) => {
   const _apiKey = config?.apiKey || process?.env?.JIGSAWSTACK_API_KEY;
 
@@ -40,8 +46,8 @@ export const JigsawStack = (config?: BaseConfig) => {
     embedding: general.embedding,
     audio,
     vision: {
-      vocr: vision.vocr,
-      object_detection: vision.object_detection,
+      vocr: createBoundMethod(vision, vision.vocr),
+      object_detection: createBoundMethod(vision, vision.object_detection),
     },
     web: {
       ai_scrape: web.ai_scrape,
