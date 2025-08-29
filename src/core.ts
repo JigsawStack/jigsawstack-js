@@ -40,7 +40,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     embedding: general.embedding,
     audio,
     vision: {
-      vocr:  vision.vocr,
+      vocr: vision.vocr,
       object_detection: vision.object_detection,
     },
     web: {
