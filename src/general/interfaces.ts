@@ -116,6 +116,6 @@ export interface EmbeddingParams {
 }
 
 export interface EmbeddingResponse extends BaseResponse {
-  embeddings: number[];
+  embeddings: number[][];
   chunks: string[]; // only for text
 }
