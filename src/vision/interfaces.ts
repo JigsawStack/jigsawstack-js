@@ -7,27 +7,8 @@ export type VOCRParams = {
   page_range?: Array<number>;
 };
 
-interface Bounds {
-  top_left: {
-    x: number;
-    y: number;
-  };
-  top_right: {
-    x: number;
-    y: number;
-  };
-  bottom_left: {
-    x: number;
-    y: number;
-  };
-  bottom_right: {
-    x: number;
-    y: number;
-  };
-}
-
 export interface VOCRResponse extends BaseResponse {
-  context: string;
+  context: string | Record<string, string[]>;
   width: number;
   height: number;
   tags: string[];
@@ -54,6 +35,7 @@ export type ObjectDetectionParams = {
   features?: ("object_detection" | "gui")[];
   annotated_image?: boolean;
   return_type?: "url" | "base64";
+  return_masks: 
 };
 
 export interface ObjectDetectionResponse extends BaseResponse {
@@ -90,4 +72,23 @@ interface BoundingBox {
 interface Point {
   x: number;
   y: number;
+}
+
+interface Bounds {
+  top_left: {
+    x: number;
+    y: number;
+  };
+  top_right: {
+    x: number;
+    y: number;
+  };
+  bottom_left: {
+    x: number;
+    y: number;
+  };
+  bottom_right: {
+    x: number;
+    y: number;
+  };
 }
