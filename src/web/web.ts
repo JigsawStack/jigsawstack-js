@@ -1,7 +1,7 @@
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { DeepResearchParams, DeepResearchResponse } from "./interfaces/deep_research";
-import { HTMLAnyParams, HTMLAnyURLResponse, HTMLAnyBinaryResponse, HTMLAnyURLParams, HTMLAnyBinaryParams } from "./interfaces/html_to_any";
+import { HTMLAnyBinaryParams, HTMLAnyBinaryResponse, HTMLAnyParams, HTMLAnyURLParams, HTMLAnyURLResponse } from "./interfaces/html_to_any";
 import { AIScrapeParams, AIScrapeResponse } from "./interfaces/scrape";
 import { SearchParams, SearchResponse, SuggestionResponse } from "./interfaces/search";
 class Web {
