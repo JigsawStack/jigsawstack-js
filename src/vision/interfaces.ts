@@ -35,7 +35,7 @@ export type ObjectDetectionParams = {
   features?: ("object_detection" | "gui")[];
   annotated_image?: boolean;
   return_type?: "url" | "base64";
-  return_masks: 
+  return_masks?: boolean;
 };
 
 export interface ObjectDetectionResponse extends BaseResponse {
@@ -47,6 +47,8 @@ export interface ObjectDetectionResponse extends BaseResponse {
 
   // Optional detected objects - included only if features includes "object_detection"
   objects?: DetectedObject[];
+
+  tags?: string[];
 }
 
 interface GuiElement {
