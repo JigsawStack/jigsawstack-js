@@ -11,17 +11,25 @@ export interface SpeechToTextParams {
   chunk_duration?: number;
 }
 
-export interface SpeechToTextSyncResponse extends BaseResponse {
+export interface SpeechToTextParamsWithWebhook extends SpeechToTextParams {
+  webhook_url: string;
+}
+
+export interface SpeechToTextParamsWithoutWebhook extends Omit<SpeechToTextParams, "webhook_url"> {
+  webhook_url?: never;
+}
+
+export interface SpeechToTextResponse extends BaseResponse {
   text: string;
   chunks: Array<{
     timestamp: number[];
     text: string;
   }>;
-  speakers?: {
+  speakers?: Array<{
     speaker: string;
     timestamp: number[];
     text: string;
-  }[];
+  }>;
 }
 
 export interface SpeechToTextWebhookResponse extends BaseResponse {
