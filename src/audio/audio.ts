@@ -1,34 +1,28 @@
 import { RequestClient } from "../request";
 import { createFileUploadFormData } from "../utils";
-import { 
-  SpeechToTextParams, 
-  SpeechToTextResponse, 
-  SpeechToTextWebhookResponse,
+import {
+  SpeechToTextParams,
   SpeechToTextParamsWithWebhook,
-  SpeechToTextParamsWithoutWebhook
+  SpeechToTextParamsWithoutWebhook,
+  SpeechToTextResponse,
+  SpeechToTextWebhookResponse,
 } from "./interfaces";
 
 class Audio {
   constructor(private readonly client: RequestClient) {}
-  
+
   // Overload for webhook case
   speech_to_text(params: SpeechToTextParamsWithWebhook): Promise<SpeechToTextWebhookResponse>;
-  
+
   // Overload for Blob/Buffer with webhook
-  speech_to_text(
-    file: Blob | Buffer, 
-    params: Omit<SpeechToTextParamsWithWebhook, "url" | "file_store_key">
-  ): Promise<SpeechToTextWebhookResponse>;
-  
+  speech_to_text(file: Blob | Buffer, params: Omit<SpeechToTextParamsWithWebhook, "url" | "file_store_key">): Promise<SpeechToTextWebhookResponse>;
+
   // Overload for non-webhook case
   speech_to_text(params: SpeechToTextParamsWithoutWebhook): Promise<SpeechToTextResponse>;
-  
+
   // Overload for Blob/Buffer without webhook
-  speech_to_text(
-    file: Blob | Buffer, 
-    params?: Omit<SpeechToTextParamsWithoutWebhook, "url" | "file_store_key">
-  ): Promise<SpeechToTextResponse>;
-  
+  speech_to_text(file: Blob | Buffer, params?: Omit<SpeechToTextParamsWithoutWebhook, "url" | "file_store_key">): Promise<SpeechToTextResponse>;
+
   // Implementation
   async speech_to_text(
     params: SpeechToTextParams | Blob | Buffer,
