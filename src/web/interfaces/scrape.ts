@@ -16,7 +16,7 @@ interface CookieParameter {
 export interface BaseAIScrapeParams {
   url?: string;
   html?: string;
-  http_headers?: object;
+  http_headers?: Record<string, string>;
   reject_request_pattern?: string[];
   goto_options?: {
     timeout?: number;
