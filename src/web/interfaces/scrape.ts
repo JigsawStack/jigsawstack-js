@@ -16,16 +16,14 @@ interface CookieParameter {
 export interface BaseAIScrapeParams {
   url?: string;
   html?: string;
-  root_element_selector?: string;
-  page_position?: number;
   http_headers?: object;
   reject_request_pattern?: string[];
   goto_options?: {
     timeout?: number;
     wait_until?: "load" | "domcontentloaded" | "networkidle0" | "networkidle2";
-  } | null;
+  };
   wait_for?: {
-    mode: string;
+    mode: "selector" | "timeout" | "function";
     value: string | number;
   };
   advance_config?: {
@@ -48,19 +46,14 @@ export interface BaseAIScrapeParams {
     };
   };
   features?: Array<"meta" | "link"> | null;
-}
-
-interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
-  selectors: Array<string>;
-  element_prompts?: string[];
-}
-
-interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
   selectors?: Array<string>;
-  element_prompts?: string[];
 }
 
-export type AIScrapeParams = AIScrapeParamsWithSelector | AIScrapeParamsWithPrompts;
+export interface AIScrapeParams extends BaseAIScrapeParams {
+  element_prompts?: string[];
+  root_element_selector?: string;
+  page_position?: number;
+}
 
 export interface AIScrapeResponse extends BaseResponse {
   data: Array<{
@@ -79,9 +72,9 @@ export interface AIScrapeResponse extends BaseResponse {
   page_position_length: number;
   advance_config:
     | {
-        console?: any[];
-        network?: any[];
-        cookies?: any[];
+        console?: boolean;
+        network?: boolean;
+        cookies?: boolean;
       }
     | undefined;
   context: any;

@@ -1,4 +1,3 @@
-import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
 import { DeepResearchParams, DeepResearchResponse } from "./interfaces/deep_research";
 import { HTMLAnyBinaryParams, HTMLAnyBinaryResponse, HTMLAnyParams, HTMLAnyURLParams, HTMLAnyURLResponse } from "./interfaces/html_to_any";
