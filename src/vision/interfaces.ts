@@ -8,7 +8,7 @@ export type VOCRParams = {
 };
 
 export interface VOCRResponse extends BaseResponse {
-  context: string | Record<string, string[]>;
+  context?: string | Record<string, string[]>;
   width: number;
   height: number;
   tags: string[];
