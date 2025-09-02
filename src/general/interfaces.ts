@@ -117,5 +117,5 @@ export interface EmbeddingParams {
 
 export interface EmbeddingResponse extends BaseResponse {
   embeddings: number[][];
-  chunks: string[]; // only for text
+  chunks?: Array<{ text: string; timestamp: number[] }>; // only available for text and audio
 }
