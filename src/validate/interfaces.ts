@@ -10,15 +10,6 @@ export interface EmailValidationResponse extends BaseResponse {
   valid: boolean;
 }
 
-export interface NSFWValidationResponse extends BaseResponse {
-  nsfw: boolean;
-  nudity: boolean;
-  gore: boolean;
-  nsfw_score: number;
-  nudity_score: number;
-  gore_score: number;
-}
-
 export interface ProfanityParams {
   text: string;
   censor_replacement?: string;
@@ -69,4 +60,13 @@ export interface SpamCheckValidationArrayResponse extends BaseResponse {
 export interface NSFWParams {
   url?: string;
   file_store_key?: string;
+}
+
+export interface NSFWValidationResponse extends BaseResponse {
+  nsfw: boolean;
+  nudity: boolean;
+  gore: boolean;
+  nsfw_score: number;
+  nudity_score: number;
+  gore_score: number;
 }
