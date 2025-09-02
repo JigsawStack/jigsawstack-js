@@ -72,9 +72,16 @@ export interface AIScrapeResponse extends BaseResponse {
   page_position_length: number;
   advance_config:
     | {
-        console?: boolean;
-        network?: boolean;
-        cookies?: boolean;
+        console?: any;
+        network?: {
+          url: string;
+          method: string;
+          status: number;
+          headers: Record<string, string>;
+          body: string | null;
+          type: "request" | "response";
+        };
+        cookies?: any;
       }
     | undefined;
   context: any;
