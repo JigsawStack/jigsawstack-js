@@ -57,6 +57,6 @@ export const JigsawStack = (config?: BaseConfig) => {
     },
     store,
     validate,
-    classification,
+    classification: classification.classify,
   };
 };
