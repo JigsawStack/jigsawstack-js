@@ -82,16 +82,16 @@ export interface TextToSQLResponse extends BaseResponse {
 }
 
 export interface SummaryParams {
-  text?: string; // maximum 300_000 characters
+  text?: string | null; // maximum 300_000 characters
+  url?: string | null; // PDF url only supported
   type?: "text" | "points";
-  url?: string; // PDF url only supported
-  file_store_key?: string;
-  max_points?: number; // max 100
-  max_characters?: number;
+  file_store_key?: string | null;
+  max_points?: number | null; // max 100
+  max_characters?: number | null;
 }
 
 export interface SummaryResponse extends BaseResponse {
-  summary: string;
+  summary: string | string[];
 }
 
 export interface PredictionParams {
