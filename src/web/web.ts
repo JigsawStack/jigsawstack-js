@@ -29,7 +29,7 @@ class Web {
   search = async (params: SearchParams): Promise<SearchResponse> => {
     return await this.client.fetchJSS("/web/search", "POST", params);
   };
-  search_suggestions = async (query: string): Promise<SuggestionResponse> => {
+  search_suggestions = async ({ query }: { query: string }): Promise<SuggestionResponse> => {
     return await this.client.fetchJSS(`/web/search/suggest?query=${query}`, "GET", undefined);
   };
 }

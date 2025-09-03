@@ -225,7 +225,7 @@ export class JigsawStackToolSet {
           query: z.string().describe("Query to get suggestions for"),
         }),
         execute: async ({ query }) => {
-          return await this.jigsawStack.web.search_suggestions(query);
+          return await this.jigsawStack.web.search_suggestions({ query });
         },
       }),
 
