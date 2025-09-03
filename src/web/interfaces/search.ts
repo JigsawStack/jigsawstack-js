@@ -6,15 +6,8 @@ export interface SearchParams {
   safe_search?: "strict" | "moderate" | "off";
   ai_overview?: boolean;
   byo_urls?: string[];
-  country_code?: string;
+  country_code?: CountryCode;
   auto_scrape?: boolean;
-  deep_research?: boolean;
-  deep_research_config?: {
-    max_depth?: number;
-    max_breadth?: number;
-    max_output_tokens?: number;
-    target_output_tokens?: number;
-  };
 }
 
 interface RelatedIndex {
@@ -29,7 +22,7 @@ export interface SearchResponse extends BaseResponse {
   ai_overview?: string;
   spell_fixed: boolean;
   is_safe: boolean;
-  results: {
+  results: Array<{
     title: string;
     url: string;
     description: string;
@@ -48,10 +41,10 @@ export interface SearchResponse extends BaseResponse {
     favicon: string;
     snippets: string[];
     related_index: RelatedIndex[];
-  }[];
+  }>;
   image_urls: string[];
   links: string[];
-  geo_results: {
+  geo_results: Array<{
     type: string;
     full_address: string;
     name: string;
@@ -69,9 +62,201 @@ export interface SearchResponse extends BaseResponse {
     };
     poi_category?: string;
     additional_properties?: any;
-  }[];
+  }>;
 }
 
 export interface SuggestionResponse extends BaseResponse {
   suggestions: string[];
 }
+
+export type CountryCode =
+  | "BEN"
+  | "ARG"
+  | "AGO"
+  | "ARM"
+  | "IRN"
+  | "NRU"
+  | "ITA"
+  | "MLI"
+  | "AUS"
+  | "UGA"
+  | "AUT"
+  | "TUR"
+  | "AND"
+  | "AFG"
+  | "ALB"
+  | "DZA"
+  | "ASM"
+  | "AZE"
+  | "BHR"
+  | "BGD"
+  | "BRB"
+  | "BLR"
+  | "BEL"
+  | "BTN"
+  | "BOL"
+  | "BWA"
+  | "BRA"
+  | "BRN"
+  | "BGR"
+  | "BFA"
+  | "KHM"
+  | "CMR"
+  | "CAN"
+  | "CPV"
+  | "CAF"
+  | "TCD"
+  | "CHL"
+  | "CHN"
+  | "COL"
+  | "COK"
+  | "CRI"
+  | "HRV"
+  | "CUB"
+  | "CYP"
+  | "CZE"
+  | "DNK"
+  | "DMA"
+  | "DOM"
+  | "ECU"
+  | "EGY"
+  | "EST"
+  | "ETH"
+  | "SLV"
+  | "FIN"
+  | "FRA"
+  | "GAB"
+  | "GEO"
+  | "IRL"
+  | "DEU"
+  | "GHA"
+  | "GRC"
+  | "GRL"
+  | "GTM"
+  | "GIN"
+  | "GNB"
+  | "GUY"
+  | "HTI"
+  | "HND"
+  | "HUN"
+  | "IND"
+  | "IDN"
+  | "IRQ"
+  | "ISL"
+  | "HKG"
+  | "ISR"
+  | "JAM"
+  | "JPN"
+  | "JOR"
+  | "KAZ"
+  | "KEN"
+  | "KIR"
+  | "KWT"
+  | "KGZ"
+  | "LAO"
+  | "LVA"
+  | "LBN"
+  | "LSO"
+  | "LBR"
+  | "LBY"
+  | "LIE"
+  | "LTU"
+  | "LUX"
+  | "MAC"
+  | "MDG"
+  | "MWI"
+  | "MYS"
+  | "MDV"
+  | "MLT"
+  | "MUS"
+  | "MEX"
+  | "FSM"
+  | "MDA"
+  | "MCO"
+  | "MNG"
+  | "MNE"
+  | "MAR"
+  | "MOZ"
+  | "MMR"
+  | "NAM"
+  | "NPL"
+  | "NLD"
+  | "NZL"
+  | "NIC"
+  | "NER"
+  | "NGA"
+  | "NIU"
+  | "MKD"
+  | "NOR"
+  | "OMN"
+  | "PAK"
+  | "PAN"
+  | "PRY"
+  | "PER"
+  | "PHL"
+  | "POL"
+  | "PRT"
+  | "PRI"
+  | "QAT"
+  | "ROU"
+  | "RUS"
+  | "RWA"
+  | "KNA"
+  | "WSM"
+  | "SMR"
+  | "SAU"
+  | "SEN"
+  | "SRB"
+  | "SYC"
+  | "SLE"
+  | "SVK"
+  | "SVN"
+  | "SLB"
+  | "SOM"
+  | "ZAF"
+  | "SGP"
+  | "KOR"
+  | "SSD"
+  | "ESP"
+  | "LKA"
+  | "SDN"
+  | "SUR"
+  | "SWE"
+  | "CHE"
+  | "SYR"
+  | "TWN"
+  | "TJK"
+  | "TZA"
+  | "THA"
+  | "BHS"
+  | "TGO"
+  | "TON"
+  | "TKM"
+  | "UKR"
+  | "ARE"
+  | "GBR"
+  | "USA"
+  | "URY"
+  | "UZB"
+  | "VUT"
+  | "VEN"
+  | "VNM"
+  | "TUN"
+  | "ZMB"
+  | "ZWE"
+  | "BIH"
+  | "COG"
+  | "CIV"
+  | "COD"
+  | "DJI"
+  | "GNQ"
+  | "ERI"
+  | "MRT"
+  | "PNG"
+  | "TTO"
+  | "YEM"
+  | "BLZ"
+  | "BDI"
+  | "COM"
+  | "SWZ"
+  | "GMB";

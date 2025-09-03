@@ -2,15 +2,13 @@ import { BaseResponse } from "../../../types";
 interface CookieParameter {
   name: string;
   value: string;
-  url?: string;
   domain?: string;
-  path?: string;
+  url?: string;
   secure?: boolean;
   httpOnly?: boolean;
-  sameSite?: "Strict" | "Lax" | "None";
-  expires?: boolean;
-  priority?: string;
   sameParty?: boolean;
+  expires?: number;
+  priority?: "Low" | "High" | "Medium";
 }
 
 export interface BaseAIScrapeParams {
