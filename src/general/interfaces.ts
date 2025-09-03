@@ -47,9 +47,9 @@ export interface TranslateResponse extends BaseResponse {
 }
 
 export interface TranslateParams {
+  text: string | string[];
   current_language?: string;
   target_language: string;
-  text: string | string[];
 }
 
 export type TranslateImageParams = {

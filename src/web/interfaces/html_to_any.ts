@@ -1,5 +1,5 @@
 import { BaseResponse } from "../../../types";
-import { ScreenSizeNames } from "./scrape";
+import { ScreenSizeNames } from "../../utils";
 
 export interface HTMLAnyParams {
   html?: string | null;

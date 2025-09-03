@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { BaseConfig } from "../types";
-import { LanguageCodes } from "./audio/interfaces";
+import { LanguageCodes } from "./utils";
 import { JigsawStack } from "./core";
 import { tool } from "./vercel-tool";
 export interface JigsawStackToolOptions {

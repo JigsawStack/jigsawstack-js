@@ -1,5 +1,5 @@
 import { BaseResponse } from "../../../types";
-import { CountryCode } from "./search";
+import { CountryCode } from "../../utils";
 // Input parameters interface for reference
 export interface DeepResearchParams {
   query: string;
