@@ -34,7 +34,7 @@ export interface SpellCheckParams {
 export interface SpellCheckValidationResponse extends BaseResponse {
   misspellings_found: boolean;
   misspellings: Array<{
-    word: string;
+    word: string | null;
     startIndex: number;
     endIndex: number;
     expected: string[];
