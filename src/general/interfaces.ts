@@ -1,4 +1,5 @@
 import { BaseResponse } from "../../types";
+import { LanguageCodes } from "../utils";
 
 export type TextToSQLParams = {
   prompt: string;
@@ -43,13 +44,13 @@ export interface SentimentResponse extends BaseResponse {
 }
 
 export interface TranslateResponse extends BaseResponse {
-  translated_text: string;
+  translated_text: string | string[];
 }
 
 export interface TranslateParams {
   text: string | string[];
-  current_language?: string;
-  target_language: string;
+  current_language?: LanguageCodes;
+  target_language: LanguageCodes;
 }
 
 export type TranslateImageParams = {
