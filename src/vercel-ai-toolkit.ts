@@ -332,7 +332,7 @@ export class JigsawStackToolSet {
           text: z.string().describe("Text to check for spam"),
         }),
         execute: async ({ text }) => {
-          return await this.jigsawStack.validate.spamcheck(text);
+          return await this.jigsawStack.validate.spamcheck({ text });
         },
       }),
     };
