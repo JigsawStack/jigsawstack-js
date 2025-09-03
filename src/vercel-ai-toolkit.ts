@@ -74,8 +74,8 @@ export class JigsawStackToolSet {
         execute: async ({ text, target_language, current_language }) => {
           return await this.jigsawStack.translate.text({
             text,
-            target_language,
-            current_language,
+            target_language: target_language as LanguageCodes,
+            current_language: current_language as LanguageCodes,
           });
         },
       }),

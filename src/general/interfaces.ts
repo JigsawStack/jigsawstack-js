@@ -8,6 +8,10 @@ export type TextToSQLParams = {
   file_store_key?: string;
 };
 
+export interface TextToSQLResponse extends BaseResponse {
+  sql: string;
+}
+
 export interface ImageGenerationParams {
   prompt: string;
   aspect_ratio?: "1:1" | "16:9" | "21:9" | "3:2" | "2:3" | "4:5" | "5:4" | "3:4" | "4:3" | "9:16" | "9:21";
@@ -75,10 +79,6 @@ export interface SpeechToTextResponse extends BaseResponse {
 export interface SpeechToTextWebhookResponse extends BaseResponse {
   status: "processing" | "error";
   id: string;
-}
-
-export interface TextToSQLResponse extends BaseResponse {
-  sql: string;
 }
 
 export interface SummaryParams {
