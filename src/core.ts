@@ -51,7 +51,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     },
     web: {
       ai_scrape: web.ai_scrape,
-      html_to_any: web.html_to_any,
+      html_to_any: createBoundMethod(web, web.html_to_any),
       search: web.search,
       search_suggestions: web.search_suggestions,
     },

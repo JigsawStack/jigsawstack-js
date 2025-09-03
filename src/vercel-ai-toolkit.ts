@@ -179,7 +179,7 @@ export class JigsawStackToolSet {
         parameters: z.object({
           html: z.string().optional().describe("HTML content to convert"),
           url: z.string().optional().describe("URL of webpage to convert"),
-          type: z.string().optional().describe("Output format type"),
+          type: z.enum(["pdf", "png", "jpeg", "webp"]).optional().describe("Output format type"),
           width: z.number().optional().describe("Output width"),
           height: z.number().optional().describe("Output height"),
           full_page: z.boolean().optional().describe("Capture full page"),
