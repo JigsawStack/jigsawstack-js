@@ -1,7 +1,7 @@
 import { BaseResponse } from "../../types";
 
 export type VOCRParams = {
-  prompt?: string | string[];
+  prompt?: string | string[] | Record<string, string>;
   url?: string;
   file_store_key?: string;
   page_range?: Array<number>;
