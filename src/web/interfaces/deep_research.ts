@@ -1,10 +1,11 @@
 import { BaseResponse } from "../../../types";
+import { CountryCode } from "./search";
 // Input parameters interface for reference
 export interface DeepResearchParams {
   query: string;
   spell_check?: boolean;
   safe_search?: "strict" | "moderate" | "off";
-  country_code?: string;
+  country_code?: CountryCode | null;
   max_depth?: number;
   max_breadth?: number;
   max_output_tokens?: number;
