@@ -51,10 +51,10 @@ export interface SpamCheckValidationResponse extends BaseResponse {
 }
 
 export interface SpamCheckValidationArrayResponse extends BaseResponse {
-  check: {
+  check: Array<{
     is_spam: boolean;
     score: number;
-  }[];
+  }>;
 }
 
 export interface NSFWParams {
