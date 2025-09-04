@@ -18,11 +18,11 @@ export interface ProfanityParams {
 export interface ProfanityValidationResponse extends BaseResponse {
   message: string;
   clean_text: string;
-  profanities: {
-    profanity: string;
+  profanities: Array<{
+    profanity: string | null;
     startIndex: number;
     endIndex: number;
-  }[];
+  }>;
   profanities_found: boolean;
 }
 
