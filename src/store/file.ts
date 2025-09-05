@@ -7,7 +7,7 @@ export class File {
 
   upload = async (file: Blob | Buffer, params?: FileUploadParams): Promise<FileUploadResponse> => {
     return await this.client.fetchJSS(
-      `/store/file`,
+      `/v1/store/file`,
       "POST",
       file,
       {
@@ -22,12 +22,12 @@ export class File {
   };
 
   retrieve = async (key: string) => {
-    const resp = await this.client.fetchJSS(`/store/file/read/${key}`, "GET");
+    const resp = await this.client.fetchJSS(`/v1/store/file/read/${key}`, "GET");
 
     return respToFileChoice(resp);
   };
 
   delete = async (key: string): Promise<BaseResponse> => {
-    return await this.client.fetchJSS(`/store/file/read/${key}`, "DELETE");
+    return await this.client.fetchJSS(`/v1/store/file/read/${key}`, "DELETE");
   };
 }

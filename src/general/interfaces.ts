@@ -115,6 +115,22 @@ export interface EmbeddingParams {
   token_overflow_mode?: "truncate" | "error";
 }
 
+export interface EmbeddingV2Params {
+  text?: string;
+  url?: string;
+  file_store_key?: string;
+  file_content?: any;
+  type: "text" | "text-other" | "image" | "audio" | "pdf";
+  token_overflow_mode?: "truncate" | "error";
+  speaker_fingerprint?: boolean;
+}
+
+export interface EmbeddingV2Response extends BaseResponse {
+  embeddings: number[][];
+  chunks: string[]; // only for text
+  speaker_embeddings?: number[][]; // only for audio
+}
+
 export interface EmbeddingResponse extends BaseResponse {
   embeddings: number[][];
   chunks: string[]; // only for text

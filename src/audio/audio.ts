@@ -11,9 +11,9 @@ class Audio {
   ): Promise<SpeechToTextSyncResponse | SpeechToTextWebhookResponse> {
     if (params instanceof Blob || params instanceof Buffer) {
       const formData = createFileUploadFormData(params, options);
-      return await this.client.fetchJSS("/ai/transcribe", "POST", formData);
+      return await this.client.fetchJSS("/v1/ai/transcribe", "POST", formData);
     }
-    return await this.client.fetchJSS("/ai/transcribe", "POST", params);
+    return await this.client.fetchJSS("/v1/ai/transcribe", "POST", params);
   }
 }
 

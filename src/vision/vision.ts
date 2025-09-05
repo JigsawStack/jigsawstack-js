@@ -9,9 +9,9 @@ class Vision {
   async vocr(params: VOCRParams | Blob | Buffer, options?: VOCRParams): Promise<VOCRResponse> {
     if (params instanceof Blob || params instanceof Buffer) {
       const formData = createFileUploadFormData(params, options);
-      return await this.client.fetchJSS("/vocr", "POST", formData);
+      return await this.client.fetchJSS("/v1/vocr", "POST", formData);
     }
-    return await this.client.fetchJSS("/vocr", "POST", params);
+    return await this.client.fetchJSS("/v1/vocr", "POST", params);
   }
 
   object_detection(params: ObjectDetectionParams): Promise<ObjectDetectionResponse>;
@@ -19,9 +19,9 @@ class Vision {
   async object_detection(params: ObjectDetectionParams | Blob | Buffer, options?: ObjectDetectionParams): Promise<ObjectDetectionResponse> {
     if (params instanceof Blob || params instanceof Buffer) {
       const formData = createFileUploadFormData(params, options);
-      return await this.client.fetchJSS("/object_detection", "POST", formData);
+      return await this.client.fetchJSS("/v1/object_detection", "POST", formData);
     }
-    return await this.client.fetchJSS("/object_detection", "POST", params);
+    return await this.client.fetchJSS("/v1/object_detection", "POST", params);
   }
 }
 
