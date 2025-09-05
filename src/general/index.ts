@@ -86,6 +86,16 @@ class General {
     }
     return await this.client.fetchJSS("/v1/embedding", "POST", params);
   }
+
+  embeddingV2(params: EmbeddingV2Params): Promise<EmbeddingV2Response>;
+  embeddingV2(file: Blob | Buffer, params: Omit<EmbeddingV2Params, "url" | "file_store_key" | "file_content">): Promise<EmbeddingV2Response>;
+  async embeddingV2(params: EmbeddingV2Params | Blob | Buffer, options?: EmbeddingV2Params): Promise<EmbeddingV2Response> {
+    if (params instanceof Blob || params instanceof Buffer) {
+      const formData = createFileUploadFormData(params, options);
+      return await this.client.fetchJSS("/v2/embedding", "POST", formData);
+    }
+    return await this.client.fetchJSS("/v2/embedding", "POST", params);
+  }
 }
 
 export default General;
