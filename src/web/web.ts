@@ -8,23 +8,23 @@ class Web {
   constructor(private readonly client: RequestClient) {}
 
   ai_scrape = async (params: AIScrapeParams): Promise<AIScrapeResponse> => {
-    return await this.client.fetchJSS("/ai/scrape", "POST", params);
+    return await this.client.fetchJSS("/v1/ai/scrape", "POST", params);
   };
 
   html_to_any = async (params: HTMLAnyParams) => {
-    const resp = await this.client.fetchJSS("/web/html_to_any", "POST", params);
+    const resp = await this.client.fetchJSS("/v1/web/html_to_any", "POST", params);
     return respToFileChoice(resp);
   };
 
   deep_research = async (params: DeepResearchParams): Promise<DeepResearchResponse> => {
-    return await this.client.fetchJSS("/web/deep_research", "POST", params);
+    return await this.client.fetchJSS("/v1/web/deep_research", "POST", params);
   };
 
   search = async (params: SearchParams): Promise<SearchResponse> => {
-    return await this.client.fetchJSS("/web/search", "POST", params);
+    return await this.client.fetchJSS("/v1/web/search", "POST", params);
   };
   search_suggestions = async (query: string): Promise<SuggestionResponse> => {
-    return await this.client.fetchJSS(`/web/search/suggest?query=${query}`, "GET", undefined);
+    return await this.client.fetchJSS(`/v1/web/search/suggest?query=${query}`, "GET", undefined);
   };
 }
 
