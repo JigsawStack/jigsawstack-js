@@ -4,27 +4,14 @@ export interface ClassificationResponse extends BaseResponse {
   predictions: (string | string[])[];
 }
 
-export interface ClassificationTextParams {
+export interface ClassificationParams {
   dataset: Array<{
-    type: "text";
+    type: "text" | "image";
     value: string;
   }>;
   labels: Array<{
     key?: string;
-    type: "text";
-    value: string;
-  }>;
-  multiple_labels?: boolean;
-}
-
-export interface ClassificationImageParams {
-  dataset: Array<{
-    type: "image";
-    value: string;
-  }>;
-  labels: Array<{
-    key?: string;
-    type: "image" | "text";
+    type: "text" | "image";
     value: string;
   }>;
   multiple_labels?: boolean;

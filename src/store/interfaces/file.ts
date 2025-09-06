@@ -7,10 +7,6 @@ export interface FileUploadParams {
   temp_public_url?: boolean;
 }
 
-export interface FileRetrieveParams {
-  key: string;
-}
-
 export interface FileUploadResponse extends BaseResponse {
   key: string;
   url: string;

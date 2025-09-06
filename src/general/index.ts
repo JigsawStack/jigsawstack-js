@@ -62,8 +62,8 @@ class General {
   };
 
   summary(params: SummaryParams & { type: "points" }): Promise<BaseResponse & { summary: string[] }>;
-  summary(params: SummaryParams & { type: "text" }): Promise<SummaryResponse>;
-  async summary(params: SummaryParams): Promise<SummaryResponse | (BaseResponse & { summary: string[] })> {
+  summary(params: SummaryParams & { type: "text" }): Promise<BaseResponse & { summary: string }>;
+  async summary(params: SummaryParams): Promise<(BaseResponse & { summary: string[] }) | (BaseResponse & { summary: string })> {
     if (params.type === "points") {
       const resp = await this.client.fetchJSS("/ai/summary", "POST", params);
       return resp as BaseResponse & { summary: string[] };

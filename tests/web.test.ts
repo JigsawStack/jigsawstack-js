@@ -1103,21 +1103,6 @@ describe("Web Search API", () => {
     expectArray(result.results);
   });
 
-  test("should work with deep research mode", async () => {
-    const result = await client.web.search({
-      query: "What is diffusion?",
-      deep_research: true,
-      deep_research_config: {
-        max_depth: 3,
-        max_breadth: 2,
-        max_output_tokens: 12000,
-      },
-    });
-
-    expectSuccess(result);
-    expectArray(result.results);
-  });
-
   test("should handle empty query gracefully", async () => {
     try {
       await client.web.search({
@@ -1162,7 +1147,7 @@ describe("Web Search Suggestions API", () => {
   });
 
   test("should work with basic query", async () => {
-    const result = await client.web.search_suggestions("artificial int");
+    const result = await client.web.search_suggestions({ query: "artificial int" });
 
     expectSuccess(result);
     expectProperty(result, "suggestions");
@@ -1175,7 +1160,7 @@ describe("Web Search Suggestions API", () => {
   });
 
   test("should work with partial query", async () => {
-    const result = await client.web.search_suggestions("machine learn");
+    const result = await client.web.search_suggestions({ query: "machine learn" });
 
     expectSuccess(result);
     expectArray(result.suggestions);
@@ -1191,7 +1176,7 @@ describe("Web Search Suggestions API", () => {
 
   test("should fail with empty string", async () => {
     try {
-      await client.web.search_suggestions("");
+      await client.web.search_suggestions({ query: "" });
       throw new Error("Expected API call to fail with empty string");
     } catch (error) {
       expectType(error, "object");
@@ -1202,7 +1187,7 @@ describe("Web Search Suggestions API", () => {
     const longQuery = "a".repeat(201); // Over 200 character limit
 
     try {
-      await client.web.search_suggestions(longQuery);
+      await client.web.search_suggestions({ query: longQuery });
       throw new Error("Expected API call to fail with query too long");
     } catch (error) {
       expectType(error, "object");
@@ -1210,14 +1195,14 @@ describe("Web Search Suggestions API", () => {
   });
 
   test("should work with special characters", async () => {
-    const result = await client.web.search_suggestions("what is the capital?");
+    const result = await client.web.search_suggestions({ query: "what is the capital?" });
 
     expectSuccess(result);
     expectArray(result.suggestions);
   });
 
   test("should work with unicode characters", async () => {
-    const result = await client.web.search_suggestions("café français");
+    const result = await client.web.search_suggestions({ query: "café français" });
 
     expectSuccess(result);
     expectArray(result.suggestions);

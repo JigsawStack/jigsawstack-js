@@ -1,17 +1,18 @@
+import { BaseResponse } from "../../../types";
+import { CountryCode } from "../../utils";
 // Input parameters interface for reference
 export interface DeepResearchParams {
   query: string;
   spell_check?: boolean;
   safe_search?: "strict" | "moderate" | "off";
-  country_code?: string;
+  country_code?: CountryCode | null;
   max_depth?: number;
   max_breadth?: number;
   max_output_tokens?: number;
   target_output_tokens?: number;
 }
 
-export interface DeepResearchResponse {
-  success: boolean;
+export interface DeepResearchResponse extends BaseResponse {
   query: string;
   results: string;
   sources: SearchResult[];

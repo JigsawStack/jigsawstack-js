@@ -135,3 +135,5 @@ test.ts
 .DS_Store
 
 .vscode
+
+local_tests/*
