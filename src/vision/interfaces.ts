@@ -17,10 +17,10 @@ export interface VOCRResponse extends BaseResponse {
     text: string;
     lines: Array<{
       text: string;
-      bounds: Bounds;
+      bounds: BoundingBox;
       words: Array<{
         text: string;
-        bounds: Bounds;
+        bounds: BoundingBox;
       }>;
     }>;
   }>;
@@ -76,23 +76,4 @@ interface BoundingBox {
 interface Point {
   x: number;
   y: number;
-}
-
-interface Bounds {
-  top_left: {
-    x: number;
-    y: number;
-  };
-  top_right: {
-    x: number;
-    y: number;
-  };
-  bottom_left: {
-    x: number;
-    y: number;
-  };
-  bottom_right: {
-    x: number;
-    y: number;
-  };
 }
