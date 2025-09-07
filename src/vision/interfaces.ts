@@ -54,6 +54,8 @@ export interface ObjectDetectionResponse extends BaseResponse {
 interface GuiElement {
   bounds: BoundingBox;
   content: string | null; // Can be null if no object detected
+  interactivity: boolean;
+  type: string;
 }
 
 interface DetectedObject {
