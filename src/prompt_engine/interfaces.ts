@@ -46,15 +46,21 @@ export interface PromptResult {
     key: string;
     optional: boolean;
   }>;
-  return_prompt: string;
+  return_prompt: string | null | undefined;
+  return_prompt_type: "json" | "string";
   created_at: string;
 }
 
 export interface PromptGetResponse extends PromptResult {
   success: boolean;
+  _usage: {
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+  };
 }
 
-export interface PromptListResponse extends PromptResult {
+export interface PromptListResponse extends BaseResponse {
   prompt_engines: PromptResult[];
 }
 
