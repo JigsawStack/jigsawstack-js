@@ -1,3 +1,5 @@
+import { BaseResponse } from "../../../types";
+import { CountryCode } from "../../utils";
 export interface SearchParams {
   query: string;
   spell_check?: boolean;
@@ -5,15 +7,8 @@ export interface SearchParams {
   safe_search?: "strict" | "moderate" | "off";
   ai_overview?: boolean;
   byo_urls?: string[];
-  country_code?: string;
+  country_code?: CountryCode;
   auto_scrape?: boolean;
-  deep_research?: boolean;
-  deep_research_config?: {
-    max_depth?: number;
-    max_breadth?: number;
-    max_output_tokens?: number;
-    target_output_tokens?: number;
-  };
 }
 
 interface RelatedIndex {
@@ -23,13 +18,12 @@ interface RelatedIndex {
   is_safe?: boolean;
 }
 
-export interface SearchResponse {
-  success: boolean;
+export interface SearchResponse extends BaseResponse {
   query: string;
   ai_overview?: string;
   spell_fixed: boolean;
   is_safe: boolean;
-  results: {
+  results: Array<{
     title: string;
     url: string;
     description: string;
@@ -48,10 +42,10 @@ export interface SearchResponse {
     favicon: string;
     snippets: string[];
     related_index: RelatedIndex[];
-  }[];
+  }>;
   image_urls: string[];
   links: string[];
-  geo_results: {
+  geo_results: Array<{
     type: string;
     full_address: string;
     name: string;
@@ -69,10 +63,9 @@ export interface SearchResponse {
     };
     poi_category?: string;
     additional_properties?: any;
-  }[];
+  }>;
 }
 
-export interface SuggestionResponse {
-  success: boolean;
+export interface SuggestionResponse extends BaseResponse {
   suggestions: string[];
 }

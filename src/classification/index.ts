@@ -1,5 +1,5 @@
 import { RequestClient } from "../request";
-import { ClassificationImageParams, ClassificationResponse, ClassificationTextParams } from "./interfaces";
+import { ClassificationParams, ClassificationResponse } from "./interfaces";
 
 class Classification {
   private readonly client: RequestClient;
@@ -7,11 +7,7 @@ class Classification {
     this.client = client;
   }
 
-  text = async (params: ClassificationTextParams): Promise<ClassificationResponse> => {
-    return await this.client.fetchJSS("/classification", "POST", params);
-  };
-
-  image = async (params: ClassificationImageParams): Promise<ClassificationResponse> => {
+  classify = async (params: ClassificationParams): Promise<ClassificationResponse> => {
     return await this.client.fetchJSS("/classification", "POST", params);
   };
 }

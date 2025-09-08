@@ -1,43 +1,42 @@
-export interface CookieParameter {
+import { BaseResponse } from "../../../types";
+import { ScreenSizeNames } from "../../utils";
+
+interface CookieParameter {
   name: string;
   value: string;
-  url?: string;
   domain?: string;
-  path?: string;
+  url?: string;
   secure?: boolean;
   httpOnly?: boolean;
-  sameSite?: "Strict" | "Lax" | "None";
-  expires?: boolean;
-  priority?: string;
   sameParty?: boolean;
+  expires?: number;
+  priority?: "Low" | "High" | "Medium";
 }
 
 export interface BaseAIScrapeParams {
-  url?: string;
-  html?: string;
-  root_element_selector?: string;
-  page_position?: number;
-  http_headers?: object;
-  reject_request_pattern?: string[];
+  url?: string | null;
+  html?: string | null;
+  http_headers?: Record<string, string> | null;
+  reject_request_pattern?: string[] | null;
   goto_options?: {
     timeout?: number;
     wait_until?: "load" | "domcontentloaded" | "networkidle0" | "networkidle2";
   } | null;
   wait_for?: {
-    mode: string;
+    mode: "selector" | "timeout" | "function";
     value: string | number;
-  };
+  } | null;
   advance_config?: {
     console?: boolean;
     network?: boolean;
     cookies?: boolean;
-  };
-  size_preset?: string;
+  } | null;
+  size_preset?: ScreenSizeNames | null;
   is_mobile?: boolean;
   scale?: number;
   width?: number;
   height?: number;
-  cookies?: Array<CookieParameter>;
+  cookies?: Array<CookieParameter> | null;
   force_rotate_proxy?: boolean;
   byo_proxy?: {
     server: string;
@@ -45,24 +44,18 @@ export interface BaseAIScrapeParams {
       username: string;
       password: string;
     };
-  };
+  } | null;
   features?: Array<"meta" | "link"> | null;
+  selectors?: Array<string> | null;
 }
 
-export interface AIScrapeParamsWithSelector extends BaseAIScrapeParams {
-  selectors: Array<string>;
-  element_prompts?: string[];
+export interface AIScrapeParams extends BaseAIScrapeParams {
+  element_prompts?: string[] | null;
+  root_element_selector?: string;
+  page_position?: number;
 }
 
-export interface AIScrapeParamsWithPrompts extends BaseAIScrapeParams {
-  selectors?: Array<string>;
-  element_prompts?: string[];
-}
-
-export type AIScrapeParams = AIScrapeParamsWithSelector | AIScrapeParamsWithPrompts;
-
-export interface AIScrapeResponse {
-  success: boolean;
+export interface AIScrapeResponse extends BaseResponse {
   data: Array<{
     key: string;
     selector: string;
@@ -79,9 +72,16 @@ export interface AIScrapeResponse {
   page_position_length: number;
   advance_config:
     | {
-        console?: any[];
-        network?: any[];
-        cookies?: any[];
+        console?: any;
+        network?: {
+          url: string;
+          method: string;
+          status: number;
+          headers: Record<string, string>;
+          body: string | null;
+          type: "request" | "response";
+        };
+        cookies?: any;
       }
     | undefined;
   context: any;

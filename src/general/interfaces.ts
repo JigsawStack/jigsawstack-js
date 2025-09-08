@@ -1,4 +1,5 @@
 import { BaseResponse } from "../../types";
+import { LanguageCodes } from "../utils";
 
 export type TextToSQLParams = {
   prompt: string;
@@ -6,6 +7,10 @@ export type TextToSQLParams = {
   sql_schema?: string;
   file_store_key?: string;
 };
+
+export interface TextToSQLResponse extends BaseResponse {
+  sql: string;
+}
 
 export interface ImageGenerationParams {
   prompt: string;
@@ -43,13 +48,13 @@ export interface SentimentResponse extends BaseResponse {
 }
 
 export interface TranslateResponse extends BaseResponse {
-  translated_text: string;
+  translated_text: string | string[];
 }
 
 export interface TranslateParams {
-  current_language?: string;
-  target_language: string;
   text: string | string[];
+  current_language?: LanguageCodes;
+  target_language: LanguageCodes;
 }
 
 export type TranslateImageParams = {
@@ -76,21 +81,17 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
   id: string;
 }
 
-export interface TextToSQLResponse extends BaseResponse {
-  sql: string;
-}
-
 export interface SummaryParams {
-  text?: string; // maximum 300_000 characters
+  text?: string | null; // maximum 300_000 characters
+  url?: string | null; // PDF url only supported
   type?: "text" | "points";
-  url?: string; // PDF url only supported
-  file_store_key?: string;
-  max_points?: number; // max 100
-  max_characters?: number;
+  file_store_key?: string | null;
+  max_points?: number | null; // max 100
+  max_characters?: number | null;
 }
 
 export interface SummaryResponse extends BaseResponse {
-  summary: string;
+  summary: string | string[];
 }
 
 export interface PredictionParams {
@@ -117,5 +118,5 @@ export interface EmbeddingParams {
 
 export interface EmbeddingResponse extends BaseResponse {
   embeddings: number[][];
-  chunks: string[]; // only for text
+  chunks?: Array<{ text: string; timestamp: number[] }>; // only available for text and audio
 }

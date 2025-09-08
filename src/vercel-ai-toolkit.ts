@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { BaseConfig } from "../types";
-import { LanguageCodes } from "./audio/interfaces";
 import { JigsawStack } from "./core";
+import { LanguageCodes } from "./utils";
 import { tool } from "./vercel-tool";
 export interface JigsawStackToolOptions {
   tools?: string[];
@@ -74,8 +74,8 @@ export class JigsawStackToolSet {
         execute: async ({ text, target_language, current_language }) => {
           return await this.jigsawStack.translate.text({
             text,
-            target_language,
-            current_language,
+            target_language: target_language as LanguageCodes,
+            current_language: current_language as LanguageCodes,
           });
         },
       }),
@@ -179,7 +179,7 @@ export class JigsawStackToolSet {
         parameters: z.object({
           html: z.string().optional().describe("HTML content to convert"),
           url: z.string().optional().describe("URL of webpage to convert"),
-          type: z.string().optional().describe("Output format type"),
+          type: z.enum(["pdf", "png", "jpeg", "webp"]).optional().describe("Output format type"),
           width: z.number().optional().describe("Output width"),
           height: z.number().optional().describe("Output height"),
           full_page: z.boolean().optional().describe("Capture full page"),
@@ -225,7 +225,7 @@ export class JigsawStackToolSet {
           query: z.string().describe("Query to get suggestions for"),
         }),
         execute: async ({ query }) => {
-          return await this.jigsawStack.web.search_suggestions(query);
+          return await this.jigsawStack.web.search_suggestions({ query });
         },
       }),
 
@@ -332,7 +332,7 @@ export class JigsawStackToolSet {
           text: z.string().describe("Text to check for spam"),
         }),
         execute: async ({ text }) => {
-          return await this.jigsawStack.validate.spamcheck(text);
+          return await this.jigsawStack.validate.spamcheck({ text });
         },
       }),
     };
