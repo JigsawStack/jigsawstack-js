@@ -8,7 +8,7 @@ class Classification {
   }
 
   classify = async (params: ClassificationParams): Promise<ClassificationResponse> => {
-    return await this.client.fetchJSS("/classification", "POST", params);
+    return await this.client.fetchJSS("/v1/classification", "POST", params);
   };
 }
 
