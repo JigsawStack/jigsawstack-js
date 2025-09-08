@@ -69,6 +69,11 @@ export interface RunPromptResponse extends BaseResponse {
   message: string;
 }
 
+export interface CreatePromptResponse extends BaseResponse {
+  prompt_engine_id: string;
+  optimized_prompt: string;
+}
+
 export interface RunPromptResponseStream<T> extends Stream<T> {}
 
 export interface RunPromptDirectResponse extends RunPromptResponse {}

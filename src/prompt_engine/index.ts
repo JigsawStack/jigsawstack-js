@@ -10,11 +10,12 @@ import {
   RunPromptDirectResponse,
   RunPromptResponse,
   RunPromptResponseStream,
+  CreatePromptResponse,
 } from "./interfaces";
 
 class PromptEngine {
   constructor(private readonly client: RequestClient) {}
-  create = async (params: PromptCreateParams): Promise<{ prompt_engine_id: string }> => {
+  create = async (params: PromptCreateParams): Promise<CreatePromptResponse> => {
     return await this.client.fetchJSS("/v1/prompt_engine", "POST", params);
   };
 
