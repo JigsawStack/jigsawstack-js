@@ -8,6 +8,7 @@ import { File } from "./store/file";
 import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
+import PromptEngine from "./prompt_engine";
 
 type BoundMethod<T> = T extends (...args: any[]) => any ? T : never;
 
@@ -29,6 +30,7 @@ export const JigsawStack = (config?: BaseConfig) => {
   const audio = new AudioApis(client);
   const file = new File(client);
   const validate = new Validate(client);
+  const promptengine = new PromptEngine(client);
   const store = {
     upload: file.upload,
     retrieve: file.retrieve,
@@ -58,6 +60,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     },
     store,
     validate,
+    prompt_engine: promptengine,
     classification: classification.classify,
   };
 };
