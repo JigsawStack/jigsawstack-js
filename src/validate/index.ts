@@ -12,9 +12,7 @@ import {
 } from "./interfaces";
 
 class Validate {
-  constructor(private readonly client: RequestClient) {
-    this.spamcheck = this.spamcheck.bind(this);
-  }
+  constructor(private readonly client: RequestClient) {}
 
   nsfw(params: NSFWParams): Promise<NSFWValidationResponse>;
   nsfw(file: Blob | Buffer, params?: Omit<NSFWParams, "url" | "file_store_key">): Promise<NSFWValidationResponse>;
@@ -34,9 +32,9 @@ class Validate {
     return await this.client.fetchJSS("/v1/validate/spell_check", "POST", { text, language_code });
   };
 
-  spamcheck(text: string): Promise<SpamCheckValidationResponse>;
-  spamcheck(text: string[]): Promise<SpamCheckValidationArrayResponse>;
-  async spamcheck(text: string | string[]): Promise<SpamCheckValidationResponse | SpamCheckValidationArrayResponse> {
+  spamcheck({ text }: { text: string }): Promise<SpamCheckValidationResponse>;
+  spamcheck({ text }: { text: string[] }): Promise<SpamCheckValidationArrayResponse>;
+  async spamcheck({ text }: { text: string | string[] }): Promise<SpamCheckValidationResponse | SpamCheckValidationArrayResponse> {
     return await this.client.fetchJSS("/v1/validate/spam_check", "POST", { text });
   }
 }

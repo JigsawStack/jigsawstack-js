@@ -77,7 +77,7 @@ describe("Text Classification API", () => {
   // Test missing required parameters
   test("should fail when no parameters are provided", async () => {
     try {
-      await client.classification.text({} as any);
+      await client.classification({} as any);
       throw new Error("Expected API call to fail with no parameters");
     } catch (error) {
       expectType(error, "object");
@@ -86,7 +86,7 @@ describe("Text Classification API", () => {
 
   test("should fail when dataset is missing", async () => {
     try {
-      await client.classification.text({
+      await client.classification({
         labels: TEXT_LABELS,
       } as any);
       throw new Error("Expected API call to fail with missing dataset");
@@ -97,7 +97,7 @@ describe("Text Classification API", () => {
 
   test("should fail when labels are missing", async () => {
     try {
-      await client.classification.text({
+      await client.classification({
         dataset: TEST_TEXT_DATA,
         labels: [],
       } as any);
@@ -109,7 +109,7 @@ describe("Text Classification API", () => {
 
   test("should fail when dataset is empty", async () => {
     try {
-      await client.classification.text({
+      await client.classification({
         dataset: [],
         labels: TEXT_LABELS,
       });
@@ -121,7 +121,7 @@ describe("Text Classification API", () => {
 
   // Basic functionality tests
   test("should work with basic text classification", async () => {
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [
         { type: "text" as const, value: "This is a great product! I love it." },
         { type: "text" as const, value: "This is a great product! I hate it." },
@@ -145,7 +145,7 @@ describe("Text Classification API", () => {
   });
 
   test("should work with multiple text samples", async () => {
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [
         { type: "text" as const, value: "This is a great product! I love it." },
         { type: "text" as const, value: "This product is terrible and broken." },
@@ -168,7 +168,7 @@ describe("Text Classification API", () => {
   });
 
   test("should work with multiple_labels enabled", async () => {
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [{ type: "text" as const, value: "This is a great product with excellent customer service!" }],
       labels: [
         { key: "quality", type: "text" as const, value: "relates to product quality" },
@@ -193,7 +193,7 @@ describe("Text Classification API", () => {
   });
 
   test("should work with multiple_labels disabled", async () => {
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [{ type: "text" as const, value: "This is a great product! I love it." }],
       labels: [
         { key: "positive", type: "text" as const, value: "positive sentiment" },
@@ -210,7 +210,7 @@ describe("Text Classification API", () => {
   test("should work with long text", async () => {
     const longText = "This is a comprehensive review of a product that I purchased recently. ".repeat(10);
 
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [{ type: "text" as const, value: longText }],
       labels: [
         { key: "review", type: "text" as const, value: "product review" },
@@ -223,7 +223,7 @@ describe("Text Classification API", () => {
   });
 
   test("should work with special characters and unicode", async () => {
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [{ type: "text" as const, value: "¡Excelente producto! 🚀 Me encanta. Ñoño café français." }],
       labels: [
         { key: "positive", type: "text" as const, value: "positive sentiment" },
@@ -245,7 +245,7 @@ describe("Text Classification API", () => {
       });
     }
 
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: [{ type: "text" as const, value: "This is a test text for classification." }],
       labels: labels,
     });
@@ -257,7 +257,7 @@ describe("Text Classification API", () => {
   // Edge cases and error handling
   test("should handle empty text gracefully", async () => {
     try {
-      const result = await client.classification.text({
+      const result = await client.classification({
         dataset: [{ type: "text" as const, value: "" }],
         labels: [
           { key: "empty", type: "text" as const, value: "empty text" },
@@ -275,7 +275,7 @@ describe("Text Classification API", () => {
 
   test("should handle whitespace-only text", async () => {
     try {
-      const result = await client.classification.text({
+      const result = await client.classification({
         dataset: [{ type: "text" as const, value: "   \n\t   " }],
         labels: [
           { key: "whitespace", type: "text" as const, value: "whitespace content" },
@@ -293,7 +293,7 @@ describe("Text Classification API", () => {
 
   test("should fail with invalid dataset type", async () => {
     try {
-      await client.classification.text({
+      await client.classification({
         dataset: [{ type: "image" as any, value: "This is a great product! I love it." }],
         labels: [{ key: "positive", type: "text" as const, value: "positive sentiment" }],
       } as any);
@@ -305,7 +305,7 @@ describe("Text Classification API", () => {
 
   test("should fail with invalid label type", async () => {
     try {
-      await client.classification.text({
+      await client.classification({
         dataset: [{ type: "text" as const, value: "This is a great product! I love it." }],
         labels: [{ key: "positive", type: "image" as any, value: "positive sentiment" }],
       } as any);
@@ -327,7 +327,7 @@ describe("Image Classification API", () => {
   // Test missing required parameters
   test("should fail when no parameters are provided", async () => {
     try {
-      await client.classification.image({} as any);
+      await client.classification({} as any);
       throw new Error("Expected API call to fail with no parameters");
     } catch (error) {
       expectType(error, "object");
@@ -336,7 +336,7 @@ describe("Image Classification API", () => {
 
   test("should fail when dataset is missing", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         labels: IMAGE_LABELS,
       } as any);
       throw new Error("Expected API call to fail with missing dataset");
@@ -347,7 +347,7 @@ describe("Image Classification API", () => {
 
   test("should fail when labels are missing", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: TEST_IMAGE_DATA,
       } as any);
       throw new Error("Expected API call to fail with missing labels");
@@ -358,7 +358,7 @@ describe("Image Classification API", () => {
 
   test("should fail when dataset is empty", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: [],
         labels: IMAGE_LABELS,
       });
@@ -370,7 +370,7 @@ describe("Image Classification API", () => {
 
   test("should fail when labels are empty", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: TEST_IMAGE_DATA,
         labels: [],
       });
@@ -382,7 +382,7 @@ describe("Image Classification API", () => {
 
   // Basic functionality tests
   test("should work with basic image classification", async () => {
-    const result = await client.classification.image({
+    const result = await client.classification({
       dataset: TEST_IMAGE_DATA,
       labels: IMAGE_LABELS,
     });
@@ -404,7 +404,7 @@ describe("Image Classification API", () => {
   });
 
   test("should work with multiple images", async () => {
-    const result = await client.classification.image({
+    const result = await client.classification({
       dataset: [
         { type: "image" as const, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" },
         { type: "image" as const, value: "https://t3.ftcdn.net/jpg/02/95/44/22/240_F_295442295_OXsXOmLmqBUfZreTnGo9PREuAPSLQhff.jpg" },
@@ -425,7 +425,7 @@ describe("Image Classification API", () => {
   });
 
   test("should work with multiple_labels enabled for images", async () => {
-    const result = await client.classification.image({
+    const result = await client.classification({
       dataset: [{ type: "image" as const, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" }],
       labels: [
         { key: "banana", type: "text" as const, value: "banana" },
@@ -449,7 +449,7 @@ describe("Image Classification API", () => {
   });
 
   test("should work with multiple_labels disabled for images", async () => {
-    const result = await client.classification.image({
+    const result = await client.classification({
       dataset: [{ type: "image" as const, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" }],
       labels: [
         { key: "banana", type: "text" as const, value: "banana" },
@@ -475,7 +475,7 @@ describe("Image Classification API", () => {
       });
     }
 
-    const result = await client.classification.image({
+    const result = await client.classification({
       dataset: [{ type: "image" as const, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" }],
       labels: labels,
     });
@@ -487,7 +487,7 @@ describe("Image Classification API", () => {
   // Edge cases and error handling
   test("should handle invalid image URL gracefully", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: [{ type: "image" as const, value: "not-a-valid-url" }],
         labels: [{ key: "banana", type: "text" as const, value: "banana" }],
       });
@@ -499,7 +499,7 @@ describe("Image Classification API", () => {
 
   test("should handle empty image URL", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: [{ type: "image" as const, value: "" }],
         labels: [{ key: "banana", type: "text" as const, value: "banana" }],
       });
@@ -511,7 +511,7 @@ describe("Image Classification API", () => {
 
   test("should fail with invalid dataset type", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: [{ type: "text" as any, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" }],
         labels: [{ key: "banana", type: "text" as const, value: "banana" }],
       } as any);
@@ -523,7 +523,7 @@ describe("Image Classification API", () => {
 
   test("should fail with invalid label type", async () => {
     try {
-      await client.classification.image({
+      await client.classification({
         dataset: [
           { type: "image" as const, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" },
         ],
@@ -537,7 +537,7 @@ describe("Image Classification API", () => {
 
   // Complex scenario test
   test("should work with comprehensive image classification configuration", async () => {
-    const result = await client.classification.image({
+    const result = await client.classification({
       dataset: [
         { type: "image" as const, value: "https://as2.ftcdn.net/v2/jpg/02/24/11/57/1000_F_224115780_2ssvcCoTfQrx68Qsl5NxtVIDFWKtAgq2.jpg" },
         { type: "image" as const, value: "https://t3.ftcdn.net/jpg/02/95/44/22/240_F_295442295_OXsXOmLmqBUfZreTnGo9PREuAPSLQhff.jpg" },
@@ -572,7 +572,7 @@ describe("Classification API Edge Cases", () => {
       });
     }
 
-    const result = await client.classification.text({
+    const result = await client.classification({
       dataset: dataset,
       labels: [
         { key: "test", type: "text" as const, value: "test content" },

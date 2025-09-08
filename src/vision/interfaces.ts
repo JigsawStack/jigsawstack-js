@@ -1,32 +1,14 @@
+import { BaseResponse } from "../../types";
+
 export type VOCRParams = {
-  prompt?: string | string[];
+  prompt?: string | string[] | Record<string, string>;
   url?: string;
   file_store_key?: string;
   page_range?: Array<number>;
 };
 
-interface Bounds {
-  top_left: {
-    x: number;
-    y: number;
-  };
-  top_right: {
-    x: number;
-    y: number;
-  };
-  bottom_left: {
-    x: number;
-    y: number;
-  };
-  bottom_right: {
-    x: number;
-    y: number;
-  };
-}
-
-export interface VOCRResponse {
-  success: boolean;
-  context: string;
+export interface VOCRResponse extends BaseResponse {
+  context?: string | Record<string, string[]>;
   width: number;
   height: number;
   tags: string[];
@@ -35,10 +17,10 @@ export interface VOCRResponse {
     text: string;
     lines: Array<{
       text: string;
-      bounds: Bounds;
+      bounds: BoundingBox;
       words: Array<{
         text: string;
-        bounds: Bounds;
+        bounds: BoundingBox;
       }>;
     }>;
   }>;
@@ -53,9 +35,10 @@ export type ObjectDetectionParams = {
   features?: ("object_detection" | "gui")[];
   annotated_image?: boolean;
   return_type?: "url" | "base64";
+  return_masks?: boolean;
 };
 
-export interface ObjectDetectionResponse {
+export interface ObjectDetectionResponse extends BaseResponse {
   // Optional annotated image - included only if annotated_image=true and objects/gui_elements exist
   annotated_image?: string; // URL or base64 string depending on return_type
 
@@ -64,11 +47,15 @@ export interface ObjectDetectionResponse {
 
   // Optional detected objects - included only if features includes "object_detection"
   objects?: DetectedObject[];
+
+  tags?: string[];
 }
 
 interface GuiElement {
   bounds: BoundingBox;
   content: string | null; // Can be null if no object detected
+  interactivity: boolean;
+  type: string;
 }
 
 interface DetectedObject {
