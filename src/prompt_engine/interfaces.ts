@@ -1,5 +1,5 @@
 import { Stream } from "../lib/streaming";
-
+import { BaseResponse } from "../../types";
 export interface PromptCreateParams {
   prompt: string;
   return_prompt?: string | Array<Record<string, any>> | Record<string, any>;
@@ -58,12 +58,16 @@ export interface PromptListResponse extends PromptResult {
   prompt_engines: PromptResult[];
 }
 
-export interface RunPromptResponse {
+export interface RunPromptResponse extends BaseResponse {
   result: any;
-  success: boolean;
-  message?: string;
+  message: string;
 }
 
 export interface RunPromptResponseStream<T> extends Stream<T> {}
 
 export interface RunPromptDirectResponse extends RunPromptResponse {}
+
+export interface PromptEngineCreateResponse extends BaseResponse {
+  prompt_engine_id: string;
+  optimized_prompt?: string;
+}
