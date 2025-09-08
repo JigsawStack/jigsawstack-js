@@ -3,12 +3,12 @@ import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
 import Classification from "./classification/index";
 import General from "./general";
+import PromptEngine from "./prompt_engine";
 import { RequestClient } from "./request";
 import { File } from "./store/file";
 import Validate from "./validate";
 import Vision from "./vision/vision";
 import Web from "./web/web";
-import PromptEngine from "./prompt_engine";
 
 type BoundMethod<T> = T extends (...args: any[]) => any ? T : never;
 
