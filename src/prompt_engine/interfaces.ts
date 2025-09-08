@@ -66,7 +66,6 @@ export interface PromptListResponse extends BaseResponse {
 
 export interface RunPromptResponse extends BaseResponse {
   result: any;
-  message: string;
 }
 
 export interface CreatePromptResponse extends BaseResponse {
