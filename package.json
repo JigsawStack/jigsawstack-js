@@ -34,7 +34,11 @@
   "scripts": {
     "build": "pkgroll --src=./",
     "format": "biome check --write .",
-    "test": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/*.ts"
+    "test": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/*.ts",
+    "test:audio": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/audio.test.ts",
+    "test:vision": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/vision.test.ts",
+    "test:web": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/web.test.ts",
+    "test:validate": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/validate.test.ts"
   },
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
