@@ -26,6 +26,7 @@ class General {
     this.client = client;
     this.summary = this.summary.bind(this);
     this.embedding = this.embedding.bind(this);
+    this.embeddingV2 = this.embeddingV2.bind(this);
   }
 
   translate = {

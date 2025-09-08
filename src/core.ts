@@ -44,6 +44,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     prediction: general.prediction,
     text_to_sql: general.text_to_sql,
     embedding: general.embedding,
+    embeddingV2: general.embeddingV2,
     audio,
     vision: {
       vocr: createBoundMethod(vision, vision.vocr),
