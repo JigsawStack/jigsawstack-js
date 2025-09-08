@@ -128,8 +128,13 @@ export interface EmbeddingV2Params {
 
 export interface EmbeddingV2Response extends BaseResponse {
   embeddings: number[][];
-  chunks: string[]; // only for text
-  speaker_embeddings?: number[][]; // only for audio
+  chunks?:
+    | string[]
+    | Array<{
+        text: string;
+        timestamp: number[];
+      }>;
+  speaker_embeddings?: number[][];
 }
 
 export interface EmbeddingResponse extends BaseResponse {
