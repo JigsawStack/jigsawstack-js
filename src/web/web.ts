@@ -7,7 +7,7 @@ class Web {
   constructor(private readonly client: RequestClient) {}
 
   ai_scrape = async (params: AIScrapeParams): Promise<AIScrapeResponse> => {
-    return await this.client.fetchJSS("/ai/scrape", "POST", params);
+    return await this.client.fetchJSS("/v1/ai/scrape", "POST", params);
   };
 
   // Simplified function overloads
@@ -16,21 +16,21 @@ class Web {
   html_to_any(params: HTMLAnyParams): Promise<HTMLAnyURLResponse | HTMLAnyBinaryResponse>;
   async html_to_any(params: HTMLAnyParams): Promise<HTMLAnyURLResponse | HTMLAnyBinaryResponse> {
     if (params.return_type === "binary") {
-      return (await this.client.fetchJSS("/web/html_to_any", "POST", params)) as HTMLAnyBinaryResponse;
+      return (await this.client.fetchJSS("/v1/web/html_to_any", "POST", params)) as HTMLAnyBinaryResponse;
     }
     // For both "url" and "base64", return the same structure with url property
-    return (await this.client.fetchJSS("/web/html_to_any", "POST", params)) as HTMLAnyURLResponse;
+    return (await this.client.fetchJSS("/v1/web/html_to_any", "POST", params)) as HTMLAnyURLResponse;
   }
 
   deep_research = async (params: DeepResearchParams): Promise<DeepResearchResponse> => {
-    return await this.client.fetchJSS("/web/deep_research", "POST", params);
+    return await this.client.fetchJSS("/v1/web/deep_research", "POST", params);
   };
 
   search = async (params: SearchParams): Promise<SearchResponse> => {
-    return await this.client.fetchJSS("/web/search", "POST", params);
+    return await this.client.fetchJSS("/v1/web/search", "POST", params);
   };
   search_suggestions = async ({ query }: { query: string }): Promise<SuggestionResponse> => {
-    return await this.client.fetchJSS(`/web/search/suggest?query=${query}`, "GET", undefined);
+    return await this.client.fetchJSS(`/v1/web/search/suggest?query=${query}`, "GET", undefined);
   };
 }
 
