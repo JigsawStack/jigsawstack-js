@@ -3,6 +3,7 @@ import { BaseConfig } from "../types";
 import AudioApis from "./audio/audio";
 import Classification from "./classification/index";
 import General from "./general";
+import PromptEngine from "./prompt_engine";
 import { RequestClient } from "./request";
 import { File } from "./store/file";
 import Validate from "./validate";
@@ -29,6 +30,7 @@ export const JigsawStack = (config?: BaseConfig) => {
   const audio = new AudioApis(client);
   const file = new File(client);
   const validate = new Validate(client);
+  const promptengine = new PromptEngine(client);
   const store = {
     upload: file.upload,
     retrieve: file.retrieve,
@@ -59,6 +61,7 @@ export const JigsawStack = (config?: BaseConfig) => {
     },
     store,
     validate,
+    prompt_engine: promptengine,
     classification: classification.classify,
   };
 };
