@@ -15,7 +15,7 @@ import {
 class PromptEngine {
   constructor(private readonly client: RequestClient) {}
   create = async (params: PromptCreateParams): Promise<{ prompt_engine_id: string }> => {
-    return await this.client.fetchJSS("/prompt_engine", "POST", params);
+    return await this.client.fetchJSS("/v1/prompt_engine", "POST", params);
   };
 
   run_prompt_direct(params: PromptRunParams & { stream: true }): Promise<RunPromptResponseStream<string>>;
