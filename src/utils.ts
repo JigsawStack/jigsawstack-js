@@ -13,8 +13,6 @@ export function createFileUploadFormData(file: Blob | Buffer, body?: Record<stri
   formData.append("file", fileToAppend);
   formData.append("body", JSON.stringify(body));
 
-  console.log("FormData on SDK", formData);
-
   return formData;
 }
 
