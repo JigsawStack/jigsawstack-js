@@ -160,16 +160,16 @@ describe("AI Scrape API", () => {
   });
 
   // Test root_element_selector parameter
-  // test("should work with root_element_selector", async () => {
-  //   const result = await client.web.ai_scrape({
-  //     url: TEST_URLS.webpage,
-  //     element_prompts: ["Find main content"],
-  //     root_element_selector: "body",
-  //   });
+  test("should work with root_element_selector", async () => {
+    const result = await client.web.ai_scrape({
+      url: TEST_URLS.webpage,
+      element_prompts: ["Find main content"],
+      root_element_selector: "body",
+    });
 
-  //   expectSuccess(result);
-  //   expectArray(result.data);
-  // });
+    expectSuccess(result);
+    expectArray(result.data);
+  });
 
   test("should work with custom root_element_selector", async () => {
     const result = await client.web.ai_scrape({
