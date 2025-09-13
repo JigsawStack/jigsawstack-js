@@ -1,24 +1,16 @@
 import { BaseResponse } from "../../types";
 import { respToFileChoice } from "../helpers";
 import { RequestClient } from "../request";
+import { createFileUploadFormData } from "../utils";
 import { FileUploadParams, FileUploadResponse } from "./interfaces/file";
 export class File {
   constructor(private readonly client: RequestClient) {}
 
   upload = async (file: Blob | Buffer, params?: FileUploadParams): Promise<FileUploadResponse> => {
-    return await this.client.fetchJSS(
-      `/v1/store/file`,
-      "POST",
-      file,
-      {
-        key: params?.key,
-        overwrite: params?.overwrite,
-        temp_public_url: params?.temp_public_url,
-      },
-      params?.content_type && {
-        "Content-Type": params.content_type,
-      }
-    );
+    const formData = createFileUploadFormData(file, params);
+
+    console.log("FORM DATA HERE", formData);
+    return await this.client.fetchJSS(`/v1/store/file`, "POST", formData);
   };
 
   retrieve = async (key: string) => {
