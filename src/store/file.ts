@@ -9,7 +9,6 @@ export class File {
   upload = async (file: Blob | Buffer, params?: FileUploadParams): Promise<FileUploadResponse> => {
     const formData = createFileUploadFormData(file, params);
 
-
     return await this.client.fetchJSS(`/v1/store/file`, "POST", formData);
   };
 
