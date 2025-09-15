@@ -26,7 +26,7 @@ class General {
     this.client = client;
     this.summary = this.summary.bind(this);
     this.embedding = this.embedding.bind(this);
-    this.embeddingV2 = this.embeddingV2.bind(this);
+    this.embedding_v2 = this.embedding_v2.bind(this);
   }
 
   translate = {
@@ -88,9 +88,9 @@ class General {
     return await this.client.fetchJSS("/v1/embedding", "POST", params);
   }
 
-  embeddingV2(params: EmbeddingV2Params): Promise<EmbeddingV2Response>;
-  embeddingV2(file: Blob | Buffer, params: Omit<EmbeddingV2Params, "url" | "file_store_key" | "file_content">): Promise<EmbeddingV2Response>;
-  async embeddingV2(params: EmbeddingV2Params | Blob | Buffer, options?: EmbeddingV2Params): Promise<EmbeddingV2Response> {
+  embedding_v2(params: EmbeddingV2Params): Promise<EmbeddingV2Response>;
+  embedding_v2(file: Blob | Buffer, params: Omit<EmbeddingV2Params, "url" | "file_store_key" | "file_content">): Promise<EmbeddingV2Response>;
+  async embedding_v2(params: EmbeddingV2Params | Blob | Buffer, options?: EmbeddingV2Params): Promise<EmbeddingV2Response> {
     if (params instanceof Blob || params instanceof Buffer) {
       const formData = createFileUploadFormData(params, options);
       return await this.client.fetchJSS("/v2/embedding", "POST", formData);
