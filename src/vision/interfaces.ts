@@ -32,7 +32,7 @@ export type ObjectDetectionParams = {
   url?: string;
   file_store_key?: string;
   prompts?: string[];
-  features?: ("object_detection" | "gui")[];
+  features?: ("object" | "gui")[];
   annotated_image?: boolean;
   return_type?: "url" | "base64";
   return_masks?: boolean;

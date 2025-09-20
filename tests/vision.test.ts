@@ -466,7 +466,7 @@ describe("Object Detection API", () => {
   test("should work with object_detection feature", async () => {
     const result = await client.vision.object_detection({
       url: TEST_URLS.image,
-      features: ["object_detection"],
+      features: ["object"],
     });
 
     expectSuccess(result);
@@ -506,7 +506,7 @@ describe("Object Detection API", () => {
   test("should work with both object_detection and gui features", async () => {
     const result = await client.vision.object_detection({
       url: TEST_URLS.image,
-      features: ["object_detection", "gui"],
+      features: ["object", "gui"],
     });
 
     expectSuccess(result);
@@ -727,7 +727,7 @@ describe("Object Detection API", () => {
     const result = await client.vision.object_detection({
       url: TEST_URLS.image,
       prompts: ["detect all objects", "find text elements"],
-      features: ["object_detection", "gui"],
+      features: ["object", "gui"],
       annotated_image: true,
       return_type: "url",
     });
