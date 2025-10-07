@@ -106,7 +106,7 @@ export class JigsawStackToolSet {
           token_overflow_mode: z.enum(["truncate", "error"]).optional().describe("How to handle token overflow"),
         }),
         execute: async ({ text, url, file_store_key, type, token_overflow_mode }) => {
-          return await this.jigsawStack.embedding({
+          return await this.jigsawStack.embedding_v2({
             text,
             url,
             file_store_key,
