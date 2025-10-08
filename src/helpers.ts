@@ -17,7 +17,7 @@ export const respToFileChoice = (
     },
     file: async (filename: string, options?: FilePropertyBag) => {
       const arr = await resp.arrayBuffer();
-      return new File([Buffer.from(arr)], filename, options);
+      return new File([arr], filename, options);
     },
   };
 };

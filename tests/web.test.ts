@@ -1002,10 +1002,12 @@ describe("Web Search API", () => {
 
     // Check structure of search results
     for (const searchResult of result.results) {
+      console.log(searchResult.title);
       expectProperty(searchResult, "title");
       expectProperty(searchResult, "url");
       expectProperty(searchResult, "description");
-      expectProperty(searchResult, "content");
+      // this could also be null after 4 search results
+      // expectProperty(searchResult, "content");
       expectProperty(searchResult, "is_safe");
       expectProperty(searchResult, "site_name");
       expectProperty(searchResult, "language");
@@ -1014,6 +1016,11 @@ describe("Web Search API", () => {
       expectType(searchResult.url, "string");
       expectType(searchResult.description, "string");
       expectType(searchResult.is_safe, "boolean");
+
+      // content can be string or null
+      if (searchResult.content !== null && typeof searchResult.content !== "string") {
+        throw new Error(`Expected content to be string or null, got ${typeof searchResult.content}`);
+      }
     }
   });
 

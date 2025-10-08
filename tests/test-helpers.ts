@@ -8,7 +8,7 @@ export function createJigsawStackClient() {
     throw new Error("JIGSAWSTACK_API_KEY environment variable is required for testing");
   }
 
-  return JigsawStack({ apiKey });
+  return JigsawStack({ apiKey, headers: { "x-jigsaw-skip-cache": "true" } });
 }
 
 export function expectSuccess(result: any): void {
