@@ -10,7 +10,7 @@ export function createJigsawStackClient() {
 
   const client = JigsawStack({
     apiKey,
-    baseURL: (process.env.JIGSAWSTACK_BASE_URL || "https://api.jigsawstack.com") + "/api",
+    baseURL: process.env.JIGSAWSTACK_BASE_URL ? `${process.env.JIGSAWSTACK_BASE_URL}/api` : "https://api.jigsawstack.com",
     headers: { "x-jigsaw-skip-cache": "true" },
   });
 
