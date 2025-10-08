@@ -38,8 +38,7 @@
     "test:audio": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/audio.test.ts",
     "test:vision": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/vision.test.ts",
     "test:web": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/web.test.ts",
-    "test:validate": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/validate.test.ts",
-    "test:main-ci": "yarn build && JIGSAWSTACK_BASE_URL=${PREVIEW_URL} node --test --no-warnings --import tsx --test-reporter=spec tests/*.ts"
+    "test:validate": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/validate.test.ts"
   },
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
