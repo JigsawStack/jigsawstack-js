@@ -8,7 +8,13 @@ export function createJigsawStackClient() {
     throw new Error("JIGSAWSTACK_API_KEY environment variable is required for testing");
   }
 
-  return JigsawStack({ apiKey, headers: { "x-jigsaw-skip-cache": "true" } });
+  const client = JigsawStack({
+    apiKey,
+    baseURL: process.env.JIGSAWSTACK_BASE_URL + "/api" || "https://api.jigsawstack.com",
+    headers: { "x-jigsaw-skip-cache": "true" },
+  });
+
+  return client;
 }
 
 export function expectSuccess(result: any): void {
