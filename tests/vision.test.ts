@@ -441,7 +441,9 @@ describe("Object Detection API", () => {
 
         // Check for optional mask
         if (obj.mask !== undefined) {
-          expectType(obj.mask, "string");
+          if (obj.mask !== null) {
+            throw new Error(`Expected mask to be null, got ${typeof obj.mask}`);
+          }
         }
       }
     }

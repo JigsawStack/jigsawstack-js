@@ -61,7 +61,7 @@ interface GuiElement {
 interface DetectedObject {
   bounds: BoundingBox;
   label: string;
-  mask?: string; // URL or base64 string depending on return_type - only present for some objects
+  mask: string | null; // URL or base64 string depending on return_type - only present for some objects
 }
 
 interface BoundingBox {
