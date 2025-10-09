@@ -18,9 +18,11 @@ export interface VOCRResponse extends BaseResponse {
     lines: Array<{
       text: string;
       bounds: BoundingBox;
+      average_confidence: number;
       words: Array<{
         text: string;
         bounds: BoundingBox;
+        confidence: number;
       }>;
     }>;
   }>;
