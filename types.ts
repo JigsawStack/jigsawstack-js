@@ -6,6 +6,7 @@ export interface BaseResponse {
     inference_time_tokens: number;
     total_tokens: number;
   };
+  log_id: string;
 }
 
 export interface BaseConfig {
