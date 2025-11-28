@@ -5,6 +5,7 @@ export type VOCRParams = {
   url?: string;
   file_store_key?: string;
   page_range?: Array<number>;
+  fine_grained?: boolean;
 };
 
 export interface VOCRResponse extends BaseResponse {
