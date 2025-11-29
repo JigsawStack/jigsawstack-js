@@ -3,7 +3,7 @@ import { createJigsawStackClient, expectArray, expectProperty, expectSuccess, ex
 
 const TEST_URLS = {
   image: "https://jigsawstack.com/preview/object-detection-example-input.jpg",
-  pdf: "https://www.w3.org/WAI/WCAG21/working-examples/pdf-table/table.pdf",
+  pdf: "https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf",
   textImage: "https://jigsawstack.com/preview/vocr-example.jpg",
 };
 
@@ -196,7 +196,7 @@ describe("VOCR (Visual OCR) API", () => {
   // PDF-specific tests
   test("should work with PDF URL", async () => {
     const result = await client.vision.vocr({
-      prompt: "Extract all text from this PDF",
+      prompt: "What is this pdf about? Give me a 50 word summary.",
       url: TEST_URLS.pdf,
     });
 
