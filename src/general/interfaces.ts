@@ -59,6 +59,7 @@ export interface TranslateParams {
 
 export type TranslateImageParams = {
   url?: string;
+  file_store_key?: string;
   target_language: string;
   return_type?: "url" | "binary" | "base64";
 };
@@ -99,8 +100,8 @@ export interface PredictionParams {
     value: number | string;
     date: string;
   }>;
-
-  steps: number;
+  /** Number of predictions to make. Min: 1, Max: 500. Default: 5. */
+  steps?: number;
 }
 
 export interface PredictionResponse extends BaseResponse {
@@ -123,6 +124,12 @@ export interface EmbeddingV2Params {
   file_content?: any;
   type: "text" | "text-other" | "image" | "audio" | "pdf";
   token_overflow_mode?: "truncate" | "error";
+  /** Embedding dimensions. Min: 32, Max: 4096. Default: 4096. */
+  dimensions?: number;
+  /** Instruction for embedding context. Max length: 400. Default: "Given a query, retrieve relevant passages that answer the query" */
+  instruction?: string;
+  /** Mark as query vs document. Default: false. Only valid when type is "text". */
+  query?: boolean;
   speaker_fingerprint?: boolean;
 }
 
