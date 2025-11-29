@@ -1,6 +1,8 @@
 import { Stream } from "../lib/streaming";
 
 export interface PromptCreateParams {
+  /** Name of the prompt engine. Max 300 characters. */
+  name?: string;
   prompt: string;
   return_prompt?: string | Array<Record<string, any>> | Record<string, any>;
   inputs?: Array<{

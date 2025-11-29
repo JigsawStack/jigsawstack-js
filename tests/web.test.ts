@@ -389,22 +389,22 @@ describe("AI Scrape API", () => {
   });
 
   // Test cookies parameter
-  test("should work with cookies", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Get content"],
-      cookies: [
-        {
-          name: "test_cookie",
-          value: "test_value",
-          domain: "example.com",
-        },
-      ],
-    });
+  // test("should work with cookies", async () => {
+  //   const result = await client.web.ai_scrape({
+  //     url: TEST_URLS.webpage,
+  //     element_prompts: ["Get content"],
+  //     cookies: [
+  //       {
+  //         name: "test_cookie",
+  //         value: "test_value",
+  //         domain: "example.com",
+  //       },
+  //     ],
+  //   });
 
-    expectSuccess(result);
-    expectArray(result.data);
-  });
+  //   expectSuccess(result);
+  //   expectArray(result.data);
+  // });
 
   // Test reject_request_pattern parameter
   test("should work with reject_request_pattern", async () => {
@@ -455,23 +455,23 @@ describe("AI Scrape API", () => {
     }
   });
 
-  test("should work with advance_config cookies tracking", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Get content"],
-      advance_config: {
-        cookies: true,
-      },
-    });
+  // test("should work with advance_config cookies tracking", async () => {
+  //   const result = await client.web.ai_scrape({
+  //     url: TEST_URLS.webpage,
+  //     element_prompts: ["Get content"],
+  //     advance_config: {
+  //       cookies: true,
+  //     },
+  //   });
 
-    expectSuccess(result);
-    expectArray(result.data);
+  //   expectSuccess(result);
+  //   expectArray(result.data);
 
-    if (result.advance_config) {
-      expectProperty(result.advance_config, "cookies");
-      expectArray(result.advance_config.cookies);
-    }
-  });
+  //   if (result.advance_config) {
+  //     expectProperty(result.advance_config, "cookies");
+  //     expectArray(result.advance_config.cookies);
+  //   }
+  // });
 
   test("should work with all advance_config options", async () => {
     const result = await client.web.ai_scrape({

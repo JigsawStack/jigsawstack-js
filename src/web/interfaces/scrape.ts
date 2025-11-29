@@ -50,7 +50,8 @@ export interface BaseAIScrapeParams {
 }
 
 export interface AIScrapeParams extends BaseAIScrapeParams {
-  element_prompts?: string[] | null;
+  /** List of prompts or a dictionary of key-value prompts for element extraction. Max 5 items. */
+  element_prompts?: string[] | Record<string, string> | null;
   root_element_selector?: string;
   page_position?: number;
 }
