@@ -5,6 +5,8 @@ export type VOCRParams = {
   url?: string;
   file_store_key?: string;
   page_range?: Array<number>;
+  /** High fidelity word-level bounding boxes within complex documents. Default: false. */
+  fine_grained?: boolean;
 };
 
 export interface VOCRResponse extends BaseResponse {

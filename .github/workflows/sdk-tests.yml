@@ -6,21 +6,61 @@ on:
     branches: [main]
 
 jobs:
-  sdk-tests:
-    name: Run SDK Integration Tests
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "yarn"
-      
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      
-      - name: Run SDK Integration Tests
+
+      - name: Build package
+        run: yarn build
+
+      - name: Cache build
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            dist
+          key: build-${{ github.sha }}
+
+  test:
+    name: Test (${{ matrix.test }})
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          - audio
+          - classification
+          - validate
+          - vision
+          - web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+
+      - name: Restore build cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            dist
+          key: build-${{ github.sha }}
+
+      - name: Run ${{ matrix.test }} tests
         env:
           JIGSAWSTACK_API_KEY: ${{ secrets.JIGSAWSTACK_API_KEY }}
-        run: yarn test 
+        run: yarn test:${{ matrix.test }}

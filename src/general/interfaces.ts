@@ -59,6 +59,7 @@ export interface TranslateParams {
 
 export type TranslateImageParams = {
   url?: string;
+  file_store_key?: string;
   target_language: string;
   return_type?: "url" | "binary" | "base64";
 };
@@ -99,8 +100,7 @@ export interface PredictionParams {
     value: number | string;
     date: string;
   }>;
-
-  steps: number;
+  steps?: number;
 }
 
 export interface PredictionResponse extends BaseResponse {
@@ -123,6 +123,9 @@ export interface EmbeddingV2Params {
   file_content?: any;
   type: "text" | "text-other" | "image" | "audio" | "pdf";
   token_overflow_mode?: "truncate" | "error";
+  dimensions?: number;
+  instruction?: string;
+  query?: boolean;
   speaker_fingerprint?: boolean;
 }
 

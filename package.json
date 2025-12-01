@@ -1,15 +1,10 @@
 {
   "name": "jigsawstack",
   "description": "JigsawStack - The AI SDK for Typescript and Javascript",
-  "keywords": [
-    "framework",
-    "ai",
-    "nextjs",
-    "react"
-  ],
+  "keywords": ["framework", "ai", "nextjs", "react"],
   "type": "module",
   "license": "MIT",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "homepage": "https://jigsawstack.com",
   "repository": {
     "type": "git",
@@ -25,9 +20,7 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
-  "files": [
-    "dist/**"
-  ],
+  "files": ["dist/**"],
   "exports": {
     "require": {
       "types": "./dist/index.d.cts",
@@ -41,11 +34,14 @@
   "scripts": {
     "build": "pkgroll --src=./",
     "format": "biome check --write .",
-    "test": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/*.ts",
-    "test:audio": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/audio.test.ts",
-    "test:vision": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/vision.test.ts",
-    "test:web": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/web.test.ts",
-    "test:validate": "yarn build && node --test --no-warnings --import tsx --test-reporter=spec tests/validate.test.ts"
+    "test": "yarn build && yarn test:all",
+    "test:run": "node --test --no-warnings --import tsx --test-reporter=spec",
+    "test:all": "yarn test:run tests/*.ts",
+    "test:audio": "yarn test:run tests/audio.test.ts",
+    "test:classification": "yarn test:run tests/classification.test.ts",
+    "test:validate": "yarn test:run tests/validate.test.ts",
+    "test:vision": "yarn test:run tests/vision.test.ts",
+    "test:web": "yarn test:run tests/web.test.ts"
   },
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
