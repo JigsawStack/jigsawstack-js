@@ -43,7 +43,8 @@ jobs:
           - classification
           - validate
           - vision
-          - web
+          - web:scraper
+          - web:search
     steps:
       - uses: actions/checkout@v4
 
