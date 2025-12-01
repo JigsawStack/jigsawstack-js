@@ -41,7 +41,8 @@
     "test:classification": "yarn test:run tests/classification.test.ts",
     "test:validate": "yarn test:run tests/validate.test.ts",
     "test:vision": "yarn test:run tests/vision.test.ts",
-    "test:web": "yarn test:run tests/web.test.ts"
+    "test:web:scraper": "yarn test:run tests/web-scraper.test.ts",
+    "test:web:search": "yarn test:run tests/web-search.test.ts"
   },
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
