@@ -1,10 +1,12 @@
-name: Deploy JigsawStack Package to NPM when a Release is Created
+name: Deploy JigsawStack Package to NPM and JSR when a Release is Created
 on:
   release:
     types: [created]
+  workflow_dispatch:
+
 jobs:
-  pypi-publish:
-    name: Publish release to NPM
+  npm-publish:
+    name: Publish to NPM
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -19,9 +21,25 @@ jobs:
         run: |
           yarn
           yarn build
-      - name: Publish package NPM
+      - name: Publish to NPM
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - name: Publish package JSR
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  jsr-publish:
+    name: Publish to JSR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - name: Build package
+        run: |
+          yarn
+          yarn build
+      - name: Publish to JSR
         run: npx jsr publish --allow-slow-types
