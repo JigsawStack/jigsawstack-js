@@ -23,8 +23,6 @@ jobs:
           yarn build
       - name: Publish to NPM
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   jsr-publish:
     name: Publish to JSR
