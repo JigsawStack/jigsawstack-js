@@ -31,8 +31,10 @@ export interface SpeechToTextResponse extends BaseResponse {
     timestamp: number[];
     text: string;
   }>;
-  language_detected?: string; // only available if language is auto
-  confidence?: number; // only available if language is auto
+  language_detected?: {
+    code?: string;
+    confidence?: number;
+  }; // only available if language is auto
 }
 
 export interface SpeechToTextWebhookResponse extends BaseResponse {
