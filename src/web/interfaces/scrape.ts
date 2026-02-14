@@ -17,6 +17,7 @@ export interface BaseAIScrapeParams {
   url?: string | null;
   html?: string | null;
   http_headers?: Record<string, string> | null;
+  scroll?: boolean;
   reject_request_pattern?: string[] | null;
   goto_options?: {
     timeout?: number;
