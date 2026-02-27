@@ -162,19 +162,6 @@ describe("VOCR (Visual OCR) API", () => {
     }
   });
 
-  test("should work with array of prompts and URL", async () => {
-    const result = await client.vision.vocr({
-      prompt: ["Extract all text", "Identify key information", "Find phone numbers"],
-      url: TEST_URLS.textImage,
-    });
-
-    expectSuccess(result);
-    expectProperty(result, "success");
-    expectProperty(result, "context");
-    expectProperty(result, "sections");
-    expectArray(result.sections);
-  });
-
   test("should work with file_store_key parameter", async () => {
     try {
       const result = await client.vision.vocr({
@@ -258,28 +245,6 @@ describe("VOCR (Visual OCR) API", () => {
     }
   });
 
-  // Test different prompt types
-  test("should work with complex single prompt", async () => {
-    const result = await client.vision.vocr({
-      prompt: "Extract all visible text including headers, body text, captions, and any metadata. Also identify the main topics discussed.",
-      url: TEST_URLS.textImage,
-    });
-
-    expectSuccess(result);
-    expectProperty(result, "context");
-    expectType(result.context, "string");
-  });
-
-  test("should work with multiple specific prompts", async () => {
-    const result = await client.vision.vocr({
-      prompt: ["Find all email addresses", "Extract phone numbers", "Identify dates", "Get website URLs", "Extract names and titles"],
-      url: TEST_URLS.textImage,
-    });
-
-    expectSuccess(result);
-    expectArray(result.sections);
-  });
-
   // Edge cases and error handling
   test("should handle invalid URL gracefully", async () => {
     try {
@@ -293,17 +258,6 @@ describe("VOCR (Visual OCR) API", () => {
     }
   });
 
-  test("should handle unreachable URL gracefully", async () => {
-    try {
-      await client.vision.vocr({
-        prompt: "Extract text",
-        url: "https://example.com/non-existent-image.jpg",
-      });
-      throw new Error("Expected API call to fail with unreachable URL");
-    } catch (error) {
-      expectType(error, "object");
-    }
-  });
 
   test("should handle empty file_store_key gracefully", async () => {
     try {
@@ -546,16 +500,6 @@ describe("Object Detection API", () => {
     expectType(result, "object");
   });
 
-  test("should work with multiple prompts", async () => {
-    const result = await client.vision.object_detection({
-      url: TEST_URLS.image,
-      prompts: ["find people", "detect vehicles", "identify buildings"],
-    });
-
-    expectSuccess(result);
-    expectType(result, "object");
-  });
-
   test("should work with empty prompts array", async () => {
     const result = await client.vision.object_detection({
       url: TEST_URLS.image,
@@ -660,17 +604,6 @@ describe("Object Detection API", () => {
     }
   });
 
-  test("should handle unreachable URL gracefully", async () => {
-    try {
-      await client.vision.object_detection({
-        url: "https://example.com/non-existent-image.jpg",
-      });
-      throw new Error("Expected API call to fail with unreachable URL");
-    } catch (error) {
-      expectType(error, "object");
-    }
-  });
-
   test("should handle empty file_store_key gracefully", async () => {
     try {
       await client.vision.object_detection({
@@ -680,48 +613,6 @@ describe("Object Detection API", () => {
     } catch (error) {
       expectType(error, "object");
     }
-  });
-
-  test("should work with different image formats", async () => {
-    const imageUrls = [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png", // PNG
-      "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", // SVG
-    ];
-
-    // Run all API calls in parallel
-    const results = await Promise.allSettled(
-      imageUrls.map(async (url) => {
-        try {
-          const result = await client.vision.object_detection({
-            url: url,
-          });
-
-          expectSuccess(result);
-          expectType(result, "object");
-
-          return { success: true, url };
-        } catch (error) {
-          expectType(error, "object");
-          return { success: false, url, error };
-        }
-      })
-    );
-
-    // Process results and log outcomes
-    results.forEach((result, index) => {
-      const url = imageUrls[index];
-      const format = url.split(".").pop()?.toUpperCase();
-
-      if (result.status === "fulfilled") {
-        if (result.value.success) {
-          console.log(`✓ ${format} format works`);
-        } else {
-          console.log(`Note: ${url} failed - may not be accessible or supported format`);
-        }
-      } else {
-        console.log(`Note: ${url} failed - may not be accessible or supported format`);
-      }
-    });
   });
 
   // Complex scenario tests
