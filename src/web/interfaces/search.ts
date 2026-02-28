@@ -20,7 +20,7 @@ interface RelatedIndex {
 
 export interface SearchResponse extends BaseResponse {
   query: string;
-  ai_overview?: string | null;
+  ai_overview?: string;
   spell_fixed: boolean;
   is_safe: boolean;
   results: Array<{
