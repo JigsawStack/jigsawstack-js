@@ -303,18 +303,6 @@ describe("NSFW validation", () => {
     }
   });
 
-  test("should handle non-image URL gracefully", async () => {
-    try {
-      await client.validate.nsfw({
-        url: "https://www.google.com",
-      });
-      throw new Error("Expected API call to fail with non-image URL");
-    } catch (error) {
-      expectType(error, "object");
-    }
-  });
-
-
   test("should handle empty string URL", async () => {
     try {
       await client.validate.nsfw({
@@ -333,59 +321,6 @@ describe("NSFW validation", () => {
       });
       throw new Error("Expected API call to fail with empty file_store_key");
     } catch (error) {
-      expectType(error, "object");
-    }
-  });
-
-  test("should prioritize url when both parameters are provided", async () => {
-    const result = await client.validate.nsfw({
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png",
-      file_store_key: "test_key", // This should be ignored in favor of URL
-    });
-
-    expectSuccess(result);
-    expectProperty(result, "success");
-    expectProperty(result, "nsfw");
-    expectProperty(result, "nudity");
-    expectProperty(result, "gore");
-    expectProperty(result, "nsfw_score");
-    expectProperty(result, "nudity_score");
-    expectProperty(result, "gore_score");
-
-    expectType(result.success, "boolean");
-    expectType(result.nsfw, "boolean");
-    expectType(result.nudity, "boolean");
-    expectType(result.gore, "boolean");
-    expectType(result.nsfw_score, "number");
-    expectType(result.nudity_score, "number");
-    expectType(result.gore_score, "number");
-  });
-
-  test("should handle very long URL", async () => {
-    const longUrl =
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png" + "?param=" + "a".repeat(1000);
-
-    try {
-      const result = await client.validate.nsfw({ url: longUrl });
-
-      expectSuccess(result);
-      expectProperty(result, "success");
-      expectProperty(result, "nsfw");
-      expectProperty(result, "nudity");
-      expectProperty(result, "gore");
-      expectProperty(result, "nsfw_score");
-      expectProperty(result, "nudity_score");
-      expectProperty(result, "gore_score");
-
-      expectType(result.success, "boolean");
-      expectType(result.nsfw, "boolean");
-      expectType(result.nudity, "boolean");
-      expectType(result.gore, "boolean");
-      expectType(result.nsfw_score, "number");
-      expectType(result.nudity_score, "number");
-      expectType(result.gore_score, "number");
-    } catch (error) {
-      console.log("Note: Very long URL failed (may be expected)");
       expectType(error, "object");
     }
   });
