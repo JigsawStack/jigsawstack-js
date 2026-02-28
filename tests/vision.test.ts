@@ -258,7 +258,6 @@ describe("VOCR (Visual OCR) API", () => {
     }
   });
 
-
   test("should handle empty file_store_key gracefully", async () => {
     try {
       await client.vision.vocr({

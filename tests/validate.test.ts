@@ -174,7 +174,6 @@ describe("Profanity validation", () => {
       }
     });
   });
-
 });
 
 // Comprehensive NSFW API Tests
@@ -324,5 +323,4 @@ describe("NSFW validation", () => {
       expectType(error, "object");
     }
   });
-
 });
