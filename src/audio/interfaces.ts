@@ -25,11 +25,7 @@ export interface SpeechToTextResponse extends BaseResponse {
   chunks: Array<{
     timestamp: number[];
     text: string;
-  }>;
-  speakers?: Array<{
-    speaker: string;
-    timestamp: number[];
-    text: string;
+    speaker?: string;
   }>;
   language_detected?: {
     code?: string;
