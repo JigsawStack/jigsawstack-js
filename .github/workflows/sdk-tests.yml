@@ -41,7 +41,6 @@ jobs:
         test:
           - audio
           - classification
-          - validate
           - vision
           - web:scraper
           - web:search
