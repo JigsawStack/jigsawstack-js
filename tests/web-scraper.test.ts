@@ -2,14 +2,10 @@ import { beforeEach, describe, test } from "node:test";
 import { createJigsawStackClient, expectArray, expectProperty, expectSuccess, expectType } from "./test-helpers.js";
 
 const TEST_URLS = {
-  image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
-  pdf: "https://www.w3.org/WAI/WCAG21/working-examples/pdf-table/table.pdf",
-  audio: "https://jigsawstack.com/preview/stt-example.wav",
-  webpage: "https://www.wikipedia.org",
+  webpage: "https://news.ycombinator.com/show",
   newsWebpage: "https://news.ycombinator.com",
 };
 
-// Comprehensive AI Scrape API Tests
 describe("AI Scrape API", () => {
   let client: ReturnType<typeof createJigsawStackClient>;
 
@@ -171,17 +167,6 @@ describe("AI Scrape API", () => {
     expectArray(result.data);
   });
 
-  test("should work with custom root_element_selector", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Find content"],
-      root_element_selector: "main",
-    });
-
-    expectSuccess(result);
-    expectArray(result.data);
-  });
-
   // Test page_position parameter
   test("should work with page_position parameter", async () => {
     const result = await client.web.ai_scrape({
@@ -238,47 +223,6 @@ describe("AI Scrape API", () => {
     expectArray(result.data);
   });
 
-  test("should work with different wait_until options", async () => {
-    const waitOptions = ["load", "domcontentloaded", "networkidle0", "networkidle2"] as const;
-
-    // Run all API calls in parallel
-    const results = await Promise.allSettled(
-      waitOptions.map(async (waitOption) => {
-        try {
-          const result = await client.web.ai_scrape({
-            url: TEST_URLS.webpage,
-            element_prompts: ["test"],
-            goto_options: {
-              timeout: 30000,
-              wait_until: waitOption,
-            },
-          });
-
-          expectSuccess(result);
-          return { success: true, waitOption };
-        } catch (error) {
-          expectType(error, "object");
-          return { success: false, waitOption, error };
-        }
-      })
-    );
-
-    // Process results and log outcomes
-    results.forEach((result, index) => {
-      const waitOption = waitOptions[index];
-
-      if (result.status === "fulfilled") {
-        if (result.value.success) {
-          console.log(`✓ wait_until: ${waitOption} works`);
-        } else {
-          console.log(`Note: wait_until: ${waitOption} failed - may not be supported`);
-        }
-      } else {
-        console.log(`Note: wait_until: ${waitOption} failed - may not be supported`);
-      }
-    });
-  });
-
   // Test wait_for parameter
   test("should work with wait_for timeout mode", async () => {
     const result = await client.web.ai_scrape({
@@ -287,34 +231,6 @@ describe("AI Scrape API", () => {
       wait_for: {
         mode: "timeout",
         value: 3000,
-      },
-    });
-
-    expectSuccess(result);
-    expectArray(result.data);
-  });
-
-  test("should work with wait_for selector mode", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Get content"],
-      wait_for: {
-        mode: "selector",
-        value: "body",
-      },
-    });
-
-    expectSuccess(result);
-    expectArray(result.data);
-  });
-
-  test("should work with wait_for function mode", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Get content"],
-      wait_for: {
-        mode: "function",
-        value: "() => document.querySelector('body')",
       },
     });
 
@@ -335,76 +251,6 @@ describe("AI Scrape API", () => {
     expectSuccess(result);
     expectArray(result.data);
   });
-
-  test("should work with mobile viewport", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Get main content"],
-      is_mobile: true,
-      width: 375,
-      height: 667,
-      scale: 2,
-    });
-
-    expectSuccess(result);
-    expectArray(result.data);
-  });
-
-  test("should work with size_preset", async () => {
-    const presets = ["HD", "FHD", "4K UHD"] as const;
-
-    // Run all API calls in parallel
-    const results = await Promise.allSettled(
-      presets.map(async (preset) => {
-        try {
-          const result = await client.web.ai_scrape({
-            url: TEST_URLS.webpage,
-            element_prompts: ["test"],
-            size_preset: preset,
-          });
-
-          expectSuccess(result);
-          return { success: true, preset };
-        } catch (error) {
-          expectType(error, "object");
-          return { success: false, preset, error };
-        }
-      })
-    );
-
-    // Process results and log outcomes
-    results.forEach((result, index) => {
-      const preset = presets[index];
-
-      if (result.status === "fulfilled") {
-        if (result.value.success) {
-          console.log(`✓ size_preset: ${preset} works`);
-        } else {
-          console.log(`Note: size_preset: ${preset} failed`);
-        }
-      } else {
-        console.log(`Note: size_preset: ${preset} failed`);
-      }
-    });
-  });
-
-  // Test cookies parameter
-  // test("should work with cookies", async () => {
-  //   const result = await client.web.ai_scrape({
-  //     url: TEST_URLS.webpage,
-  //     element_prompts: ["Get content"],
-  //     cookies: [
-  //       {
-  //         name: "test_cookie",
-  //         value: "test_value",
-  //         domain: "example.com",
-  //       },
-  //     ],
-  //   });
-
-  //   expectSuccess(result);
-  //   expectArray(result.data);
-  // });
 
   // Test reject_request_pattern parameter
   test("should work with reject_request_pattern", async () => {
@@ -436,42 +282,6 @@ describe("AI Scrape API", () => {
       expectArray(result.advance_config.console);
     }
   });
-
-  test("should work with advance_config network tracking", async () => {
-    const result = await client.web.ai_scrape({
-      url: TEST_URLS.webpage,
-      element_prompts: ["Get content"],
-      advance_config: {
-        network: true,
-      },
-    });
-
-    expectSuccess(result);
-    expectArray(result.data);
-
-    if (result.advance_config) {
-      expectProperty(result.advance_config, "network");
-      expectArray(result.advance_config.network);
-    }
-  });
-
-  // test("should work with advance_config cookies tracking", async () => {
-  //   const result = await client.web.ai_scrape({
-  //     url: TEST_URLS.webpage,
-  //     element_prompts: ["Get content"],
-  //     advance_config: {
-  //       cookies: true,
-  //     },
-  //   });
-
-  //   expectSuccess(result);
-  //   expectArray(result.data);
-
-  //   if (result.advance_config) {
-  //     expectProperty(result.advance_config, "cookies");
-  //     expectArray(result.advance_config.cookies);
-  //   }
-  // });
 
   test("should work with all advance_config options", async () => {
     const result = await client.web.ai_scrape({

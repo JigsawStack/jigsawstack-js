@@ -5,7 +5,7 @@ export interface SearchParams {
   spell_check?: boolean;
   max_results?: number;
   safe_search?: "strict" | "moderate" | "off";
-  ai_overview?: boolean;
+  ai_overview?: boolean; // defaults to false on api side
   byo_urls?: string[];
   country_code?: CountryCode;
   auto_scrape?: boolean;
