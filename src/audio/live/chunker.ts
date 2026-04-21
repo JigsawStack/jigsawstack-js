@@ -36,6 +36,9 @@ export class Chunker {
     if (this.buffer.byteLength > this.maxBufferBytes) {
       dropped = this.buffer.byteLength - this.maxBufferBytes;
       this.buffer = this.buffer.slice(dropped);
+      if (this.pendingChunkBytes > 0) {
+        this.pendingChunkBytes = Math.max(0, this.pendingChunkBytes - dropped);
+      }
     }
     return { dropped };
   }

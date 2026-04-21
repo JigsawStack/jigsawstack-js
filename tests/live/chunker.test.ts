@@ -81,4 +81,20 @@ describe("Chunker", () => {
     const dv = new DataView(wav!.buffer, wav!.byteOffset, wav!.byteLength);
     assert.equal(dv.getUint32(40, true), 1 * BYTES_PER_SEC);
   });
+
+  test("overflow while a chunk is pending keeps ackChunk overlap math consistent", () => {
+    const c = makeChunker({ maxBufferSeconds: 6 }); // chunk=5s, overlap=2s, max=6s
+    c.push(new Uint8Array(5 * BYTES_PER_SEC)); // 5s — fills chunk exactly
+    assert.ok(c.tryEmit());
+    // Push enough to overflow by 3s (buffer becomes 9s → clips to 6s → drops 3s from front)
+    c.push(new Uint8Array(4 * BYTES_PER_SEC));
+    c.ackChunk();
+    // After overflow, pendingChunkBytes should have been adjusted from 160_000 → 64_000 (5s - 3s dropped = 2s).
+    // drop = max(0, 64_000 - 64_000) = 0 → buffer is unchanged.
+    // The 6s buffer (2s overlap-ish + 4s new) should still be intact; tryEmit on next 5s window should succeed
+    // after we just append 0 more bytes (since buffer already has 6s, > chunkBytes).
+    const wav = c.tryEmit();
+    assert.ok(wav);
+    assert.equal(wav!.byteLength, 44 + 5 * BYTES_PER_SEC);
+  });
 });
