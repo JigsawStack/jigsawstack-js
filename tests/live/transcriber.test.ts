@@ -195,4 +195,13 @@ describe("Transcriber", () => {
     await t.close();
     assert.ok(warnings.some((w) => w.code === "buffer_overflow"));
   });
+
+  test("jigsaw.audio.speech_to_text_live is exposed on the SDK", async () => {
+    const { JigsawStack } = await import("../../index");
+    const jigsaw = JigsawStack({ apiKey: "k", baseURL: "https://api.test" });
+    const t = jigsaw.audio.speech_to_text_live({ chunkSeconds: 5, overlapSeconds: 2 });
+    await t.connect();
+    await t.close();
+    assert.ok(t);
+  });
 });
