@@ -31,7 +31,6 @@ const transcriber = jigsaw.audio.speech_to_text_live(config?: LiveSTTConfig);
 | `chunkSeconds`         | `number`                            | `5`     | Chunk size sent per transcribe request |
 | `overlapSeconds`       | `number`                            | `2`     | Audio retained between chunks for stitching |
 | `vadThreshold`         | `number`                            | `0.4`   | Forwarded as `vad_threshold` query param |
-| `hallucinationPhrases` | `string[]`                          | `[]`    | Phrases stripped from the tail of committed turns — used to filter Whisper-style fallback text that the model invents on silent or low-signal audio (e.g. `"thanks for watching"`, `"thank you"`). Case-insensitive, trailing-punctuation-tolerant, tail-only (mid-sentence matches are kept). |
 | `maxBufferSeconds`     | `number`                            | `30`    | Upper bound on internal buffer before oldest frames are dropped |
 
 ### `LiveTranscriber`
@@ -65,7 +64,7 @@ interface LiveSTTEvents {
 
 - `open` fires exactly once after `connect()`. `id` is a locally-generated UUID for user-side logging/correlation (no server session exists).
 - `delta` fires as SSE `transcript.delta` events stream in during a chunk. `text` is the preview already stitched against the last committed transcript. Drives ephemeral preview UI.
-- `turn` fires once per chunk on `transcript.done`/`transcript.final`, after hallucination filtering + stitching. `isFinal` is true only on the flush-on-close chunk.
+- `turn` fires once per chunk on `transcript.done`/`transcript.final`, after stitching. `isFinal` is true only on the flush-on-close chunk.
 - `warning` fires for non-fatal issues (buffer overflow drops, single-chunk HTTP errors). Session continues.
 - `error` fires for fatal issues (invalid config, 3 consecutive chunk failures, stream aborted). Terminates session.
 - `close` fires exactly once — either after clean flush or after a fatal error.
@@ -110,7 +109,7 @@ src/audio/
 └── live/
     ├── transcriber.ts        # public class: event emitter, lifecycle, WritableStream sink
     ├── chunker.ts            # PCM buffer → WAV chunks with overlap retention
-    ├── stitcher.ts           # token overlap detection, fuzzy match, hallucination filter
+    ├── stitcher.ts           # token overlap detection, fuzzy match
     └── sse.ts                # POST + SSE parser via RequestClient.fetchJSSStream
 ```
 
@@ -131,7 +130,7 @@ user pipe
 
 **`Chunker`** — maintains a rolling `Uint8Array` buffer of PCM16 bytes; knows sample rate, channels, chunk size, overlap. `push(bytes) → wavBuf | null` appends and returns a complete WAV when the buffer crosses `chunkSeconds`. `trimToOverlap()` retains only the last `overlapSeconds` worth of audio. `flush() → wavBuf | null` returns remaining audio if ≥ 0.5s, otherwise null. Pure — no I/O, no events.
 
-**`Stitcher`** — holds `prevTranscript` state. `preview(deltaStreamText) → string` returns the stitched preview (does not mutate state). `commit(chunkText) → string` returns the stitched committed text and updates state; applies hallucination filter on commit only. Fuzzy token match handles minor diffs in the overlap region (exact match, single-char substitution, single insertion/deletion on tokens ≥ 4 chars). Pure.
+**`Stitcher`** — holds `prevTranscript` state. `preview(deltaStreamText) → string` returns the stitched preview (does not mutate state). `commit(chunkText) → string` returns the stitched committed text and updates state. Fuzzy token match handles minor diffs in the overlap region (exact match, single-char substitution, single insertion/deletion on tokens ≥ 4 chars). Pure.
 
 **`SSE`** — `transcribe(wavBuf, onDelta) → Promise<string>`. Calls `RequestClient.fetchJSSStream("/v1/ai/transcribe", "POST", wavBuf, { stream: true, vad: true, vad_threshold, language }, { "Content-Type": "audio/wav" })`. Iterates `resp.body`, parses SSE lines (`data: ...`, `[DONE]` sentinel, malformed JSON skipped not thrown). Invokes `onDelta(text)` for each `transcript.delta`, resolves with final text on `transcript.done`/`transcript.final`. 30s `AbortSignal.timeout` per request.
 
@@ -183,7 +182,6 @@ export interface LiveSTTConfig {
   chunkSeconds?: number;
   overlapSeconds?: number;
   vadThreshold?: number;
-  hallucinationPhrases?: string[];
   maxBufferSeconds?: number;
 }
 
@@ -224,7 +222,7 @@ Since `jigsaw.audio` is exposed as the full `AudioApis` instance, no `core.ts` c
 **Unit (pure, fast, no network):**
 
 - `tests/live/chunker.test.ts` — push various sizes, assert chunk boundaries sample-aligned, WAV header validity (RIFF/WAVE/fmt/data magic, correct byte sizes, little-endian), overlap retention, `flush()` returns sub-chunk remainder, `flush()` drops <0.5s.
-- `tests/live/stitcher.test.ts` — exact token overlap, fuzzy single-char diff, insertion/deletion within tolerance, no overlap returns current unchanged, empty inputs, hallucination stripping on commit but not preview, trailing punctuation.
+- `tests/live/stitcher.test.ts` — exact token overlap, fuzzy single-char diff, insertion/deletion within tolerance, no overlap returns current unchanged, empty inputs, trailing punctuation.
 - `tests/live/sse.test.ts` — line parser handles `data:` prefix, `[DONE]`, malformed JSON (skip, not throw), events split across network chunks. Uses a fake `Response` with a `ReadableStream` body.
 
 **Integration (mocked HTTP, tests wiring):**
