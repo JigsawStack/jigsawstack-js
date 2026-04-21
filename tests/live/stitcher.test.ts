@@ -65,4 +65,18 @@ describe("Stitcher", () => {
     s.reset();
     assert.equal(s.commit("previous again"), "previous again");
   });
+
+  test("strips trailing punctuation when it was already in the previous commit", () => {
+    const s = new Stitcher();
+    s.commit("Hi Vineet, how are you doing?");
+    const out = s.commit("Hi Vineet, how are you doing? I am doing fine.");
+    assert.equal(out, "I am doing fine.");
+  });
+
+  test("preserves trailing punctuation that is new in current (not in prev)", () => {
+    const s = new Stitcher();
+    s.commit("hello international world");
+    const out = s.commit("internationl world, how are you");
+    assert.equal(out, ", how are you");
+  });
 });

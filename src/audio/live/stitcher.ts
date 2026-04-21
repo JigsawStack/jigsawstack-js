@@ -22,7 +22,7 @@ function stitch(prev: string, current: string): string {
   const curTokens = tokenize(current);
   const overlap = findTokenOverlap(prevTokens, curTokens);
   if (overlap > 0) {
-    const cutPos = findCutPosition(current, curTokens, overlap);
+    const cutPos = findCutPosition(current, prevTokens, curTokens, overlap);
     if (cutPos === -1) return "";
     return current.slice(cutPos).trimStart();
   }
@@ -30,29 +30,32 @@ function stitch(prev: string, current: string): string {
 }
 
 /**
- * Find the position in `current` immediately after the alphanumeric core of the
- * last overlap token. This preserves trailing punctuation that belongs to the
- * non-overlapping remainder (e.g. "world," → cut after "world", keeping ",").
+ * Find the position in `current` immediately after the last overlap token's
+ * alphanumeric core. For the last overlap token, if prev's matching token
+ * carried the same trailing punctuation, strip that punctuation too — it was
+ * already emitted with prev. Otherwise preserve the trailing punctuation in
+ * the remainder (e.g. "world," → keep ",").
  */
-function findCutPosition(current: string, curTokens: string[], overlap: number): number {
-  // Walk through the string, skipping whitespace between tokens, to find where
-  // the overlap-th token's alphanumeric core ends.
+function findCutPosition(current: string, prevTokens: string[], curTokens: string[], overlap: number): number {
   let pos = 0;
   for (let i = 0; i < overlap; i++) {
-    // Skip leading whitespace
     while (pos < current.length && /\s/.test(current[pos])) pos++;
     const token = curTokens[i];
-    // Find the alphanumeric core of this token (strip leading/trailing non-alnum)
     const coreMatch = token.match(/^[^a-zA-Z0-9]*([a-zA-Z0-9].*?[a-zA-Z0-9]|[a-zA-Z0-9])[^a-zA-Z0-9]*$/);
     const core = coreMatch ? coreMatch[1] : token;
-    // Find core in current string starting from pos
     const coreIdx = current.indexOf(core, pos);
     if (coreIdx === -1) {
-      // Fall back: skip the whole token length
       pos += token.length;
     } else {
-      // Advance pos to end of core
       pos = coreIdx + core.length;
+    }
+    if (i === overlap - 1) {
+      const prevToken = prevTokens[prevTokens.length - overlap + i];
+      const prevPunctMatch = prevToken.match(/[^a-zA-Z0-9]+$/);
+      const prevPunct = prevPunctMatch ? prevPunctMatch[0] : "";
+      if (prevPunct && current.slice(pos, pos + prevPunct.length) === prevPunct) {
+        pos += prevPunct.length;
+      }
     }
   }
   if (pos >= current.length) return -1;
