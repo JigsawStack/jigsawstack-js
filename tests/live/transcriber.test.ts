@@ -183,7 +183,7 @@ describe("Transcriber", () => {
   test("buffer overflow emits warning", async () => {
     restore = mockFetchSequence([() => successResponse([], "")]);
     const client = new RequestClient({ apiKey: "k", baseURL: "https://api.test" });
-    const t = new Transcriber(client, { chunkSeconds: 5, overlapSeconds: 2, maxBufferSeconds: 4 });
+    const t = new Transcriber(client, { chunkSeconds: 5, overlapSeconds: 2, maxBufferSeconds: 6 });
     const warnings: any[] = [];
     t.on("warning", (p) => warnings.push(p));
     await t.connect();

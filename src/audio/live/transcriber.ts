@@ -77,6 +77,7 @@ export class Transcriber implements LiveTranscriber {
     if (!(this.cfg.channels === 1 || this.cfg.channels === 2)) throw new Error("channels must be 1 or 2");
     if (!(this.cfg.chunkSeconds > this.cfg.overlapSeconds && this.cfg.overlapSeconds > 0))
       throw new Error("chunkSeconds > overlapSeconds > 0 required");
+    if (!(this.cfg.maxBufferSeconds > this.cfg.chunkSeconds)) throw new Error("maxBufferSeconds must be > chunkSeconds");
     this.sessionId = crypto.randomUUID();
     this.state = "open";
     this.emit("open", { id: this.sessionId });
