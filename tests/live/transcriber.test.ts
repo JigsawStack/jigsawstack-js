@@ -38,7 +38,7 @@ function successResponse(deltas: string[], final: string): Response {
 
 function makeTranscriber() {
   const client = new RequestClient({ apiKey: "k", baseURL: "https://api.test" });
-  return new Transcriber(client, { sampleRate: RATE, channels: 1, chunkSeconds: 5, overlapSeconds: 2, maxBufferSeconds: 30 });
+  return new Transcriber(client, { sampleRate: RATE, chunkSeconds: 5, overlapSeconds: 2, maxBufferSeconds: 30 });
 }
 
 async function writeBytes(writer: WritableStreamDefaultWriter<Uint8Array>, bytes: Uint8Array, chunkSize = 0) {

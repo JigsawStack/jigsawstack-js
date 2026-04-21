@@ -23,25 +23,36 @@ async function fetchPcm16(url: string): Promise<{ pcm: Uint8Array; sampleRate: n
   throw new Error("data chunk not found");
 }
 
+function downmixToMono(pcm: Uint8Array, channels: number): Uint8Array {
+  if (channels === 1) return pcm;
+  const frames = pcm.byteLength / (channels * 2);
+  const out = new Uint8Array(frames * 2);
+  const src = new DataView(pcm.buffer, pcm.byteOffset, pcm.byteLength);
+  const dst = new DataView(out.buffer);
+  for (let i = 0; i < frames; i++) {
+    let sum = 0;
+    for (let c = 0; c < channels; c++) sum += src.getInt16((i * channels + c) * 2, true);
+    dst.setInt16(i * 2, Math.round(sum / channels), true);
+  }
+  return out;
+}
+
 describe("Live STT (integration)", { skip: !process.env.JIGSAWSTACK_API_KEY }, () => {
   test("streams PCM through transcriber and receives at least one turn", async () => {
     const client = createJigsawStackClient();
     const { pcm, sampleRate, channels } = await fetchPcm16(PREVIEW_WAV_URL);
+    const monoPcm = downmixToMono(pcm, channels);
 
-    const transcriber = client.audio.speech_to_text_live({
-      language: "en",
-      sampleRate,
-      channels: channels === 2 ? 2 : 1,
-    });
+    const transcriber = client.audio.speech_to_text_live({ sampleRate });
 
     const turns: string[] = [];
     transcriber.on("turn", ({ text }) => turns.push(text));
 
     await transcriber.connect();
     const writer = transcriber.stream().getWriter();
-    const sliceBytes = sampleRate * channels * 2 * 0.5;
-    for (let off = 0; off < pcm.byteLength; off += sliceBytes) {
-      await writer.write(pcm.slice(off, Math.min(off + sliceBytes, pcm.byteLength)));
+    const sliceBytes = sampleRate * 2 * 0.5;
+    for (let off = 0; off < monoPcm.byteLength; off += sliceBytes) {
+      await writer.write(monoPcm.slice(off, Math.min(off + sliceBytes, monoPcm.byteLength)));
     }
     await writer.close();
     await transcriber.close();

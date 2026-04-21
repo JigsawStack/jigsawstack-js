@@ -5,9 +5,7 @@ import recorder from "node-record-lpcm16";
 const jigsaw = JigsawStack({ apiKey: process.env.JIGSAWSTACK_API_KEY });
 
 const transcriber = jigsaw.audio.speech_to_text_live({
-  language: "en",
   sampleRate: 16000,
-  channels: 1,
 });
 
 transcriber.on("open", ({ id }) => console.log("session", id));

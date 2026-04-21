@@ -7,9 +7,7 @@ import { Stitcher } from "./stitcher";
 type State = "idle" | "open" | "closing" | "closed" | "errored";
 
 const DEFAULTS = {
-  language: "en" as const,
   sampleRate: 16000,
-  channels: 1 as 1 | 2,
   translate: false,
   chunkSeconds: 5,
   overlapSeconds: 2,
@@ -17,6 +15,9 @@ const DEFAULTS = {
   vadThreshold: 0.4,
   maxBufferSeconds: 30,
 };
+
+const LANGUAGE = "en"; // streaming is English-only per JigsawStack docs
+const CHANNELS = 1; // audio must be mono PCM16
 
 const MAX_CONSECUTIVE_ERRORS = 3;
 const CHUNK_TIMEOUT_MS = 30_000;
@@ -41,7 +42,7 @@ export class Transcriber implements LiveTranscriber {
     this.cfg = { ...DEFAULTS, ...(config ?? {}) } as Required<LiveSTTConfig>;
     this.chunker = new Chunker({
       sampleRate: this.cfg.sampleRate,
-      channels: this.cfg.channels,
+      channels: CHANNELS,
       chunkSeconds: this.cfg.chunkSeconds,
       overlapSeconds: this.cfg.overlapSeconds,
       maxBufferSeconds: this.cfg.maxBufferSeconds,
@@ -78,7 +79,6 @@ export class Transcriber implements LiveTranscriber {
   async connect(): Promise<void> {
     if (this.state !== "idle") throw new Error("connect() called on transcriber that is not idle");
     if (!(this.cfg.sampleRate > 0)) throw new Error("sampleRate must be > 0");
-    if (!(this.cfg.channels === 1 || this.cfg.channels === 2)) throw new Error("channels must be 1 or 2");
     if (!(this.cfg.chunkSeconds > this.cfg.overlapSeconds && this.cfg.overlapSeconds > 0))
       throw new Error("chunkSeconds > overlapSeconds > 0 required");
     if (!(this.cfg.maxBufferSeconds > this.cfg.chunkSeconds)) throw new Error("maxBufferSeconds must be > chunkSeconds");
@@ -134,7 +134,7 @@ export class Transcriber implements LiveTranscriber {
         this.client,
         wav,
         {
-          language: this.cfg.language,
+          language: LANGUAGE,
           vad: this.cfg.vad,
           vadThreshold: this.cfg.vadThreshold,
           translate: this.cfg.translate,

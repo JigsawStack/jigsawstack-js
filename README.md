@@ -93,10 +93,9 @@ import recorder from "node-record-lpcm16";
 import { JigsawStack } from "jigsawstack";
 
 const jigsaw = JigsawStack({ apiKey: process.env.JIGSAWSTACK_API_KEY });
+// Streaming is English-only and expects mono 16-bit PCM input (downmix stereo sources beforehand).
 const transcriber = jigsaw.audio.speech_to_text_live({
-  language: "en",
   sampleRate: 16000,
-  channels: 1,
 });
 
 transcriber.on("delta", ({ text }) => process.stdout.write(`\r… ${text}`));

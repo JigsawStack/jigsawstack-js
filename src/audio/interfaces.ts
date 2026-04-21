@@ -38,17 +38,16 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
   id: string;
 }
 
+// Streaming transcribe is English-only per the JigsawStack docs, so `language` is not exposed.
+// Audio must be mono 16-bit PCM — downmix stereo sources before piping.
 export interface LiveSTTConfig {
-  // Server-side transcribe params — forwarded as query string.
-  // Streaming is English-only per the JigsawStack docs; non-English values may error server-side.
-  language?: LanguageCodes | "auto";
+  // Server-side transcribe params.
   translate?: boolean;
   vad?: boolean;
   vadThreshold?: number;
 
   // Client-side audio + chunking params.
   sampleRate?: number;
-  channels?: 1 | 2;
   chunkSeconds?: number;
   overlapSeconds?: number;
   maxBufferSeconds?: number;
