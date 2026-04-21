@@ -1,12 +1,15 @@
 import { RequestClient } from "../request";
 import { createFileUploadFormData } from "../utils";
 import {
+  LiveSTTConfig,
+  LiveTranscriber,
   SpeechToTextParams,
   SpeechToTextParamsWithWebhook,
   SpeechToTextParamsWithoutWebhook,
   SpeechToTextResponse,
   SpeechToTextWebhookResponse,
 } from "./interfaces";
+import { Transcriber } from "./live/transcriber";
 
 class Audio {
   constructor(private readonly client: RequestClient) {}
@@ -33,6 +36,10 @@ class Audio {
       return await this.client.fetchJSS("/v1/ai/transcribe", "POST", formData);
     }
     return await this.client.fetchJSS("/v1/ai/transcribe", "POST", params);
+  }
+
+  speech_to_text_live(config?: LiveSTTConfig): LiveTranscriber {
+    return new Transcriber(this.client, config);
   }
 }
 

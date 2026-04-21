@@ -37,3 +37,51 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
   status: "processing" | "error";
   id: string;
 }
+
+// Streaming transcribe is English-only per the JigsawStack docs, so `language` is not exposed.
+// Audio must be mono 16-bit PCM — downmix stereo sources before piping.
+export interface LiveSTTConfig {
+  // Server-side transcribe params.
+  translate?: boolean;
+  vad?: boolean;
+  vadThreshold?: number;
+
+  // Client-side audio + chunking params.
+  sampleRate?: number;
+  chunkSeconds?: number;
+  overlapSeconds?: number;
+  maxBufferSeconds?: number;
+}
+
+export interface LiveSTTDelta {
+  text: string;
+  chunkIndex: number;
+}
+
+export interface LiveSTTTurn {
+  text: string;
+  chunkIndex: number;
+  isFinal: boolean;
+}
+
+export interface LiveSTTWarning {
+  code: "buffer_overflow" | "chunk_error";
+  message: string;
+}
+
+export interface LiveSTTEvents {
+  open: (payload: { id: string }) => void;
+  delta: (payload: LiveSTTDelta) => void;
+  turn: (payload: LiveSTTTurn) => void;
+  warning: (payload: LiveSTTWarning) => void;
+  error: (err: Error) => void;
+  close: () => void;
+}
+
+export interface LiveTranscriber {
+  on<E extends keyof LiveSTTEvents>(event: E, handler: LiveSTTEvents[E]): this;
+  off<E extends keyof LiveSTTEvents>(event: E, handler: LiveSTTEvents[E]): this;
+  connect(): Promise<void>;
+  stream(): WritableStream<Uint8Array>;
+  close(): Promise<void>;
+}
