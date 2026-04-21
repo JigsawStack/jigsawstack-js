@@ -31,7 +31,7 @@ const transcriber = jigsaw.audio.speech_to_text_live(config?: LiveSTTConfig);
 | `chunkSeconds`         | `number`                            | `5`     | Chunk size sent per transcribe request |
 | `overlapSeconds`       | `number`                            | `2`     | Audio retained between chunks for stitching |
 | `vadThreshold`         | `number`                            | `0.4`   | Forwarded as `vad_threshold` query param |
-| `hallucinationPhrases` | `string[]`                          | `[]`    | Trailing phrases stripped from committed turns |
+| `hallucinationPhrases` | `string[]`                          | `[]`    | Phrases stripped from the tail of committed turns — used to filter Whisper-style fallback text that the model invents on silent or low-signal audio (e.g. `"thanks for watching"`, `"thank you"`). Case-insensitive, trailing-punctuation-tolerant, tail-only (mid-sentence matches are kept). |
 | `maxBufferSeconds`     | `number`                            | `30`    | Upper bound on internal buffer before oldest frames are dropped |
 
 ### `LiveTranscriber`
