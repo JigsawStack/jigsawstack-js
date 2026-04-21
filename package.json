@@ -36,7 +36,7 @@
     "format": "biome check --write .",
     "test": "yarn build && yarn test:all",
     "test:run": "node --test --no-warnings --import tsx --test-reporter=spec",
-    "test:all": "yarn test:run tests/*.ts",
+    "test:all": "yarn test:run tests/*.ts tests/live/*.ts",
     "test:audio": "yarn test:run tests/audio.test.ts",
     "test:audio:live": "yarn test:run tests/audio-live.test.ts",
     "test:classification": "yarn test:run tests/classification.test.ts",

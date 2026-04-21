@@ -1,6 +1,6 @@
 import { Readable } from "stream";
-import recorder from "node-record-lpcm16";
 import { JigsawStack } from "jigsawstack";
+import recorder from "node-record-lpcm16";
 
 const jigsaw = JigsawStack({ apiKey: process.env.JIGSAWSTACK_API_KEY });
 
