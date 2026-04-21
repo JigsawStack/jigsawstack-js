@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { afterEach, beforeEach, describe, test } from "node:test";
-import { RequestClient } from "../../src/request";
 import { transcribeChunk } from "../../src/audio/live/sse";
+import { RequestClient } from "../../src/request";
 
 function sseResponse(events: string[]): Response {
   const encoder = new TextEncoder();
@@ -68,7 +68,10 @@ describe("transcribeChunk (SSE)", () => {
   test("throws on non-2xx with truncated body in message", async () => {
     globalThis.fetch = (async () => new Response("server on fire".repeat(50), { status: 500 })) as typeof fetch;
     const client = new RequestClient({ apiKey: "k", baseURL: "https://api.test" });
-    await assert.rejects(transcribeChunk(client, new Uint8Array([1]), { language: "en", vadThreshold: 0.4 }, () => {}), /Transcribe failed 500/);
+    await assert.rejects(
+      transcribeChunk(client, new Uint8Array([1]), { language: "en", vadThreshold: 0.4 }, () => {}),
+      /Transcribe failed 500/
+    );
   });
 
   test("forwards query params including translate when set", async () => {

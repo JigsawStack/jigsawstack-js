@@ -33,7 +33,10 @@ export class Transcriber implements LiveTranscriber {
   private closePromise: Promise<void> | null = null;
   private sessionId = "";
 
-  constructor(private readonly client: RequestClient, config?: LiveSTTConfig) {
+  constructor(
+    private readonly client: RequestClient,
+    config?: LiveSTTConfig
+  ) {
     this.cfg = { ...DEFAULTS, ...(config ?? {}) } as Required<LiveSTTConfig>;
     this.chunker = new Chunker({
       sampleRate: this.cfg.sampleRate,
@@ -135,7 +138,7 @@ export class Transcriber implements LiveTranscriber {
           const preview = this.stitcher.preview(delta);
           if (preview) this.emit("delta", { text: preview, chunkIndex: idx });
         },
-        chunkAbort.signal,
+        chunkAbort.signal
       );
       this.consecutiveErrors = 0;
     } catch (err: any) {

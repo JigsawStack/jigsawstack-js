@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { afterEach, beforeEach, describe, test } from "node:test";
-import { RequestClient } from "../../src/request";
 import { Transcriber } from "../../src/audio/live/transcriber";
+import { RequestClient } from "../../src/request";
 
 const RATE = 16000;
 const BYTES_PER_SEC = RATE * 2;

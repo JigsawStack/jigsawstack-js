@@ -11,7 +11,7 @@ export async function transcribeChunk(
   wavBuf: Uint8Array,
   params: SSETranscribeParams,
   onDelta: (text: string) => void,
-  signal?: AbortSignal,
+  signal?: AbortSignal
 ): Promise<string> {
   const searchParams: Record<string, any> = {
     stream: "true",
