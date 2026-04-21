@@ -83,6 +83,39 @@ const objectDetectionResp = await jigsaw.vision.object_detection({
 });
 ```
 
+### Live speech-to-text (streaming)
+
+Pipe real-time PCM16 audio (microphone, WebRTC, file) into the SDK and receive incremental and committed transcripts.
+
+```js
+import { Readable } from "stream";
+import recorder from "node-record-lpcm16";
+import { JigsawStack } from "jigsawstack";
+
+const jigsaw = JigsawStack({ apiKey: process.env.JIGSAWSTACK_API_KEY });
+const transcriber = jigsaw.audio.speech_to_text_live({
+  language: "en",
+  sampleRate: 16000,
+  channels: 1,
+});
+
+transcriber.on("delta", ({ text }) => process.stdout.write(`\r… ${text}`));
+transcriber.on("turn",  ({ text }) => console.log(`\n${text}`));
+
+await transcriber.connect();
+
+const rec = recorder.record({ sampleRate: 16000, channels: 1, audioType: "raw" });
+Readable.toWeb(rec.stream()).pipeTo(transcriber.stream());
+
+process.on("SIGINT", async () => {
+  rec.stop();
+  await transcriber.close();
+  process.exit();
+});
+```
+
+See `examples/live-mic.js` for a full working example.
+
 ## Community
 
 Join JigsawStack community on [Discord](https://discord.gg/dj8fMBpnqd) to connect with other developers, share ideas, and get help with the SDK.
