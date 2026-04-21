@@ -82,7 +82,7 @@ describe("transcribeChunk (SSE)", () => {
     }) as typeof fetch;
 
     const client = new RequestClient({ apiKey: "k", baseURL: "https://api.test" });
-    await transcribeChunk(client, new Uint8Array([1]), { language: "fr", vadThreshold: 0.5, translate: true }, () => {});
+    await transcribeChunk(client, new Uint8Array([1]), { language: "fr", vad: true, vadThreshold: 0.5, translate: true }, () => {});
     assert.match(captured, /stream=true/);
     assert.match(captured, /vad=true/);
     assert.match(captured, /vad_threshold=0\.5/);

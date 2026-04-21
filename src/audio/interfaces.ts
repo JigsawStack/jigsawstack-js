@@ -39,13 +39,18 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
 }
 
 export interface LiveSTTConfig {
+  // Server-side transcribe params — forwarded as query string.
+  // Streaming is English-only per the JigsawStack docs; non-English values may error server-side.
   language?: LanguageCodes | "auto";
+  translate?: boolean;
+  vad?: boolean;
+  vadThreshold?: number;
+
+  // Client-side audio + chunking params.
   sampleRate?: number;
   channels?: 1 | 2;
-  translate?: boolean;
   chunkSeconds?: number;
   overlapSeconds?: number;
-  vadThreshold?: number;
   maxBufferSeconds?: number;
 }
 

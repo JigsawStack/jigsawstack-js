@@ -4,6 +4,7 @@ export interface SSETranscribeParams {
   language: string;
   vadThreshold: number;
   translate?: boolean;
+  vad?: boolean;
 }
 
 export async function transcribeChunk(
@@ -15,7 +16,7 @@ export async function transcribeChunk(
 ): Promise<string> {
   const searchParams: Record<string, any> = {
     stream: "true",
-    vad: "true",
+    vad: params.vad === undefined ? undefined : params.vad ? "true" : "false",
     vad_threshold: params.vadThreshold,
     language: params.language,
     translate: params.translate ? "true" : undefined,

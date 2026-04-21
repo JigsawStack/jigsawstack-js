@@ -13,6 +13,7 @@ const DEFAULTS = {
   translate: false,
   chunkSeconds: 5,
   overlapSeconds: 2,
+  vad: true,
   vadThreshold: 0.4,
   maxBufferSeconds: 30,
 };
@@ -132,7 +133,12 @@ export class Transcriber implements LiveTranscriber {
       committed = await transcribeChunk(
         this.client,
         wav,
-        { language: this.cfg.language, vadThreshold: this.cfg.vadThreshold, translate: this.cfg.translate },
+        {
+          language: this.cfg.language,
+          vad: this.cfg.vad,
+          vadThreshold: this.cfg.vadThreshold,
+          translate: this.cfg.translate,
+        },
         (delta) => {
           if (this.state !== "open" && this.state !== "closing") return;
           const preview = this.stitcher.preview(delta);
