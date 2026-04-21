@@ -1,5 +1,5 @@
-import { describe, test } from "node:test";
 import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import { Chunker } from "../../src/audio/live/chunker";
 
 const RATE = 16000;

@@ -1,5 +1,5 @@
-import { describe, test, beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
+import { afterEach, beforeEach, describe, test } from "node:test";
 import { RequestClient } from "../../src/request";
 
 describe("RequestClient.fetchJSSStream", () => {
