@@ -37,3 +37,47 @@ export interface SpeechToTextWebhookResponse extends BaseResponse {
   status: "processing" | "error";
   id: string;
 }
+
+export interface LiveSTTConfig {
+  language?: LanguageCodes | "auto";
+  sampleRate?: number;
+  channels?: 1 | 2;
+  translate?: boolean;
+  chunkSeconds?: number;
+  overlapSeconds?: number;
+  vadThreshold?: number;
+  maxBufferSeconds?: number;
+}
+
+export interface LiveSTTDelta {
+  text: string;
+  chunkIndex: number;
+}
+
+export interface LiveSTTTurn {
+  text: string;
+  chunkIndex: number;
+  isFinal: boolean;
+}
+
+export interface LiveSTTWarning {
+  code: "buffer_overflow" | "chunk_error";
+  message: string;
+}
+
+export interface LiveSTTEvents {
+  open: (payload: { id: string }) => void;
+  delta: (payload: LiveSTTDelta) => void;
+  turn: (payload: LiveSTTTurn) => void;
+  warning: (payload: LiveSTTWarning) => void;
+  error: (err: Error) => void;
+  close: () => void;
+}
+
+export interface LiveTranscriber {
+  on<E extends keyof LiveSTTEvents>(event: E, handler: LiveSTTEvents[E]): this;
+  off<E extends keyof LiveSTTEvents>(event: E, handler: LiveSTTEvents[E]): this;
+  connect(): Promise<void>;
+  stream(): WritableStream<Uint8Array>;
+  close(): Promise<void>;
+}
