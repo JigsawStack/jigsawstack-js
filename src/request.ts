@@ -59,4 +59,40 @@ export class RequestClient {
 
     return result;
   };
+
+  readonly fetchJSSStream = async (
+    path: string,
+    method: "POST" | "GET",
+    body?: Uint8Array | Record<string, any>,
+    searchParams?: {
+      [key: string]: any;
+    },
+    headers?: {
+      [key: string]: string;
+    },
+    signal?: AbortSignal
+  ): Promise<Response> => {
+    const isBinary = body instanceof Uint8Array;
+
+    searchParams = searchParams ? removeUndefinedProperties(searchParams) : undefined;
+
+    const _headers = {
+      "x-api-key": this.config?.apiKey,
+      ...(!isBinary && body !== undefined ? { "Content-Type": "application/json" } : {}),
+      ...this.config?.headers,
+      ...headers,
+    };
+
+    const _body = isBinary ? body : body !== undefined ? JSON.stringify(body) : undefined;
+
+    const url = `${this.config?.baseURL || baseURL}${path}`;
+    const urlParams = searchParams && Object.keys(searchParams).length ? `?${new URLSearchParams(searchParams).toString()}` : "";
+
+    return fetch(`${url}${urlParams}`, {
+      method,
+      headers: _headers,
+      body: method === "POST" ? _body : undefined,
+      signal,
+    });
+  };
 }
