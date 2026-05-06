@@ -10,6 +10,7 @@ export interface SpeechToTextParams {
   webhook_url?: string;
   batch_size?: number;
   chunk_duration?: number;
+  word_timestamps?: boolean;
 }
 
 export interface SpeechToTextParamsWithWebhook extends SpeechToTextParams {
