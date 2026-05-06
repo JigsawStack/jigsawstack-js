@@ -320,7 +320,7 @@ describe("VOCR (Visual OCR) API", () => {
   test("should work with different image formats", async () => {
     const imageUrls = [
       "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", // PNG
-      "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", // SVG
+      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg", // JPG
     ];
 
     // Run all API calls in parallel
@@ -685,7 +685,7 @@ describe("Object Detection API", () => {
   test("should work with different image formats", async () => {
     const imageUrls = [
       "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png", // PNG
-      "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", // SVG
+      "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg", // JPG
     ];
 
     // Run all API calls in parallel
