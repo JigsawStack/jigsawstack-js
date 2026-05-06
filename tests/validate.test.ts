@@ -567,8 +567,7 @@ describe("NSFW validation", () => {
   });
 
   test("should handle very long URL", async () => {
-    const longUrl =
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070" + "?param=" + "a".repeat(1000);
+    const longUrl = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070" + "?param=" + "a".repeat(1000);
 
     try {
       const result = await client.validate.nsfw({ url: longUrl });
