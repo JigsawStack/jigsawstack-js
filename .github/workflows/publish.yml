@@ -19,12 +19,14 @@ jobs:
           node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
 
-      # Ensure npm is new enough for Trusted Publishing (>= 11.5.1)
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - name: Enable corepack (yarn)
+      - name: Enable corepack
         run: corepack enable
+
+      # Ensure npm is new enough for Trusted Publishing (>= 11.5.1).
+      # Use corepack to bypass the broken bundled npm in Node 22.22.2
+      # (missing promise-retry in @npmcli/arborist).
+      - name: Update npm via corepack
+        run: corepack prepare npm@latest --activate
 
       - name: Install deps
         run: yarn install --frozen-lockfile
