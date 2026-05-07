@@ -2,7 +2,7 @@ import { beforeEach, describe, test } from "node:test";
 import { createJigsawStackClient, expectArray, expectProperty, expectSuccess, expectType } from "./test-helpers.js";
 
 const TEST_URLS = {
-  image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
+  image: "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png",
   pdf: "https://www.w3.org/WAI/WCAG21/working-examples/pdf-table/table.pdf",
   audio: "https://jigsawstack.com/preview/stt-example.wav",
   webpage: "https://www.wikipedia.org",

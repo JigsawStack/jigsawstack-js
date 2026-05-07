@@ -62,7 +62,7 @@ const IMAGE_LABELS = [
   },
   {
     type: "image" as const,
-    value: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png",
+    value: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
   },
 ];
 
