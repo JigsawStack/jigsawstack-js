@@ -14,19 +14,17 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+      # Node 24 ships with npm 11.x, which has the OIDC handshake support
+      # required by Trusted Publishing. Node 22's bundled npm 10.x silently
+      # fails the handshake and the registry returns a misleading 404.
+      # See: https://github.com/npm/cli/issues/8730
       - uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
+          node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Enable corepack
+      - name: Enable corepack (yarn)
         run: corepack enable
-
-      # Ensure npm is new enough for Trusted Publishing (>= 11.5.1).
-      # Use corepack to bypass the broken bundled npm in Node 22.22.2
-      # (missing promise-retry in @npmcli/arborist).
-      - name: Update npm via corepack
-        run: corepack prepare npm@latest --activate
 
       - name: Install deps
         run: yarn install --frozen-lockfile
