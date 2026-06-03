@@ -7,6 +7,8 @@ export type VOCRParams = {
   page_range?: Array<number>;
   /** High fidelity word-level bounding boxes within complex documents. Default: false. */
   fine_grained?: boolean;
+  /** Include line and word level bounding box coordinates. When false, the coordinates are omitted but the text and confidence are still returned. Default: true. */
+  return_bounds?: boolean;
 };
 
 export interface VOCRResponse extends BaseResponse {

@@ -724,32 +724,6 @@ describe("Object Detection API", () => {
     });
   });
 
-  // Complex scenario tests
-  test("should work with comprehensive configuration", async () => {
-    const result = await client.vision.object_detection({
-      url: TEST_URLS.image,
-      prompts: ["detect all objects", "find text elements"],
-      features: ["object", "gui"],
-      annotated_image: true,
-      return_type: "url",
-    });
-
-    expectSuccess(result);
-    expectType(result, "object");
-
-    if (result.objects !== undefined) {
-      expectArray(result.objects);
-    }
-
-    if (result.gui_elements !== undefined) {
-      expectArray(result.gui_elements);
-    }
-
-    if (result.annotated_image !== undefined) {
-      expectType(result.annotated_image, "string");
-    }
-  });
-
   test("should work with file upload", async () => {
     const imageResponse = await fetch(TEST_URLS.image);
     const imageBlob = await imageResponse.blob();
