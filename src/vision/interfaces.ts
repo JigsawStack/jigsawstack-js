@@ -21,11 +21,11 @@ export interface VOCRResponse extends BaseResponse {
     text: string;
     lines: Array<{
       text: string;
-      bounds: BoundingBox;
+      bounds?: BoundingBox; // omitted when return_bounds is false
       average_confidence: number;
       words: Array<{
         text: string;
-        bounds: BoundingBox;
+        bounds?: BoundingBox; // omitted when return_bounds is false
         confidence: number;
       }>;
     }>;
