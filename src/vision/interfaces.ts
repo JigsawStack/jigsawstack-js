@@ -43,6 +43,7 @@ export type ObjectDetectionParams = {
   annotated_image?: boolean;
   return_type?: "url" | "base64";
   return_masks?: boolean;
+  return_tags?: boolean;
 };
 
 export interface ObjectDetectionResponse extends BaseResponse {
