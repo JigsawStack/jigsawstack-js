@@ -38,6 +38,7 @@ export type ObjectDetectionParams = {
   url?: string;
   file_store_key?: string;
   prompts?: string[];
+  enhance_prompts?: boolean;
   features?: ("object" | "gui")[];
   annotated_image?: boolean;
   return_type?: "url" | "base64";
